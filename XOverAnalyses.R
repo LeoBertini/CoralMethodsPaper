@@ -23,14 +23,20 @@ DF$ColonyNickname = as.factor(DF$ColonyNickname)
 #ANOVA to check for significant effects using entire dataset and all variables
 modelCrosses0 <- aov(WeightOffset ~ ColonyNickname + CrossType*PhantomType, data = DF)
 summary(modelCrosses0)
+###
+library(car)
+Anova(modelCrosses0, type = "III") #this is done as we have unbalanced design
 
 #check for multicolinearity
-vif(modelCrosses0) # --> shows high multicolinearity of CrossType with another independent variable. Need to account for this.
-#I suspect high correlation with ColonyNickName. We see that ColonyNickname is a variable that still significantly affects the results, 
+vif(modelCrosses0) # --> shows high multicolinearity of CrossType with another independent variable. 
+#Need to account for this.
+#I suspect high correlation with ColonyNickName. 
+#We see that ColonyNickname is a variable that still significantly affects the results, 
 #We can try to eliminate that effect by standardizing the data. 
 
 
-#### First we filter the DATA to include only crosses of type 1 and 2, as these are the ones we are interested in
+#### First we filter the DATA to include only crosses of type 1 and 2, 
+# as these are the ones we are interested in
 FilteredCrossesDF=DF[(DF$CrossType == 'Type1' | DF$CrossType == 'Type2'),]
 
 # Then modelling by  WeightOffsetUnitArea to 
@@ -43,7 +49,8 @@ attributes(scaled_data) <- NULL
 FilteredCrossesDF['OffsetPerUnitAreaScaled']=scaled_data
   
 
-#Now we fit a model where ColonyNickname is included to check if its effect was removed or if multicolinearity is at least controlled
+#Now we fit a model where ColonyNickname is included to check if its effect was removed or 
+#if multicolinearity is at least controlled
 modelCrosses1 <- aov(OffsetPerUnitAreaScaled~ ColonyNickname + CrossType*PhantomType, data = FilteredCrossesDF)
 summary(modelCrosses1)
 vif(modelCrosses1)
@@ -92,17 +99,23 @@ Anova(modelCrosses2, type = "III") #this is done as we have unbalanced design
 model.tables(modelCrosses2, type="means", se = TRUE)
 
 
+
+##reporting post hoc pairwise effects 
 library(multcomp)
 summary(glht(modelCrosses2, linfct = mcp(CrossType = "Tukey")))
 summary(glht(modelCrosses2, linfct = mcp(PhantomType = "Tukey")))
 
 library(lsmeans)
-lsmeans(modelCrosses2, pairwise ~ CrossType:PhantomType)
+lsmeans(modelCrosses2, pairwise ~ PhantomType|CrossType)
 
+
+
+
+#####FIGURES######
 
 
 #plotting mean effect of crosses
-d <- summary(lsmeans(modelCrosses2, ~ CrossType:PhantomType))
+d <- summary(lsmeans(modelCrosses2, ~ PhantomType:CrossType))
 library(ggplot2)
 
 ggplot(d, aes(CrossType:PhantomType)) +
@@ -114,20 +127,16 @@ ggplot(d, aes(CrossType:PhantomType)) +
 
 
 
-#reporting post hoc pairwise effects 
-library(multcomp)
-summary(glht(modelCrosses2, linfct = mcp(CrossType = "Tukey")))
-library(lsmeans)
-lsmeans(modelCrosses2, pairwise ~ PhantomType | CrossType)
 
-
-
-###########
 library("ggpubr")
-ggline(FilteredNoOutliers, x = "CrossType", y = "WeightOffset", color = "PhantomType",
+ggline(FilteredNoOutliers, x = "CrossType", y = "OffsetPerUnitAreaScaled", color = "PhantomType",
        add = c("mean_se", "dotplot"),)
 
-
+######### Visualize data 
+# Box plot all data by groups (check effects of phantom type on weight offset)
+bp <- ggplot(FilteredNoOutliers, aes(x = PhantomType , y = OffsetPerUnitAreaScaled, fill=CrossType )) +
+  geom_boxplot()
+print(bp)
 
 #exploring correlations
 result_corr<-cor(FilteredNoOutliers[, unlist(lapply(DF, is.numeric))])    
