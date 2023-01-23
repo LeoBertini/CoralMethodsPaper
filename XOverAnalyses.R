@@ -4,7 +4,6 @@ library(dplyr)
 library(lme4)
 library(lmerTest)
 
-#TEDDY LINDO
 
 # read data
 datacoral <-read_xlsx('/Users/leonardobertini/RProjects/CoralMethodsPaper/ConsolidatedResultsXover.xlsx',col_names=TRUE)
