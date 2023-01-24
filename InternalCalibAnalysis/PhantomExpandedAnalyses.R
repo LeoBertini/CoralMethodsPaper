@@ -18,7 +18,7 @@ return (DFNoOutliers)
 
 
 # read data
-datacoral <-read_xlsx('/Users/leonardobertini/RProjects/CoralMethodsPaper/ConsolidadedResultsPhantomExpanded.xlsx',col_names=TRUE)
+datacoral <-read_xlsx('/Users/leonardobertini/RProjects/CoralMethodsPaper/InternalCalibAnalysis/ConsolidadedResultsPhantomExpanded.xlsx',col_names=TRUE)
 DF <- data.frame(datacoral)
 
 DF$PhantomType = as.factor(DF$PhantomType)
@@ -27,7 +27,7 @@ DF$Group = as.factor(DF$Group)
 DF$Scan_name = as.factor(DF$Scan_name)
 
 
-#exploratory figure of equipment bias in density
+#exploratory figure of Phantom bias in density
 ggplot(DF, aes(y =RealColonyDensity, x = VirtualDensity, color=PhantomType)) + 
   geom_point() + 
   geom_smooth(method = lm, se=TRUE)
@@ -46,10 +46,16 @@ print(bp)
 
 #REMOVING OUTLIERS
 DF_Normal= DF[(DF$PhantomType =='Normal'),] #subset Phantom Normal to bind later
-DF_Expanded= DF[(DF$PhantomType =='Expanded'),] #subset Expanded to remove outliers
-DF_ExpandedNoOut = remove_outliers(DF_Expanded)
+DF_ExpandedBristol= DF[(DF$Group =='Bristol:Expanded'),] #subset Expanded to remove outliers
+DF_ExpandedLondon= DF[(DF$Group =='London:Expanded'),] #subset Expanded to remove outliers
+DF_ExpandedNoOutB1 = remove_outliers(DF_ExpandedBristol)
+DF_ExpandedNoOutL1 = remove_outliers(DF_ExpandedLondon)
 
-DF_CLEAN = rbind(DF_ExpandedNoOut,DF_Normal) #bind data
+DF_Expanded= DF[(DF$PhantomType =='Expanded'),] #subset Expanded to remove outliers
+DF_ExpandedNoOut=remove_outliers(DF_Expanded)
+
+
+DF_CLEAN = rbind(DF_ExpandedNoOut ,DF_Normal) #bind data
 
 #exploratory boxplot of PhantomType VS WieghtOffset
 bp <- ggplot(DF_CLEAN, aes(x = PhantomType , y = WeightOffset, fill=PhantomType)) +
@@ -58,13 +64,13 @@ print(bp)
 
 
 #Fit model again without outliers
-model1 <- aov(WeightOffset ~ PhantomType*Equipment, data = DF_CLEAN)
+model1 <- aov(WeightOffset ~ PhantomType, data = DF_CLEAN)
 summary(model1)
 
 #checking assumption of homogeneous variance without main outliers
 plot(model1, 1)
 library(car)
-leveneTest( WeightOffset ~ PhantomType*Equipment, data = DF_CLEAN)
+leveneTest( WeightOffset ~ PhantomType, data = DF_CLEAN)
 
 # checking assumption of normality with new data without main outliers
 plot(model1, 2)
@@ -75,7 +81,8 @@ shapiro.test(x = aov_residuals )
 
 ##reporting post hoc pairwise effects 
 library(multcomp)
-lsmeans(model1, pairwise ~ PhantomType|Equipment)
+library(lsmeans)
+lsmeans(model1, pairwise ~ PhantomType)
 
 library("ggpubr")
 ggline(DF_CLEAN, x = "Equipment", y = "WeightOffset", color = "PhantomType",
@@ -128,20 +135,6 @@ summary(model0)
 library(car)
 Anova(model0, type = "III") #this is done as we have unbalanced design
 
-
-
-
-
-
-
-
-
-
-
-#filtering
-DF$PhantomType = as.factor(DF$PhantomType)
-DF$ColonyNickname = as.factor(DF$ColonyNickname)
-GoodPhantomData=DF[(DF$PhantomType == 'Expanded'),]
 
 #####NEXT PART
 #modelling weight offset effects
