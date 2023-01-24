@@ -25,6 +25,7 @@ DF$PhantomType = as.factor(DF$PhantomType)
 DF$Equipment = as.factor(DF$Equipment)
 DF$Group = as.factor(DF$Group)
 DF$Scan_name = as.factor(DF$Scan_name)
+DF$CoralAlias = as.factor(DF$CoralAlias)
 
 
 #exploratory figure of Phantom bias in density
@@ -36,7 +37,7 @@ ggplot(DF, aes(y =RealColonyDensity, x = VirtualDensity, color=PhantomType)) +
 model0 <- aov(WeightOffset ~ PhantomType, data = DF)
 summary(model0)
 #check for multicolinearity
-vif(model0) # --> shows no multicolinearity as VIF values < 5
+#vif(model0) # --> shows no multicolinearity as VIF values < 5
 
 #exploratory boxplot of PhantomType VS WieghtOffset
 bp <- ggplot(DF, aes(x = PhantomType , y = WeightOffset, fill=PhantomType)) +
@@ -45,17 +46,20 @@ print(bp)
 
 
 #REMOVING OUTLIERS
-DF_Normal= DF[(DF$PhantomType =='Normal'),] #subset Phantom Normal to bind later
 DF_ExpandedBristol= DF[(DF$Group =='Bristol:Expanded'),] #subset Expanded to remove outliers
 DF_ExpandedLondon= DF[(DF$Group =='London:Expanded'),] #subset Expanded to remove outliers
 DF_ExpandedNoOutB1 = remove_outliers(DF_ExpandedBristol)
 DF_ExpandedNoOutL1 = remove_outliers(DF_ExpandedLondon)
 
+DF_Normal= DF[(DF$PhantomType =='Normal'),] #subset Phantom Normal to bind later
+DF_NormalNoOut=remove_outliers(DF_Normal)
+
+
 DF_Expanded= DF[(DF$PhantomType =='Expanded'),] #subset Expanded to remove outliers
 DF_ExpandedNoOut=remove_outliers(DF_Expanded)
 
 
-DF_CLEAN = rbind(DF_ExpandedNoOut ,DF_Normal) #bind data
+DF_CLEAN = rbind(DF_ExpandedNoOut ,DF_NormalNoOut) #bind data
 
 #exploratory boxplot of PhantomType VS WieghtOffset
 bp <- ggplot(DF_CLEAN, aes(x = PhantomType , y = WeightOffset, fill=PhantomType)) +
@@ -85,7 +89,7 @@ library(lsmeans)
 lsmeans(model1, pairwise ~ PhantomType)
 
 library("ggpubr")
-ggline(DF_CLEAN, x = "Equipment", y = "WeightOffset", color = "PhantomType",
+ggline(DF_CLEAN, x = "PhantomType", y = "WeightOffset", color='PhantomType',
        add = c("mean_se", "dotplot"),)
 
 
@@ -93,57 +97,22 @@ ggline(DF_CLEAN, x = "Equipment", y = "WeightOffset", color = "PhantomType",
 #EXPANDED PHANTOM GIVES DIFFERENT OFFSETS ON AVERAGE WHEN COMPARED TO NORMAL PHANTOM
 
 
-########
+#CORRELOGRAM WITH ALL NUMERIC VARS for EXPANDED PHANTOM
+DF_CLEAN_EXP= DF_CLEAN[(DF_CLEAN$PhantomType =='Expanded'),] #subset Expanded to remove outliers
+Corr_DF = subset(DF_CLEAN_EXP, select = -c(Least_Square_Sum_Residuals,RMSE, R2)) #keeping only meaningfull variables
+result_corr<-cor(Corr_DF[, unlist(lapply(Corr_DF, is.numeric))])
 
-#Subset Data so that only expanded scans are changed
-DF_FilteredBristol= DF[(DF$Group =='Bristol:Expanded'),]
-DF_FilteredLondon= DF[(DF$Group =='London:Expanded'),]
-
-DF_FilteredBristolNoOutliers=remove_outliers(DF_FilteredBristol)
-DF_FilteredLondonNoOutliers=remove_outliers(DF_FilteredLondon)
-
-#binding clean dataframes
-CleanDF_NoOut=rbind(DF_FilteredBristolNoOutliers,DF_FilteredLondonNoOutliers,DF_Normal)
-
-#exploratory boxplot of PhantomType VS WieghtOffset
-bp <- ggplot(CleanDF_NoOut, aes(x = PhantomType , y = WeightOffset, fill=Group)) +
-  geom_boxplot()
-print(bp)
-
-
-summary(glht(model1, linfct = mcp(Equipment = "Tukey")))
-
-
-library(lsmeans)
-lsmeans(model1, pairwise ~ PhantomType|Equipment)
-
-
-
-#########
-ggplot(DF, aes(x = VirtualDensity, y = RealColonyDensity, 
-               fill = Equipment, color=PhantomType)) +
-         geom_point(aes(shape=Equipment)) +
-         geom_smooth(method = "lm", fill = PhantomType:Equpment, se=TRUE)
-       
-
-
-##########
-#modelling if WeightOffsets are different between phantom types
-model0 <- lm(WeightOffset ~ PhantomType*Equipment, data = DF)
-summary(model0)
-###
-library(car)
-Anova(model0, type = "III") #this is done as we have unbalanced design
+library(corrplot)
+corrplot(result_corr, type = "upper", order = "hclust", diag=F,
+         tl.col = "black", tl.srt = 45)
 
 
 #####NEXT PART
 #modelling weight offset effects
+
+
 #First we standardize numeric variables
-datacoralMOD <- GoodPhantomData %>% mutate_at(c('Volume_estimate','WeightOffset','VirtualDensity','RealAreaOverVol','RealWeight','SurfaceArea','ShapeVA3d','Breadth3d','MeanRugosity','MeanShapeAP','MeanSymmetry','RealColonyDensity'), ~(scale(.) %>% as.vector))
-
-
-DF2 <- DF %>% mutate_at(c('Volume_estimate','WeightOffset','VirtualDensity','RealAreaOverVol','RealWeight','SurfaceArea','ShapeVA3d','Breadth3d','MeanRugosity','MeanShapeAP','MeanSymmetry','RealColonyDensity'), ~(scale(.) %>% as.vector))
-coral.glmm1 <- lmer(WeightOffset ~ RealAreaOverVol + SurfaceArea + MeanSymmetry + ShapeVA3d + Breadth3d + MeanRugosity + MeanShapeAP + RealColonyDensity +
-                      (1|Scan_name) + (1|PhantomType), data=DF2)
+DF2 <- DF_CLEAN %>% mutate_at(c('Volume_estimate','WeightOffset','VirtualDensity','RealAreaOverVol','RealWeight','SurfaceArea','ShapeVA3d','Breadth3d','MeanRugosity','MeanShapeAP','MeanSymmetry','RealColonyDensity'), ~(scale(.) %>% as.vector))
+coral.glmm1 <- lmer(WeightOffset ~ PhantomType + RealAreaOverVol + SurfaceArea + MeanSymmetry + ShapeVA3d + Breadth3d + MeanRugosity + MeanShapeAP + RealColonyDensity  + (1|CoralAlias), data=DF2)
 summary(coral.glmm1)
 print(coral.glmm1, corr=F)

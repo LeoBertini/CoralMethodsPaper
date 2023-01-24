@@ -6,7 +6,7 @@ library(lmerTest)
 
 
 # read data
-datacoral <-read_xlsx('/Users/leonardobertini/RProjects/CoralMethodsPaper/ConsolidatedResultsXover.xlsx',col_names=TRUE)
+datacoral <-read_xlsx('/Users/leonardobertini/RProjects/CoralMethodsPaper/XOverAnalysis/ConsolidatedResultsXover.xlsx',col_names=TRUE)
 DF <- data.frame(datacoral)
 
 
