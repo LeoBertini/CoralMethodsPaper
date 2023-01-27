@@ -57,6 +57,7 @@ summary(modelCrosses1)
 vif(modelCrosses1)
 #it seems multicolinearity is not a problem anymore as VIF values are <5
 
+
 ######### Visualize data 
 # Box plot all data by groups (check effects of phantom type on weight offset)
 bp <- ggplot(FilteredCrossesDF, aes(x = PhantomType , y = OffsetPerUnitAreaScaled, fill=CrossType )) +
@@ -145,5 +146,21 @@ library(corrplot)
 corrplot(result_corr, type = "upper", order = "hclust", 
          tl.col = "black", tl.srt = 45)
 
+
+
+#T-test as suggested by Erica of differences between each pairing type1 and type2
+#DF t-test
+dataT <-read_xlsx('/Users/leonardobertini/RProjects/CoralMethodsPaper/XOverAnalysis/ConsolidatedResultsXover.xlsx', col_names=TRUE, sheet = "T-test")
+
+
+#NormalPhantom
+dataTNormal=dataT[, c('Coral_','OffsetType1NormalAbsolut','OffsetType2NormalAbsolut')]
+t.test(dataTNormal$OffsetType1NormalAbsolut,dataTNormal$OffsetType2NormalAbsolut, paired = TRUE)
+
+#ExpandedlPhantom
+dataTExpanded=dataT[, c('Coral_','OffsetType1ExpandedAbsolut','OffsetType2ExpandedAbsolut')]
+dataTExpandedClean=dataTExpanded[-c(7,8,9,10),]
+
+t.test(dataTExpandedClean$OffsetType1ExpandedAbsolut,dataTExpandedClean$OffsetType2ExpandedAbsolut, paired = TRUE)
 
 

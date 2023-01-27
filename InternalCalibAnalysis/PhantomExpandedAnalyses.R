@@ -28,23 +28,6 @@ DF$Scan_name = as.factor(DF$Scan_name)
 DF$CoralAlias = as.factor(DF$CoralAlias)
 
 
-#exploratory figure of Phantom bias in density
-ggplot(DF, aes(y =RealColonyDensity, x = VirtualDensity, color=PhantomType)) + 
-  geom_point() + 
-  geom_smooth(method = lm, se=TRUE)
-
-
-model0 <- aov(WeightOffset ~ PhantomType, data = DF)
-summary(model0)
-#check for multicolinearity
-#vif(model0) # --> shows no multicolinearity as VIF values < 5
-
-#exploratory boxplot of PhantomType VS WieghtOffset
-bp <- ggplot(DF, aes(x = PhantomType , y = WeightOffset, fill=PhantomType)) +
-  geom_boxplot()
-print(bp)
-
-
 #REMOVING OUTLIERS
 DF_ExpandedBristol= DF[(DF$Group =='Bristol:Expanded'),] #subset Expanded to remove outliers
 DF_ExpandedLondon= DF[(DF$Group =='London:Expanded'),] #subset Expanded to remove outliers
@@ -60,6 +43,29 @@ DF_ExpandedNoOut=remove_outliers(DF_Expanded)
 
 
 DF_CLEAN = rbind(DF_ExpandedNoOut ,DF_NormalNoOut) #bind data
+
+
+
+#exploratory figure of Phantom bias in density
+ggplot(DF_CLEAN, aes(x =RealColonyDensity, y=WeightOffset, color=PhantomType)) + 
+  geom_point(aes(size=SurfaceArea)) + 
+  geom_smooth(method = lm, se=TRUE)
+
+
+
+#plot real density versus virtual density 
+
+model0 <- aov(WeightOffset ~ PhantomType, data = DF)
+summary(model0)
+#check for multicolinearity
+#vif(model0) # --> shows no multicolinearity as VIF values < 5
+
+#exploratory boxplot of PhantomType VS WieghtOffset
+bp <- ggplot(DF, aes(x = PhantomType , y = WeightOffset, fill=PhantomType)) +
+  geom_boxplot()
+print(bp)
+
+
 
 #exploratory boxplot of PhantomType VS WieghtOffset
 bp <- ggplot(DF_CLEAN, aes(x = PhantomType , y = WeightOffset, fill=PhantomType)) +
