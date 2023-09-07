@@ -314,7 +314,7 @@ FIG_1B = ggplot()+
         legend.box = 'horizontal'
   )
 
-FIG_1B
+#FIG_1B
 
 
 # TESTING IF Light and Heavy corals show significant relationships --------
@@ -343,7 +343,7 @@ FIG_1B = FIG_1B +  new_scale_color() +
                  se=T,
                  alpha = 0.1)+ scale_color_manual(values = fit_colors)+
   theme(legend.position = 'none')
-FIG_1B
+#FIG_1B
 
 # All figures in GRID -----------------------------------------------------
 plot_grid(FIG_1A, FIG_1B, nrow=2, ncol=1, labels = c('a)', 'b)'))
@@ -389,20 +389,6 @@ library(MuMIn)
 r.squaredGLMM(model1)
 anova(model1)
 
-
-# library(nlme)
-# model2 <- lme(WeightOffset ~ RealColonyDensity + WeightCat + AreaOverVol.x + RealColonyDensity:WeightCat,
-#                random = ~ 1|Colony_label,
-#                method = 'REML',
-#                data = DF_ALL_MOD,
-#                na.action=na.exclude)
-# 
-# summary(model2)
-# plot(model2)
-# library(sjPlot)
-# plot_model(model2,show.values = TRUE, value.offset = .3)
-# sresid <- resid(model2, type = 'normalized',na.action=na.exclude )
-# hist(sresid)
 ###################################################################################################
 
 
@@ -439,4 +425,4 @@ FIG_2B = ggplot()+
         legend.box = 'horizontal'
   )
 
-FIG_2B
+#FIG_2B

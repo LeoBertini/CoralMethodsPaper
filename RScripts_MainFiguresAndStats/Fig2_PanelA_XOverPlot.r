@@ -99,7 +99,7 @@ XOVER_PLOT = ggplot() +
         legend.position = "none")
   
 
-XOVER_PLOT
+#XOVER_PLOT
 
 #STATS
 
@@ -144,8 +144,6 @@ sd(DF_grouped_stats$WeightOffset_mean[DF_grouped_stats$PhantomType.x=='Narrow' &
 
 mean(DF_grouped_stats$WeightOffset_sd[DF_grouped_stats$PhantomType.x=='Narrow'& DF_grouped_stats$CalibrationApproach.x=='EXTERNAL'],)
 sd(DF_grouped_stats$WeightOffset_sd[DF_grouped_stats$PhantomType.x=='Narrow' & DF_grouped_stats$CalibrationApproach.x=='EXTERNAL'],)
-
-
 
 
 #PAIRED TESTS FIXING CALIBRATION APPROACH

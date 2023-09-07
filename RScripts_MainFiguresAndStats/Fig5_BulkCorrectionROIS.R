@@ -39,7 +39,7 @@ FIG_5B1 = ggplot() +
               alpha = 0.1)+
   
   scale_shape_manual(values=c(22, 23))+
-  scale_color_manual(values=c('red','blue'))+
+  scale_color_manual(values=c('#E66100','#5D3A9B'))+
   
   
   theme_bw() + 
@@ -86,7 +86,7 @@ FIG_5B2 = ggplot() +
     alpha = 0.1)+
   
   scale_shape_manual(values=c(22, 23))+
-  scale_color_manual(values=c('red','blue'))+
+  scale_color_manual(values=c('#E66100','#5D3A9B'))+
 
   
   theme_bw() + 

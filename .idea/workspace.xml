@@ -4,20 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f030ea2-4a67-4695-894e-4df9e27768f4" name="Changes" comment="new repo">
-      <change afterPath="$PROJECT_DIR$/CoralWeightTests/Phantom_Fittings.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CoralWeightTests/ResultsAggregator.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CoralWeightTests/WeightTest_DiagnosticFigures.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Histograms_ReplicateScans/Histogram_overlays.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Histograms_ReplicateScans/Histograms_Colony_10165.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Histograms_ReplicateScans/Histograms_Colony_1048.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Histograms_ReplicateScans/Histograms_Colony_1981.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Histograms_ReplicateScans/Histograms_Colony_1981_Beam_Hardening.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Histograms_ReplicateScans/Histograms_Colony_6781.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Histograms_ReplicateScans/Histograms_Colony_6785.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PhantomExtraction/Manual_Extraction_Phantom.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+    <list default="true" id="5f030ea2-4a67-4695-894e-4df9e27768f4" name="Changes" comment="Uploading changes">
+      <change afterPath="$PROJECT_DIR$/PhantomExtraction/README_PhantomCalib.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/README_MAIN.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RScripts_MainFiguresAndStats/Fig1_PanelsAB.R" beforeDir="false" afterPath="$PROJECT_DIR$/RScripts_MainFiguresAndStats/Fig1_PanelsAB.R" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RScripts_MainFiguresAndStats/Fig2_PanelA_XOverPlot.r" beforeDir="false" afterPath="$PROJECT_DIR$/RScripts_MainFiguresAndStats/Fig2_PanelA_XOverPlot.r" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RScripts_MainFiguresAndStats/Fig5_BulkCorrectionROIS.R" beforeDir="false" afterPath="$PROJECT_DIR$/RScripts_MainFiguresAndStats/Fig5_BulkCorrectionROIS.R" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/CoralWeightTests/README_WeightTests.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,14 +41,19 @@
     <scope name="MethodsPaper" pattern="file[CoralMethodsPaper]:*" />
   </component>
   <component name="ProjectId" id="2V4UC5H46QFgL9kt5mrmo3FQBvj" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "/Users/leonardobertini/PycharmProjects/CoralMethodsPaper",
     "node.js.detected.package.eslint": "true",
@@ -114,7 +113,21 @@
       <option name="project" value="LOCAL" />
       <updated>1694103945063</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Uploading changes">
+      <created>1694106086239</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1694106086240</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Uploading changes">
+      <created>1694106196183</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1694106196183</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -144,9 +157,11 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Updated" />
     <MESSAGE value="Added 'oi leo'" />
     <MESSAGE value="new repo" />
-    <option name="LAST_COMMIT_MESSAGE" value="new repo" />
+    <MESSAGE value="Uploading changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Uploading changes" />
   </component>
 </project>
