@@ -1,0 +1,6 @@
+<component name="CopyrightManager">
+  <copyright>
+    <option name="notice" value="This software was developed by Leonardo Bertini (l.bertini@nhm.ac.uk) at the Natural History Museum (London,UK). &#10;&#10;This is released as Supporting Material as part of the following publication: &#10;# &quot;XXXXXX&quot; (link to paper and DOI once published).&#10;#&#10;&#10;Copyright (c) &amp;#36;originalComment.match(&quot;Copyright \(c\) (\d+)&quot;, 1, &quot;-&quot;, &quot;&amp;#36;today.year&quot;)&amp;#36;today.year. &#10;&#10;The code is distributed under the MIT license https://en.wikipedia.org/wiki/MIT_License" />
+    <option name="myName" value="MP_CopyrightTemplate" />
+  </copyright>
+</component>
