@@ -5,13 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f030ea2-4a67-4695-894e-4df9e27768f4" name="Changes" comment="Uploading changes">
-      <change afterPath="$PROJECT_DIR$/PhantomExtraction/README_PhantomCalib.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README_MAIN.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RScripts_MainFiguresAndStats/Fig1_PanelsAB.R" beforeDir="false" afterPath="$PROJECT_DIR$/RScripts_MainFiguresAndStats/Fig1_PanelsAB.R" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RScripts_MainFiguresAndStats/Fig2_PanelA_XOverPlot.r" beforeDir="false" afterPath="$PROJECT_DIR$/RScripts_MainFiguresAndStats/Fig2_PanelA_XOverPlot.r" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RScripts_MainFiguresAndStats/Fig5_BulkCorrectionROIS.R" beforeDir="false" afterPath="$PROJECT_DIR$/RScripts_MainFiguresAndStats/Fig5_BulkCorrectionROIS.R" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/CoralWeightTests/README_WeightTests.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhantomExtraction/README_PhantomCalib.md" beforeDir="false" afterPath="$PROJECT_DIR$/PhantomExtraction/README_PhantomCalib.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,7 +122,21 @@
       <option name="project" value="LOCAL" />
       <updated>1694106196183</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Uploading changes">
+      <created>1694107714054</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1694107714054</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Uploading changes">
+      <created>1694107883895</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1694107883896</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
