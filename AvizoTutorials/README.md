@@ -1,4 +1,4 @@
-# 1. Aligning replicate µCT scans:
+# 1. Aligning replicate µCT scans
 
 
 See below a step-by-step guide using Avizo® 2022.2
