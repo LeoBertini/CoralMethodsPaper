@@ -1,3 +1,3 @@
 Inline-style: 
 
-![alt text](  "Logo Title Text 1")
+![alt text]( https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/VolumeRegistration.gif  "Logo Title Text 1")
