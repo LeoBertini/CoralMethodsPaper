@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f030ea2-4a67-4695-894e-4df9e27768f4" name="Changes" comment="Uploading changes">
-      <change afterPath="$PROJECT_DIR$/AvizoTutorials/GIF_images/ImagesVolmetrics/Picture5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AvizoTutorials/GIF_images/ImagesVolmetrics/Picture6.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AvizoTutorials/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/AvizoTutorials/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +80,7 @@
       <workItem from="1694094717126" duration="827000" />
       <workItem from="1694102240274" duration="274000" />
       <workItem from="1694189023620" duration="4247000" />
-      <workItem from="1694433277618" duration="3124000" />
+      <workItem from="1694433277618" duration="3738000" />
     </task>
     <task id="LOCAL-00001" summary="Updated">
       <created>1694094891967</created>
@@ -225,7 +222,14 @@
       <option name="project" value="LOCAL" />
       <updated>1694435528358</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Uploading changes">
+      <created>1694436412443</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1694436412443</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
