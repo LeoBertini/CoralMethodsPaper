@@ -55,8 +55,7 @@ The results are then saved on a spreadsheet 'STANDARD_EXTRACTED_VALUES_ScanXX.xl
 
 A plot of the greyscale series and median grey values for each insert is also created for diagnostic purposes.
 
-
-![alt text](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/PhantomExtraction/GIFs/PhantomExtract3.gif)
+![alt text](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/PhantomExtraction/GIFs/PhantomExtractedValuesOverlay.png)
 
 
 
