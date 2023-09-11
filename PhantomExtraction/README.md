@@ -49,8 +49,6 @@ After marking the inserts again, positions across the entire phantom stack are p
 See below:
 ![alt text](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/PhantomExtraction/GIFs/PhantomExtract3.gif)
 
-
-
 The results are then saved on a spreadsheet 'STANDARD_EXTRACTED_VALUES_ScanXX.xlsx'. 
 
 A plot of the greyscale series and median grey values for each insert is also created for diagnostic purposes.
