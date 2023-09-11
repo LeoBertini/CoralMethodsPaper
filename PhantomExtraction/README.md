@@ -41,12 +41,12 @@ Make sure you also probe for 'air' in an area that is free from artifacts or noi
 
 After marking on all available inserts on the top slice of the stack, you choose a scaling factor to expand the sampled area inside each insert.
 This scaling factor allows for adjustments across scans of different resolutions (usually a scalling factor between 200-300 is ideal for scans with resolutions between 50-100 µm)
-
 Then, the bottom slice will be brought forward for marking. Initial positions on the top slice are shown as 'red dots' for guidance. 
 
-After marking the inserts again, positions across the entire phantom stack are predicted and greyscale values extracted.
+A phantom's bottom slice which was marked for probing areas looks like this:
+![alt text](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/PhantomExtraction/GIFs/PhantomMarkedExample.png)
 
-See below:
+After marking the inserts again, positions across the entire phantom stack are predicted and greyscale values extracted.
 ![alt text](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/PhantomExtraction/GIFs/PhantomExtract3.gif)
 
 The results are then saved on a spreadsheet *'STANDARD_EXTRACTED_VALUES_ScanXX.xlsx'*. 
