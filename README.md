@@ -25,4 +25,9 @@ This directory contains guided instructions using Avizo® for:
 # CoralWeightTests
 
 This directory contains code for:
+
 1 - Fitting different calibration curves to PhantomExtract results and performing weight tests [Phantom_Fittings.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/Phantom_Fittings.py)
+
+2 - Producing diagnostic figures to visualize different calibration fits and how µCT histogram and phantom density standards overlap [WeightTest_DiagnosticFigures.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/WeightTest_DiagnosticFigures.py)
+
+3 - Aggregate weight test results from both an extended and an emulated normal phantom condition [ResultsAggregator.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/ResultsAggregator.py)
