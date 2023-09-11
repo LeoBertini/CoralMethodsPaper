@@ -12,4 +12,4 @@ e-mail :  l.bertini@nhm.ac.uk  | l.bertini@bristol.ac.uk
 Below, you'll find a brief description of all subdirectories, which might have their on 'README.md' files with further info.
 
 
-# [AvizoTutorials] (CoralMethodsPaper/AvizoTutorials)
+# [AvizoTutorials] (LeoBertiniNHM/CoralMethodsPaper/tree/main/AvizoTutorials)
