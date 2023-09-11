@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f030ea2-4a67-4695-894e-4df9e27768f4" name="Changes" comment="Uploading changes">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AvizoTutorials/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/AvizoTutorials/README.md" afterDir="false" />
-    </list>
+    <list default="true" id="5f030ea2-4a67-4695-894e-4df9e27768f4" name="Changes" comment="Uploading changes" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -80,7 +77,7 @@
       <updated>1694094715913</updated>
       <workItem from="1694094717126" duration="827000" />
       <workItem from="1694102240274" duration="274000" />
-      <workItem from="1694189023620" duration="4135000" />
+      <workItem from="1694189023620" duration="4247000" />
     </task>
     <task id="LOCAL-00001" summary="Updated">
       <created>1694094891967</created>
@@ -194,7 +191,14 @@
       <option name="project" value="LOCAL" />
       <updated>1694193424826</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Uploading changes">
+      <created>1694193503945</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1694193503945</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

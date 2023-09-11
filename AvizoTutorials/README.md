@@ -14,7 +14,7 @@ You'll want to give a computer a headstart first, by manually manipulating the o
 
 # 2. Repeat
 
-Apply the image registration step from again to ensure a perfect match. 
+Apply the image registration step from (1) again to ensure a perfect match. 
 
 ![alt text]( https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/Step2.gif )
 
@@ -44,3 +44,14 @@ This step 'masks' the volume based on the binary mask created before, so we can 
 16-bit µCT dataset containing only voxel intensities and counts from the shrinkwrapped volume. 
 
 ![alt text]( https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/Step5.gif )
+
+# 6. Extracting surface area and other volume metrics 
+
+Using the masked shrinkwrapped volume, we now can extract a range of metrics.
+
+## Step 1: Generate volume surface from binary mask object
+
+Attach a 'Generate Surface module'
+
+![alt text]( https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/ImagesVolmetrics/Picture1.png )
+
