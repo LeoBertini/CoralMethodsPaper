@@ -9,10 +9,10 @@ The code is distributed under the MIT license https://en.wikipedia.org/wiki/MIT_
 Corresponding author: Leonardo Bertini 
 e-mail :  l.bertini@nhm.ac.uk  | l.bertini@bristol.ac.uk
 
-Below, you'll find a brief description of all subdirectories, which might have their on 'README.md' files with further info.
+Below, you'll find a brief description of all subdirectories, which might have their own 'README' files with further info.
 
 
-## AvizoTutorials
+## [AvizoTutorials](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/AvizoTutorials)
 
 This directory contains guided instructions using Avizo® for:
 
