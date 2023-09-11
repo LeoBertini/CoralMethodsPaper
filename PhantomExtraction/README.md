@@ -21,28 +21,7 @@ See example below:
 
 **A general representation of the directory tree showing the folder structure is as follows:**
 
-ProjectRoot/
-├── Scan1
-├── Scan2
-├── Scan3
-├── Scan4/
-│   ├── TIFF/
-│   │   ├── Scan4_Slice_xy_0001.tif ...
-│   │   └── Scan4_Slice_xy_0002.tif ...
-│   ├── STANDARD_EXTRACT/
-│   │   ├── PhantomStack
-│   │   ├── Overlay_Extracted_Vals_Scan4.png
-│   │   └── PhantomMasks/
-│   │       └── Phantom_mask_slice_0001.png ...
-│   ├── Scan4.vgi
-│   ├── Scan4.xtekCT
-│   ├── Scan4.raw
-│   ├── Scan4.VolMetrics
-│   ├── Histogram-Scan4.csv
-│   └── Phantom_Fittings_and_Weights.xlsx
-├── Scan5
-└── ...
-
+![alt text](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/PhantomExtraction/GIFs/DirectoryTreeExample.jpg)
 
 
 
