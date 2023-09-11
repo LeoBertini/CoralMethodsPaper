@@ -43,14 +43,13 @@ After marking on all available inserts on the top slice of the stack, you choose
 This scaling factor allows for adjustments across scans of different resolutions (usually a scalling factor between 200-300 is ideal for scans with resolutions between 50-100 µm)
 Then, the bottom slice will be brought forward for marking. Initial positions on the top slice are shown as 'red dots' for guidance. 
 
-A phantom's bottom slice which was marked for probing areas looks like this:
-![alt text](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/PhantomExtraction/GIFs/PhantomMarkedExample.png)
-
 After marking the inserts again, positions across the entire phantom stack are predicted and greyscale values extracted.
 ![alt text](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/PhantomExtraction/GIFs/PhantomExtract3.gif)
 
-The results are then saved on a spreadsheet *'STANDARD_EXTRACTED_VALUES_ScanXX.xlsx'*. 
+A phantom's bottom slice which was marked for probing areas looks like this:
+![alt text](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/PhantomExtraction/GIFs/PhantomMarkedExample.png)
 
+The results are saved on a spreadsheet *'STANDARD_EXTRACTED_VALUES_ScanXX.xlsx'*.
 A plot of the greyscale series and median grey values for each insert is also created for diagnostic purposes.
 
 ![alt text](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/PhantomExtraction/GIFs/PhantomExtractedValuesOverlay.png)
