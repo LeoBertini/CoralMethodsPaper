@@ -15,7 +15,7 @@ Make sure both the top and bottom slices have all the materials as you'll be pro
 
 See example below:
 
-![alt text]()
+![alt text](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/PhantomExtraction/GIFs/PhantomExtract1.gif)
 
 
 
