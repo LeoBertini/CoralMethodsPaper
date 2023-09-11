@@ -39,12 +39,12 @@ This directory contains code for:
 ## PhantomExtraction
 This directory contains code for:
 
-1 - Semi-automated extraction of phantom density inserts across the stack by prompting user interaction to mark where extended phantom inserts are located at the top and bottom of the stack. 
+1 - Semi-automated extraction of phantom density inserts across the stack by prompting user interaction to mark where extended phantom inserts are located at the top and bottom of the stack [SemiAutomated_Extraction_Phantom.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/PhantomExtraction/SemiAutomated_Extraction_Phantom.py). 
 
-2 - Automated extaction of phantom density inserts using computer vision to detect regular circular features across the phantom stack
+2 - Automated extraction of phantom density inserts using computer vision to detect regular circular features across the phantom stack [Standard_Extract.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/PhantomExtraction/Standard_Extract.py)
 
 
-## HistogramsRelicateScans
+## HistogramsReplicateScans
 This directory contains code for:
 
 1 - Plotting histogram overlays of replicate scans under different optimal settings, with curtosis and skewness measurements

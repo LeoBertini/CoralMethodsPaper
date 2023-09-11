@@ -419,9 +419,9 @@ def DF_update(Dataframe):
         Dataframe['Median_CI_95'][insert] = CI
         Dataframe['Median_StdError'][insert] = std_error
         if len(Dataframe['InsertType']) <= 7:
-            answer = 'normal'
+            answer = 'narrow'
         else:
-            answer = 'expanded'
+            answer = 'extended'
 
         Dataframe['Phantom_type'][insert] = answer.lower()
 
@@ -486,7 +486,7 @@ if __name__ == "__main__":
             Phantom_folder = os.path.join(selected_project_dir,scan_name, 'STANDARD_EXTRACT')
 
 
-            # showing first image to user to define type of phantom (Expanded or Normal phantom)
+            # showing first image to user to define type of phantom (Extended or Narrow phantom)
             first_image = cv2.imread(image_list[0])
             print("Original shape: ", first_image.shape)
 
@@ -505,13 +505,13 @@ if __name__ == "__main__":
             while True:
                 try:
 
-                    answer = input("Type in what kind of phantom was used (Expanded or Normal)?: \n")
-                    if answer.lower() == 'expanded':
+                    answer = input("Type in what kind of phantom was used (Extended or Narrow)?: \n")
+                    if answer.lower() == 'extended':
                         insert_list = ["Air", "Sugar", "Coffee", "Oil", "Aluminum", "Epoxy",
                                        "Insert1", "Insert2", "Insert3", "Insert4", "Insert5"]
                         print(f"Phantom type is {answer}. Sample image window closed")
                         break
-                    if answer.lower() == 'normal':
+                    if answer.lower() == 'narrow':
                         insert_list = ["Air", "Epoxy", "Insert1", "Insert2", "Insert3", "Insert4", "Insert5"]
                         print(f"Phantom type is {answer}. Sample image window closed")
                         break
@@ -913,14 +913,14 @@ if __name__ == "__main__":
             # COMPLETE todo convert Dataframe to CSV spreadsheet
             DF.to_excel(os.path.join(Phantom_folder, f"STANDARD_EXTRACTED_VALUES_{scan_name}.xlsx"), index=False)
 
-            if answer.lower() =='expanded': #if expanded phantom, then also save a file with just the 5 inserts and epoxy --> for comparisson on how the fit improves when having extended phantom
+            if answer.lower() =='extended': #if extended phantom, then also save a file with just the 5 inserts and epoxy --> for comparisson on how the fit improves when having extended phantom
                 df = DF
                 #df.drop(df[df['InsertType'] == 'air'].index, inplace=True)
                 df.drop(df[df['InsertType'] == 'sugar'].index, inplace=True)
                 df.drop(df[df['InsertType'] == 'oil'].index, inplace=True)
                 df.drop(df[df['InsertType'] == 'coffee'].index, inplace=True)
                 df.drop(df[df['InsertType'] == 'aluminum'].index, inplace=True)
-                df.to_excel(os.path.join(Phantom_folder, f"STANDARD_EXTRACTED_VALUES_{scan_name}_PNormal.xlsx"))
+                df.to_excel(os.path.join(Phantom_folder, f"STANDARD_EXTRACTED_VALUES_{scan_name}_PNarrow.xlsx"))
 
     if already_extracted: #all files extracted and we have items in 'already_extracted'
         userInput = ''
