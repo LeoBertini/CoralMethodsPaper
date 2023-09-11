@@ -93,3 +93,17 @@ Set interpretation to **3D**
 Measure Group should be a default or a saved group that includes for example the following 3-dimensional measures: Breadth3D, Shape_VA3D
 
 Look at the ‘.analysis’ object for results table
+
+## Step 5 - Save information in a '.VolMetrics' file
+
+Open any text editor (e.g., Notepad or TextEdit) and insert volume information alogside the specimen's RealWeight as displayed below:
+
+![alt text]( https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/ImagesVolmetrics/Picture5.png )
+
+
+Then save with extension '.VolMetrics' into the scan folder
+
+![alt text]( https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/ImagesVolmetrics/Picture6.png )
+
+
+
