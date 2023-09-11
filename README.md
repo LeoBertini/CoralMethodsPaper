@@ -25,4 +25,4 @@ This directory contains guided instructions using Avizo® for:
 # CoralWeightTests
 
 This directory contains code for:
-1 - Fitting different calibration curves to PhantomExtract results and performing weight tests [link] (/CoralWeightTests/Phantom_Fittings.py)
+1 - Fitting different calibration curves to PhantomExtract results and performing weight tests [Phantom_Fittings.py](..blob/main/CoralWeightTests/Phantom_Fittings)
