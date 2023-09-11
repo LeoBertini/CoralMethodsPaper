@@ -50,5 +50,5 @@ This directory contains code for:
 ## [RScriptsMainFiguresAndStats](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/RScriptsMainFiguresAndStats)
 This directory contains code for:
 
-1 - R code to produce all base figures used in the publication.
+1 - R code to produce all base figures used in the publication. Statistical analyses therein.
 

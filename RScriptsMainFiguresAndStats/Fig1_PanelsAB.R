@@ -1,5 +1,3 @@
-
-
 #Fig1
 
 library(readxl)

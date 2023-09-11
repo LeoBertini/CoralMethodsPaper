@@ -1,3 +1,14 @@
+#  This software was developed by Kenneth Johnson and Leonardo Bertini at the Natural History Museum (London,UK).
+#
+#  This is released as Supporting Material as part of the following publication:
+#  "XXXXXX" (link to paper and DOI once published).
+#  #
+#
+#  Copyright (c) 2023.
+#
+#  The code is distributed under the MIT license https://en.wikipedia.org/wiki/MIT_License
+
+
 '''
 2017-07-26
 2017-09-22
@@ -7,6 +18,7 @@
 2021-August Only Process folders which haven't been handled yet  - Leo Mod
 2021-December : when importing voxel size from metadata , make sure all decimals are included when converting from str to float
 '''
+
 
 import numpy as np
 import cv2
