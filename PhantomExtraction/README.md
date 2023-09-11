@@ -1,3 +1,8 @@
-Inline-style: 
+# Density calibration curve via semi-automated extraction of phantom inserts
 
-![alt text]( https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/PhantomExtraction/GIPHY_EXAMPLE.gif "Logo Title Text 1")
+Below is a guide on how to perform the semi-automated extraction of density standards within and also attached to the phantom disc.
+
+## Step 1 - Select phantom range from X-ray stack 
+
+Generate a .tif stack containing slices of the entire scan. You can use Avizo® to export a volume into an image stack or 
+Fiji/ImageJ using the utility plug-in provided [Vol2Any.py]()
