@@ -12,7 +12,7 @@ e-mail :  l.bertini@nhm.ac.uk  | l.bertini@bristol.ac.uk
 Below, you'll find a brief description of all subdirectories, which might have their on 'README.md' files with further info.
 
 
-# AvizoTutorials
+## AvizoTutorials
 
 This directory contains guided instructions using Avizo® for:
 
@@ -27,8 +27,7 @@ This directory contains guided instructions using Avizo® for:
 5 - How to create a '.VolMetrics' file containing information from a respective scan
 
 
-# CoralWeightTests
-
+## CoralWeightTests
 This directory contains code for:
 
 1 - Fitting different calibration curves to PhantomExtract results and performing weight tests [Phantom_Fittings.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/Phantom_Fittings.py)
@@ -36,3 +35,16 @@ This directory contains code for:
 2 - Producing diagnostic figures to visualize different calibration fits and how µCT histogram and phantom density standards overlap [WeightTest_DiagnosticFigures.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/WeightTest_DiagnosticFigures.py)
 
 3 - Aggregate weight test results from both an extended and an emulated normal phantom condition [ResultsAggregator.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/ResultsAggregator.py)
+
+## PhantomExtraction
+This directory contains code for:
+
+1 - Semi-automated extraction of phantom density inserts across the stack by prompting user interaction to mark where extended phantom inserts are located at the top and bottom of the stack. 
+
+2 - Automated extaction of phantom density inserts using computer vision to detect regular circular features across the phantom stack
+
+
+## HistogramsRelicateScans
+This directory contains code for:
+
+1 - Plotting histogram overlays of replicate scans under different optimal settings, with curtosis and skewness measurements
