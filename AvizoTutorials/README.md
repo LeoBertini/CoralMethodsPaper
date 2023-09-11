@@ -20,7 +20,7 @@ Apply the image registration step from (1) again to ensure a perfect match.
 
 # 3. Voxel resampling and fixing coordinate system
 
-This step ensures that the both the coordinate system and the voxelized structure of the orange volume are the same as those of the reference volume 
+This step ensures that the both the coordinate system and the voxelized structure of the orange volume are the same as those of the reference volume.
 
 ![alt text]( https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/Step3.gif )
 
@@ -51,7 +51,7 @@ Using the masked shrinkwrapped volume, we now can extract a range of metrics.
 
 ## Step 1: Generate volume surface from binary mask object
 
-Attach a 'Generate Surface module' to the label field
+Attach a 'Generate Surface module' to the label field.
 
 ![alt text]( https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/ImagesVolmetrics/Picture1.png )
 
@@ -61,7 +61,7 @@ Reduce the number of faces of the rendered surface by a factor of 100, to smooth
 make calculations run a lot faster. 
 
 This overwrites the surface object, so if you want to see a Before/After then duplicate and simplify on the copied surface object instead. 
--	Preserve slice structure and you can also hit fast
+- Preserve slice structure and you can also hit fast
 
 ![alt text]( https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/ImagesVolmetrics/Picture2.png )
 
@@ -74,24 +74,22 @@ Attach a Smooth Surface module to the simplified surface object (set iterations 
 
 ## Step 4: Get general volume statistics
 
-Then Attach a Surface Area Vol object and see statistics table for surface area
-
+Attach a Surface Area Vol object and see statistics table for surface area
 
 ## Optional: Get different measures in 2D 
 
-Attach a Global Analysis module to the binary label field and also load the masked greyscale volume
-Set interpretation to XY planes
+Attach a Global Analysis module to the binary label field and load the masked greyscale volume
+Set interpretation to **XY planes**
 Measure Group should be a default or a saved group that includes for example the following 2-dimensional measures: Rugosity, Shape_AP and Symmetry
 
 Look at the ‘.analysis’ object for results table
 
 ![alt text]( https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/ImagesVolmetrics/Picture4.png )
 
-
 ## Optional: Get different measures in 3D 
 
 Attach a Global Analysis module to the binary label field and also load the masked greyscale volume
-Set interpretation to 3D
+Set interpretation to **3D**
 Measure Group should be a default or a saved group that includes for example the following 3-dimensional measures: Breadth3D, Shape_VA3D
 
 Look at the ‘.analysis’ object for results table
