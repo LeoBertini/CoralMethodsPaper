@@ -48,7 +48,7 @@ This directory contains code for generating figures of X-ray histograms of repli
 1 - Plotting histogram overlays with curtosis and skewness measurements [Histogram_overlays.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/HistogramsReplicateScans/Histogram_overlays.py)
 
 ## [RScriptsMainFiguresAndStats](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/RScriptsMainFiguresAndStats)
-This directory contains code to produce all base figures used in the publication statistical analyses therein. Code was written in R version 4.2.2.
+This directory contains code to produce all base figures used in the publication. Statistical analyses therein. Code was written in R version 4.2.2.
 Scripts are named based on the figure they generate and are self-explanatory. 
 
 
