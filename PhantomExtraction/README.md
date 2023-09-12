@@ -1,6 +1,6 @@
 # Density calibration curves via semi-automated extraction of phantom inserts
 
-Below is a guide on how to perform the semi-automated extraction of density standards within and also attached to the phantom disc.
+Below is a guide on how to perform semi-automated extraction of density standards embedded and also attached to a radiology phantom disc.
 
 ## Step 1 - Select phantom range from X-ray stack 
 
