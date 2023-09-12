@@ -45,4 +45,6 @@ This involves:
 
 See example below:
 
-
+<p align="center">
+  <img src="https://github.com/LeoBertiniNHM/CoralMethodsPaper/main/CoralWeightTests/IMGs/PowerShellExample.png" height="300" width="600" >
+</p>
