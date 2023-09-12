@@ -1,7 +1,7 @@
 A brief description of each Python script is given below:
-- [Phantom_Fittings.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/Phantom_Fittings.py): this is the main script and is used for fitting different calibration curves and calculating virtual weights from X-ray datasets
-- [WeightTest_DiagnosticFigures.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/WeightTest_DiagnosticFigures.py)
-- [ResultsAggregator.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/ResultsAggregator.py)
+- [Phantom_Fittings.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/Phantom_Fittings.py): this is the main script and is used for fitting different calibration curves and calculating virtual weights from X-ray datasets.
+- [WeightTest_DiagnosticFigures.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/WeightTest_DiagnosticFigures.py): creates plots for visualizing calibration curves as well as weight test results.
+- [ResultsAggregator.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/ResultsAggregator.py): a utility script that binds results into a single spreadsheet and includes .Volmetrics data to the results table. 
 
 ## Directory structure
 
@@ -32,7 +32,7 @@ Make sure to run python code from terminal clients such as ***Windows PowerShell
 
 Specify your phython.exe from within your environment installation followed by the path to [Phantom_Fittings.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/Phantom_Fittings.py).
 
-           <user> PythonEnvironment/path_to/python.exe CoralWeightTests/Phantom_Fittings.py
+           <user> ...PythonEnvironment/path_to/python.exe CoralWeightTests/Phantom_Fittings.py
 
 The code will run weight tests in parallel across the entire project tree for all scan folders. 
 Runtime is ~60 min no matter how many scans are under a ProjectRoot (machine used had Intel Xeon 2.30 GHz 16-core CPU). 
@@ -65,7 +65,7 @@ When the run is complete, additional files with results and diagnostic figures w
 See example below (new files are highlighted)
 
 <p align="center">
-  <img src="https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/IMGs/CreatedFilesExample.png" >
+  <img src="https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/IMGs/CreatedFilesExample1.png" >
 </p>
 
 
@@ -73,5 +73,13 @@ Next, you can call [WeightTest_DiagnosticFigures.py](https://github.com/LeoBerti
 which creates diagnostic plots like the one below:
 
 <p align="center">
-  <img src="https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/IMGs/Example_Diagnostic_Plots_Scan_LB_0043.png >
+  <img src="https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/IMGs/Example_Diagnostic_Plots_Scan_LB_0043.png" >
+</p>
+
+
+You can use [ResultsAggregator.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/ResultsAggregator.py) to merge .VolMetrics data to the resulting dataframe and also go through the ProjectRoot and bind all the results into a single spreadsheet. 
+
+In the end, you should have a scan directory populated with the highlighted files:
+<p align="center">
+  <img src="https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/IMGs/CreatedFilesExample2.png" >
 </p>

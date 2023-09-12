@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f030ea2-4a67-4695-894e-4df9e27768f4" name="Changes" comment="Uploading changes">
-      <change afterPath="$PROJECT_DIR$/CoralWeightTests/IMGs/PowerShellExample2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoralWeightTests/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/CoralWeightTests/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CoralWeightTests/IMGs/CreatedFilesExample1.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +65,7 @@
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/CoralWeightTests/IMGs" />
       <recent name="$PROJECT_DIR$/AvizoTutorials/GIF_images" />
       <recent name="$PROJECT_DIR$/CoralWeightTests" />
       <recent name="$PROJECT_DIR$/PhantomExtraction" />
@@ -84,14 +83,7 @@
       <workItem from="1694094717126" duration="827000" />
       <workItem from="1694102240274" duration="274000" />
       <workItem from="1694189023620" duration="4247000" />
-      <workItem from="1694433277618" duration="28290000" />
-    </task>
-    <task id="LOCAL-00032" summary="Uploading changes">
-      <created>1694438625851</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1694438625851</updated>
+      <workItem from="1694433277618" duration="28665000" />
     </task>
     <task id="LOCAL-00033" summary="Uploading changes">
       <created>1694438682717</created>
@@ -429,7 +421,14 @@
       <option name="project" value="LOCAL" />
       <updated>1694528817735</updated>
     </task>
-    <option name="localTasksCounter" value="81" />
+    <task id="LOCAL-00081" summary="Uploading changes">
+      <created>1694529504953</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1694529504954</updated>
+    </task>
+    <option name="localTasksCounter" value="82" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
