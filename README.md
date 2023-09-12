@@ -53,10 +53,10 @@ Python code for density calibration and  weight tests on X-ray µCT volumes that
 
 -  [WeightTest_DiagnosticFigures.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/WeightTest_DiagnosticFigures.py): Producing diagnostic figures to visualize different calibration fits and how µCT histogram and phantom density standards overlap.
 
--  [ResultsAggregator.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/ResultsAggregator.py): A wrapper to aggregate weight test results from both an extended and an emulated normal phantom condition, bind results across the ProjectRoot and appended volume measurements to results datafranes. 
+-  [ResultsAggregator.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/ResultsAggregator.py): A wrapper to aggregate and bind weight test results across the ProjectRoot. This also appends volume and area measurements to resulting dataframes. 
 
 ## [HistogramsReplicateScans](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/HistogramsReplicateScans)
-Python code for generating figures of X-ray histograms of replicate scans done under varying settings:
+Python code for generating figures of X-ray histograms of replicate scans done under varying settings
 
 - [Histogram_overlays.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/HistogramsReplicateScans/Histogram_overlays.py): Plotting histogram overlays with kurtosis and skewness measurements. 
 
