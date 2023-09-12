@@ -8,6 +8,12 @@ This directory contains auxiliary code as well as tutorials released as Supporti
 
 The code is distributed under the MIT license https://en.wikipedia.org/wiki/MIT_License
 
+This project was supported by:
+- ![Static Badge](https://img.shields.io/badge/:badgeContent)  [](), a Marie Skłodowska-Curie Innovative Training Network funded by European Union Horizon 2020 research and innovation programme
+- The Natural History Museum Science Investment Fund. 
+- SYNTHESIS+ Transnational Access.
+
+
 Corresponding author: Leonardo Bertini 
 e-mail :  l.bertini@nhm.ac.uk  | l.bertini@bristol.ac.uk
 
