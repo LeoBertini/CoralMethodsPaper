@@ -40,25 +40,25 @@ Instructions for X-ray volume operations using Avizo® on :
 
 ## [PhantomExtraction](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/PhantomExtraction)
 
-Python code for extracting (or 'probing') greyscale values across an X-ray stack containing a phantom disc with embedded density standard materials :
+Python code for extracting (i.e., 'probing') greyscale values across an X-ray stack containing a phantom disc with embedded density standard materials :
 
-- Semi-automated extraction across the stack by prompting user interaction to mark where extended phantom inserts are located at top and bottom slices of the stack [SemiAutomated_Extraction_Phantom.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/PhantomExtraction/SemiAutomated_Extraction_Phantom.py). 
+- [SemiAutomated_Extraction_Phantom.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/PhantomExtraction/SemiAutomated_Extraction_Phantom.py): Extraction across the stack by prompting user interaction to mark density standard materials embedded in or attached around a radiology phantom.  
 
-- Automated extraction of phantom density inserts using computer vision to detect regular circular features across the phantom stack [Standard_Extract.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/PhantomExtraction/ExtractStandard.py)
+- [Standard_Extract.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/PhantomExtraction/ExtractStandard.py): Automated extraction of phantom density inserts using computer vision to detect regular circular features across the phantom stack. 
 
 ## [CoralWeightTests](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests)
-Python code for running weight tests on X-ray µCT volumes that have been previously shrinkwraped (i.e., masked. Refer to [AvizoTutorials](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/AvizoTutorials)) :
+Python code for density calibration and  weight tests on X-ray µCT volumes that have been previously shrinkwraped (Refer to [AvizoTutorials](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/AvizoTutorials)) :
 
-- Fitting different calibration curves to PhantomExtract results and performing weight tests [Phantom_Fittings.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/Phantom_Fittings.py)
+- [Phantom_Fittings.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/Phantom_Fittings.py): Fitting different calibration curves to PhantomExtract results and performing weight tests.
 
-- Producing diagnostic figures to visualize different calibration fits and how µCT histogram and phantom density standards overlap [WeightTest_DiagnosticFigures.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/WeightTest_DiagnosticFigures.py)
+-  [WeightTest_DiagnosticFigures.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/WeightTest_DiagnosticFigures.py): Producing diagnostic figures to visualize different calibration fits and how µCT histogram and phantom density standards overlap.
 
-- A wrapper to aggregate weight test results from both an extended and an emulated normal phantom condition [ResultsAggregator.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/ResultsAggregator.py)
+-  [ResultsAggregator.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/ResultsAggregator.py): A wrapper to aggregate weight test results from both an extended and an emulated normal phantom condition, bind results across the ProjectRoot and appended volume measurements to results datafranes. 
 
 ## [HistogramsReplicateScans](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/HistogramsReplicateScans)
 Python code for generating figures of X-ray histograms of replicate scans done under varying settings:
 
-- Plotting histogram overlays with kurtosis and skewness measurements [Histogram_overlays.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/HistogramsReplicateScans/Histogram_overlays.py)
+- [Histogram_overlays.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/HistogramsReplicateScans/Histogram_overlays.py): Plotting histogram overlays with kurtosis and skewness measurements. 
 
 ## [RScriptsMainFiguresAndStats](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/RScriptsMainFiguresAndStats)
 
