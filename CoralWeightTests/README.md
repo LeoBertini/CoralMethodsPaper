@@ -46,5 +46,5 @@ This involves:
 See example below:
 
 <p align="center">
-  <img src="https://github.com/LeoBertiniNHM/CoralMethodsPaper/main/CoralWeightTests/IMGs/PowerShellExample.png" >
+  <img src="https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/IMGs/PowerShellExample.png" >
 </p>
