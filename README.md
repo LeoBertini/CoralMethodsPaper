@@ -9,9 +9,13 @@ This directory contains auxiliary code as well as tutorials released as Supporti
 The code is distributed under the MIT license https://en.wikipedia.org/wiki/MIT_License
 
 This project was supported by:
-- ![Static Badge](https://img.shields.io/badge/:badgeContent)  [](), a Marie Skłodowska-Curie Innovative Training Network funded by European Union Horizon 2020 research and innovation programme
-- The Natural History Museum Science Investment Fund. 
-- SYNTHESIS+ Transnational Access.
+- [4D-Reef](https://www.4d-reef.eu/), a Marie Skłodowska-Curie Innovative Training Network funded by European Union Horizon 2020 research and innovation programme
+- The [Natural History Museum](https://www.nhm.ac.uk/) Science Investment Fund. 
+- [SYNTHESIS+](https://www.synthesys.info/) museum initiative transnational access.
+
+This work involved a joint effort across people from the following institutions:
+![]()
+
 
 
 Corresponding author: Leonardo Bertini 
