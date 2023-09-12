@@ -13,8 +13,10 @@ This project was supported by:
 - The [Natural History Museum](https://www.nhm.ac.uk/) Science Investment Fund. 
 - [SYNTHESIS+](https://www.synthesys.info/) museum initiative transnational access.
 
-This work involved a joint effort across people from the following institutions:
-<img src="https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/PhantomExtraction/GIFs/LogoInstitutions.png" height="400" width="800" >
+This work was a joint effort across people from the following institutions:
+<p align="center">
+  <img src="https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/PhantomExtraction/GIFs/LogoInstitutions.png" height="300" width="600" >
+</p>
 
 
 Corresponding author: Leonardo Bertini 

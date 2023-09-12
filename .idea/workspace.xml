@@ -5,8 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f030ea2-4a67-4695-894e-4df9e27768f4" name="Changes" comment="Uploading changes">
-      <change afterPath="$PROJECT_DIR$/PhantomExtraction/GIFs/LogoInstitutions.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -84,21 +82,7 @@
       <workItem from="1694094717126" duration="827000" />
       <workItem from="1694102240274" duration="274000" />
       <workItem from="1694189023620" duration="4247000" />
-      <workItem from="1694433277618" duration="24241000" />
-    </task>
-    <task id="LOCAL-00022" summary="Uploading changes">
-      <created>1694437216538</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1694437216538</updated>
-    </task>
-    <task id="LOCAL-00023" summary="Uploading changes">
-      <created>1694437361029</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1694437361029</updated>
+      <workItem from="1694433277618" duration="24538000" />
     </task>
     <task id="LOCAL-00024" summary="Uploading changes">
       <created>1694437427216</created>
@@ -429,7 +413,21 @@
       <option name="project" value="LOCAL" />
       <updated>1694524122082</updated>
     </task>
-    <option name="localTasksCounter" value="71" />
+    <task id="LOCAL-00071" summary="Uploading changes">
+      <created>1694525178456</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1694525178456</updated>
+    </task>
+    <task id="LOCAL-00072" summary="Uploading changes">
+      <created>1694525327514</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1694525327514</updated>
+    </task>
+    <option name="localTasksCounter" value="73" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
