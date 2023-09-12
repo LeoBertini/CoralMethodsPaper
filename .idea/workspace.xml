@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f030ea2-4a67-4695-894e-4df9e27768f4" name="Changes" comment="Uploading changes" />
+    <list default="true" id="5f030ea2-4a67-4695-894e-4df9e27768f4" name="Changes" comment="Uploading changes">
+      <change afterPath="$PROJECT_DIR$/CoralWeightTests/IMGs/PowerShellExample2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoralWeightTests/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/CoralWeightTests/README.md" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -80,21 +84,7 @@
       <workItem from="1694094717126" duration="827000" />
       <workItem from="1694102240274" duration="274000" />
       <workItem from="1694189023620" duration="4247000" />
-      <workItem from="1694433277618" duration="27779000" />
-    </task>
-    <task id="LOCAL-00030" summary="Uploading changes">
-      <created>1694438537903</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1694438537903</updated>
-    </task>
-    <task id="LOCAL-00031" summary="Uploading changes">
-      <created>1694438580928</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1694438580928</updated>
+      <workItem from="1694433277618" duration="28290000" />
     </task>
     <task id="LOCAL-00032" summary="Uploading changes">
       <created>1694438625851</created>
@@ -425,7 +415,21 @@
       <option name="project" value="LOCAL" />
       <updated>1694528698855</updated>
     </task>
-    <option name="localTasksCounter" value="79" />
+    <task id="LOCAL-00079" summary="Uploading changes">
+      <created>1694528783398</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1694528783398</updated>
+    </task>
+    <task id="LOCAL-00080" summary="Uploading changes">
+      <created>1694528817735</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1694528817735</updated>
+    </task>
+    <option name="localTasksCounter" value="81" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -1,5 +1,5 @@
 A brief description of each Python script is given below:
-- [Phantom_Fittings.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/Phantom_Fittings.py)
+- [Phantom_Fittings.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/Phantom_Fittings.py): this is the main script and is used for fitting different calibration curves and calculating virtual weights from X-ray datasets
 - [WeightTest_DiagnosticFigures.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/WeightTest_DiagnosticFigures.py)
 - [ResultsAggregator.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/ResultsAggregator.py)
 
@@ -36,15 +36,42 @@ Specify your phython.exe from within your environment installation followed by t
 
 The code will run weight tests in parallel across the entire project tree for all scan folders. 
 Runtime is ~60 min no matter how many scans are under a ProjectRoot (machine used had Intel Xeon 2.30 GHz 16-core CPU). 
+Input files used are: *ScanXX.xtekVolume*, *Histogram-ScanXX.csv* and *STANDARD_EXTRACTED_VALUES.xlsx*
 
 This involves: 
 - fitting different calibration curves using both linear, 3rd-degree polynomial, gaussian and exponential relationships across inserts from adopted phantom (11-point Extended or 6-point narrow) with their subvariations. 
 - There's up to 32 calibration adjustments already parametrized in the code and this can be adapted. 
-- reverse fitting each calibration curve (finding inverted functions) to obtain density estimates for each greyscale intensity present in a specimen's histogram
+- reverse fitting each calibration curve (finding inverse functions) to obtain density estimates for each greyscale intensity present in a specimen's histogram
 - calculate the specimen's total virtual weight per fit adjustment. 
 
 See example below:
 
 <p align="center">
   <img src="https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/IMGs/PowerShellExample.png" >
+</p>
+
+
+You'll be prompted to indicate the ProjectRoot containing all the individual scan folders.
+Once the code is running, some results are printed out to the screen
+
+
+<p align="center">
+  <img src="https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/IMGs/PowerShellExample2.png" >
+</p>
+
+
+
+When the run is complete, additional files with results and diagnostic figures will have been saved on the scan's directory.
+See example below (new files are highlighted)
+
+<p align="center">
+  <img src="https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/IMGs/CreatedFilesExample.png" >
+</p>
+
+
+Next, you can call [WeightTest_DiagnosticFigures.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/WeightTest_DiagnosticFigures.py)
+which creates diagnostic plots like the one below:
+
+<p align="center">
+  <img src="https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/IMGs/Example_Diagnostic_Plots_Scan_LB_0043.png >
 </p>
