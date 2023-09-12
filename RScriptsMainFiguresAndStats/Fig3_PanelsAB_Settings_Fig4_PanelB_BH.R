@@ -11,9 +11,10 @@ library(ggrepel)
 library(randomcoloR)
 library(ggnewscale)
 library(colorspace)
+library(cowplot)
 
 bin_voltage = function(Dataframe){
-#append_text to scan conditions for grouping later (3 kV bands <170, 170-190, >190)
+  #append_text to scan conditions for grouping later (3 kV bands <170, 170-190, >190)
   
   ScanCondition = c(rep(NaN,dim(Dataframe)[1]))
   MatThick = c(rep(NaN,dim(Dataframe)[1]))
@@ -43,7 +44,7 @@ bin_voltage = function(Dataframe){
   Dataframe$MetalAndThick = as.factor(Dataframe$MetalAndThick)
   
   return(Dataframe)
-
+  
 }
 
 
@@ -80,7 +81,6 @@ bin_weights = function (Dataframe, band1, band2, band3, band4){
   
   return(Dataframe)
 }
-
 
 
 # importing dataset
@@ -126,13 +126,12 @@ c3 =  sequential_hcl(5, palette = "Reds 3")
 # my_colors = c( "#005D67", "#1B817F" ,"#64A79A" ,
 #                "#00366C", "#0072B4", "#79ABE2" ,
 #                "#CC1C2F", "#FF7078", "#FFBEC1")
-               
-
-# Figure C1 ----------------------------------------------------------------
 
 
+# Figure 3A ----------------------------------------------------------------
 
-FIG_C1 = ggplot() +
+
+FIG_3A = ggplot() +
   
   # # tin 1 mm 
   # stat_summary(aes(x = RealColonyDensity ,
@@ -144,21 +143,21 @@ FIG_C1 = ggplot() +
   #              width=.01, alpha = 0.8, na.rm = TRUE) + 
   
   
-  stat_summary(aes( x = RealColonyDensity ,
-                    y = WeightOffset,
-                    group=Scan_name, 
-                    fill = ScanConditionStr),
-               data = DF_Replicates_Tin,
-               fun = "mean",
-               geom = "point",
-               size = 4,
-               na.rm = TRUE,
-               alpha = 0.8,
-               shape = 21,
-               color = 'black') + 
+stat_summary(aes( x = RealColonyDensity ,
+                  y = WeightOffset,
+                  group=Scan_name, 
+                  fill = ScanConditionStr),
+             data = DF_Replicates_Tin,
+             fun = "mean",
+             geom = "point",
+             size = 4,
+             na.rm = TRUE,
+             alpha = 0.8,
+             shape = 21,
+             color = 'black') + 
   
   #copper 1mm - up triangle
-
+  
   stat_summary(aes( x = RealColonyDensity ,
                     y = WeightOffset,
                     group=Scan_name,
@@ -171,10 +170,10 @@ FIG_C1 = ggplot() +
                alpha = .8,
                shape = 24, #up triangle
                color='black') +
-
-
+  
+  
   #copper2mm - down trinangle
-
+  
   stat_summary(aes( x = RealColonyDensity ,
                     y = WeightOffset,
                     group=Scan_name,
@@ -187,7 +186,7 @@ FIG_C1 = ggplot() +
                alpha = .8,
                shape = 25, #down triangle
                color='black') +
-
+  
   
   theme_bw() + 
   theme(axis.text = element_text(size = 12, color = 'black'), 
@@ -198,7 +197,7 @@ FIG_C1 = ggplot() +
         legend.background = element_rect(fill = alpha('grey', 0.4)),
         legend.key = element_rect(fill = alpha('grey', 0.01)),
         legend.box = 'none'
-        )+
+  )+
   
   ylim(-12,12) +
   xlim(1.0, 1.6) +
@@ -208,12 +207,13 @@ FIG_C1 = ggplot() +
   ylab(paste("Density offset",'(%)')) +
   xlab(bquote('Colony density (g' ~cm^-3~')'))
 
-FIG_C1
+FIG_3A
 
-save(FIG_C1, file = "/Users/leonardobertini/Library/CloudStorage/OneDrive-SharedLibraries-UniversityofBristol/grp-CT Methods paper - General/LB_Results/R_Scripts_Leo/Fig5A.rdata")
+#saving base fig to be used as panel A in Figure 5
+save(FIG_3A, file = "/Users/leonardobertini/Library/CloudStorage/OneDrive-SharedLibraries-UniversityofBristol/grp-CT Methods paper - General/LB_Results/R_Scripts_Leo/Fig5A.rdata")
 
 
-# Figure C2 ---------------------------------------------------------------
+# Figure 4B ---------------------------------------------------------------
 
 DF_KJ = DF2_merged %>% filter(grepl('KJ', Scan_name))
 col_append=c(rep(NaN,dim(DF_KJ)[1]))
@@ -229,7 +229,7 @@ DF_KJ=bin_voltage(DF_KJ)
 colnames(DF_KJ) = make.unique(names(DF_KJ))
 DF_KJ$BH_Corr=as.factor(DF_KJ$BH_Corr)
 
-FIG_C2 = ggplot()+ 
+FIG_4B = ggplot()+ 
   
   geom_boxplot(data=DF_KJ, aes(x=BH_Corr, y=WeightOffset), width=0.2, alpha=0.8)+
   
@@ -237,7 +237,7 @@ FIG_C2 = ggplot()+
                    y=WeightOffset, 
                    shape=MetalAndThick.1, 
                    fill=ScanConditionStr.1, 
-                  group = Scan_name),
+                   group = Scan_name),
                data = DF_KJ,
                fun = "mean",
                geom = "point",
@@ -258,7 +258,7 @@ FIG_C2 = ggplot()+
                alpha = 0.8) + 
   
   scale_shape_manual(values=c('Copper_1'=24,'Copper_2'=25,'Tin_1'=21)) + 
-
+  
   theme_bw() + 
   theme(axis.text = element_text(size = 12, color = 'black'), 
         axis.title = element_text(size = 12),
@@ -275,11 +275,11 @@ FIG_C2 = ggplot()+
   xlab(bquote('BH Correction Applied?'))
 
 
-FIG_C2        
+FIG_4B        
 
 
 
-# Figure C3 ---------------------------------------------------------------------
+# Figure 3B ---------------------------------------------------------------------
 # importing dataset
 datapath="/Users/leonardobertini/Library/CloudStorage/OneDrive-SharedLibraries-UniversityofBristol/grp-CT Methods paper - General/LB_Results/MP_CompleteDatasetLeoFinal.xlsx" 
 
@@ -310,7 +310,7 @@ DF_Singletons_NORM= DF_CleanFits[DF_CleanFits$PhantomType.x == 'Narrow',]
 DF_Singletons_EXT= DF_CleanFits[DF_CleanFits$PhantomType.x == 'Extended',]
 
 
-FIG_C3_NORM = ggplot() +
+FIG_3B_NORM = ggplot() +
   
   stat_summary(aes( x = RealColonyDensity ,
                     y = WeightOffset,
@@ -340,12 +340,12 @@ FIG_C3_NORM = ggplot() +
   ylim(-12,12) +
   xlim(1.0, 1.6) +
   
-ylab(paste("Density offset",'(%)')) +
-xlab(bquote('Colony density (g' ~cm^-3~')'))
+  ylab(paste("Density offset",'(%)')) +
+  xlab(bquote('Colony density (g' ~cm^-3~')'))
 
-FIG_C3_NORM
+FIG_3B_NORM
 
-FIG_C3_EXT = ggplot() +
+FIG_3B_EXT = ggplot() +
   
   stat_summary(aes( x = RealColonyDensity ,
                     y = WeightOffset,
@@ -379,9 +379,10 @@ FIG_C3_EXT = ggplot() +
   xlab(bquote('Colony density (g' ~cm^-3~')'))
 
 
-plot_grid(FIG_C1, FIG_C3_NORM, nrow=2, ncol=1, labels = c('a)', 'b)'))
+plot_grid(FIG_3A, FIG_3B_EXT, nrow=2, ncol=1, labels = c('a)', 'b)'))
 
 
+# Pairwise stats between Normal and Extended Phantom ---------------------------------------------------------------------
 
 #subpopulation mean
 NarrowSingleton= DF_Singletons_NORM[DF_Singletons_NORM$PhantomType.x=='Narrow' & DF_Singletons_NORM$ScanConditionStr == 'Medium_kV (170-190)' & DF_Singletons_NORM$MetalAndThick == 'Tin_1',]
@@ -411,4 +412,4 @@ mean((ExtSingleton_GROUPED$WeightOffset), na.rm=TRUE)
 sd(ExtSingleton_GROUPED$WeightOffset, na.rm=TRUE)
 
 pairedt= t.test(ExtSingleton_GROUPED$WeightOffset,NarrowSingleton_GROUPED$WeightOffset, paired=TRUE)
-
+pairedt
