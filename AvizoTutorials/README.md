@@ -114,10 +114,11 @@ The ProjectRoot can be any folder under which single-scan folders are saved. See
 
 **Inside the scan folder, the following files can be found:**
 
-- X-ray volume and reconstruction configuration files (respectively ***.raw***, ***.vgi*** and ***.xtekCT*** extensions)
+- X-ray volume and reconstruction configuration files (respectively ***.raw***, ***.vgi*** and ***.xtekVolume*** extensions)
 - a text file containing information about the specimen and additional volumetric measurements (***.VolMetrics*** extension)
 - the histogram of the shrinkwraped masked volume (***.csv*** extension)
 - the results from weight tests (***.xlsx*** extension) - created after running [Phantom_Fittings.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests)
+- diagnostic plots weight tests (***.png*** extension) - created after running [WeightTest_DiagnosticFigures.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests)
 
 Additionally, scan folders should have secondary directories containing:
 
