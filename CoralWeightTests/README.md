@@ -34,10 +34,6 @@ Specify your phython.exe from within your environment installation followed by t
 
            <user> ...PythonEnvironment/path_to/python.exe CoralWeightTests/Phantom_Fittings.py
 
-The code will run weight tests in parallel across the entire project tree for all scan folders. 
-Runtime is ~60 min no matter how many scans are under a ProjectRoot (machine used had Intel Xeon 2.30 GHz 16-core CPU). 
-Input files used are: *ScanXX.xtekVolume*, *Histogram-ScanXX.csv* and *STANDARD_EXTRACTED_VALUES.xlsx*
-
 This involves: 
 - fitting different calibration curves using both linear, 3rd-degree polynomial, gaussian and exponential relationships across inserts from adopted phantom (11-point Extended or 6-point narrow) with their subvariations. 
 - There's up to 32 calibration adjustments already parametrized in the code and this can be adapted. 
@@ -50,8 +46,8 @@ See example below:
   <img src="https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/IMGs/PowerShellExample.png" >
 </p>
 
-
 You'll be prompted to indicate the ProjectRoot containing all the individual scan folders.
+Input files used are: *ScanXX.xtekVolume*, *Histogram-ScanXX.csv* and *STANDARD_EXTRACTED_VALUES.xlsx*. These should be placed in the right sections of the directory tree.
 Once the code is running, some results are printed out to the screen
 
 
@@ -60,7 +56,8 @@ Once the code is running, some results are printed out to the screen
 </p>
 
 
-
+The code will run in 'parallel' across the entire project tree for all scan folders.
+Runtime is ~60 min no matter how many scans are under a ProjectRoot (machine used had Intel Xeon 2.30 GHz 16-core CPU).
 When the run is complete, additional files with results and diagnostic figures will have been saved on the scan's directory.
 See example below (new files are highlighted)
 
