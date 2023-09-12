@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f030ea2-4a67-4695-894e-4df9e27768f4" name="Changes" comment="Uploading changes">
-      <change beforePath="$PROJECT_DIR$/AvizoTutorials/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/AvizoTutorials/README.md" afterDir="false" />
-    </list>
+    <list default="true" id="5f030ea2-4a67-4695-894e-4df9e27768f4" name="Changes" comment="Uploading changes" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -82,14 +80,7 @@
       <workItem from="1694094717126" duration="827000" />
       <workItem from="1694102240274" duration="274000" />
       <workItem from="1694189023620" duration="4247000" />
-      <workItem from="1694433277618" duration="21922000" />
-    </task>
-    <task id="LOCAL-00018" summary="Uploading changes">
-      <created>1694434193785</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1694434193785</updated>
+      <workItem from="1694433277618" duration="22253000" />
     </task>
     <task id="LOCAL-00019" summary="Uploading changes">
       <created>1694435117334</created>
@@ -427,7 +418,14 @@
       <option name="project" value="LOCAL" />
       <updated>1694522269495</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="Uploading changes">
+      <created>1694522666355</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1694522666355</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

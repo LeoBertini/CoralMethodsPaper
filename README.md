@@ -1,6 +1,4 @@
-<p align="center">
-// # Supporting Material
-</p>
+# Introduction 
 
 This directory contains auxiliary code as well as tutorials released as Supporting Material as part of the following publication:
 
