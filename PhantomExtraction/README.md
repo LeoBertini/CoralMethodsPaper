@@ -19,14 +19,12 @@ Make sure both the top and bottom slices have all the materials as you'll be pro
 
 ![alt text](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/PhantomExtraction/GIFs/PhantomExtract2.gif)
 
-
 ### 1.3 Copy phantom slice range to the right directory 
 Copy the slice range to ProjecRoot/ScanXX/STANDARD_EXTRACT/PhantomStack. 
 
 **A general representation of the directory tree showing the folder structure is as follows:**
 
 ![alt text](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/PhantomExtraction/GIFs/DirectoryTreeExample.jpg)
-
 
 ## Step 2 - Run Phantom Extraction code 
  

@@ -100,9 +100,30 @@ Open any text editor (e.g., Notepad or TextEdit) and insert volume information a
 
 <img src="https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/ImagesVolmetrics/Picture5.png" height="400" width="600" >
 
-Then save with extension '.VolMetrics' into the scan folder
+Then save with extension '.VolMetrics' into the respective scan folder
 
 ![alt text]( https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/ImagesVolmetrics/Picture6.png )
+
+
+## Project Directory structure
+
+The following folder structure is advised as this ensures code runs smoothly and subsequent files are saved in the right places .
+The ProjectRoot can be any folder under which single-scan folders are saved. See example below:
+
+![alt text](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/PhantomExtraction/GIFs/DirectoryTreeExample.jpg)
+
+Inside the scan folder, the following files can be found:
+
+1 - X-ray volume and reconstruction configuration files (respectively .raw, .vgi and .xtekCT extensions)
+2 - a text file containing information about the specimen and additional volumetric measurements (.VolMetrics extension)
+3 - the histogram of the shrinkwraped masked volume (.csv extension)
+4 - the results from weight tests (.xlsx extension) - created after running [Phantom_Fittings.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/Phantom_Fittings.py)
+
+Additionally, scan folders should have secondary directories containing:
+
+1 - a .tif image stack of the X-ray scan  ('TIFF'), which can be exported through Avizo® or using Fiji/ImageJ.
+2 - density standard extraction ('STANDARD_EXTRACT'). Refer to [PhantomExtraction](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/PhantomExtraction) for more info
+
 
 
 

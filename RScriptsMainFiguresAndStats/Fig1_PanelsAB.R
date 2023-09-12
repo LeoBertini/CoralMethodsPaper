@@ -393,7 +393,7 @@ anova(model1)
 
 
 ##### voxel size effects -- no relationship found
-FIG_2B = ggplot()+
+FIG_2B_voxelsize = ggplot()+
   
   geom_point(data = GROUPED_ALL, aes(x = RealColonyDensity, 
                                      y = WeightOffset, 
@@ -425,4 +425,4 @@ FIG_2B = ggplot()+
         legend.box = 'horizontal'
   )
 
-#FIG_2B
+#FIG_2B_voxelsize
