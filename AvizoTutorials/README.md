@@ -98,10 +98,7 @@ Look at the ‘.analysis’ object for results table
 
 Open any text editor (e.g., Notepad or TextEdit) and insert volume information alogside the specimen's RealWeight as displayed below:
 
-<img src="https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/ImagesVolmetrics/Picture5.png" height="60" width="60" >
-
-![alt text]( https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/ImagesVolmetrics/Picture5.png )
-
+<img src="https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/ImagesVolmetrics/Picture5.png" height="400" width="400" >
 
 Then save with extension '.VolMetrics' into the scan folder
 
