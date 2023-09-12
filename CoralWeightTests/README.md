@@ -32,7 +32,7 @@ Make sure to run python code from terminal clients such as ***Windows PowerShell
 
 Specify your phython.exe from within your environment installation followed by the path to [Phantom_Fittings.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/Phantom_Fittings.py).
 
-           <user> PythonEnvironment/path_to/python.ex CoralWeightTests/Phantom_Fittings.py
+           <user> PythonEnvironment/path_to/python.exe CoralWeightTests/Phantom_Fittings.py
 
 The code will run weight tests in parallel across the entire project tree for all scan folders. 
 Runtime is ~60 min no matter how many scans are under a ProjectRoot (machine used had Intel Xeon 2.30 GHz 16-core CPU). 
@@ -46,5 +46,5 @@ This involves:
 See example below:
 
 <p align="center">
-  <img src="https://github.com/LeoBertiniNHM/CoralMethodsPaper/main/CoralWeightTests/IMGs/PowerShellExample.png" height="300" width="600" >
+  <img src="https://github.com/LeoBertiniNHM/CoralMethodsPaper/main/CoralWeightTests/IMGs/PowerShellExample.png" >
 </p>
