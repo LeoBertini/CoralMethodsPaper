@@ -1,7 +1,7 @@
 A brief description of each Python script is given below:
 - [Phantom_Fittings.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/Phantom_Fittings.py): this is the main script and is used for fitting different calibration curves and calculating virtual weights from X-ray datasets.
-- [WeightTest_DiagnosticFigures.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/WeightTest_DiagnosticFigures.py): creates plots for visualizing calibration curves as well as weight test results.
-- [ResultsAggregator.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/ResultsAggregator.py): a utility script that binds results into a single spreadsheet and includes .Volmetrics data to the results table. 
+- [WeightTest_DiagnosticFigures.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/WeightTest_DiagnosticFigures.py): creates plots for visualizing calibration curves and weight test results.
+- [ResultsAggregator.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/CoralWeightTests/ResultsAggregator.py): a utility script that binds results into a single spreadsheet and includes .Volmetrics data to resulting dataframes. 
 
 ## Directory structure
 
