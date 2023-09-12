@@ -76,7 +76,7 @@ Attach a Smooth Surface module to the simplified surface object (set iterations 
 
 Attach a Surface Area Vol object and see statistics table for surface area
 
-## Optional: Get different measures in 2D 
+### Optional: Get different measures in 2D 
 
 Attach a Global Analysis module to the binary label field and load the masked greyscale volume
 Set interpretation to **XY planes**
@@ -86,7 +86,7 @@ Look at the ‘.analysis’ object for results table
 
 ![alt text]( https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/ImagesVolmetrics/Picture4.png )
 
-## Optional: Get different measures in 3D 
+### Optional: Get different measures in 3D 
 
 Attach a Global Analysis module to the binary label field and also load the masked greyscale volume
 Set interpretation to **3D**
@@ -97,6 +97,8 @@ Look at the ‘.analysis’ object for results table
 ## Step 5 - Save information in a '.VolMetrics' file
 
 Open any text editor (e.g., Notepad or TextEdit) and insert volume information alogside the specimen's RealWeight as displayed below:
+
+<img src="https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/ImagesVolmetrics/Picture5.png" height="60" width="60" >
 
 ![alt text]( https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/ImagesVolmetrics/Picture5.png )
 
