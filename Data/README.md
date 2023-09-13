@@ -8,9 +8,13 @@ Below is a brief description of files and subfolders in this directory.
 
 **Units**:
     Weight Offsets : %
+
     Weights : g
+
     Voxel size: mm
+
     SurfaceArea : mm<sup>2
+
 
 
 [ROI_AnalysesBulkCorrection](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/Data/ROI_AnalysesBulkCorrection) includes:
