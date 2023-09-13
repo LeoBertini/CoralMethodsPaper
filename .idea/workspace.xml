@@ -4,19 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f030ea2-4a67-4695-894e-4df9e27768f4" name="Changes" comment="Uploading changes">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RScriptsMainFiguresAndStats/Fig1_PanelsAB.R" beforeDir="false" afterPath="$PROJECT_DIR$/R_ScriptsMainFiguresAndStats/Fig1_PanelsAB.R" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RScriptsMainFiguresAndStats/Fig2_PanelA_XOverPlot.r" beforeDir="false" afterPath="$PROJECT_DIR$/R_ScriptsMainFiguresAndStats/Fig2_PanelA_XOverPlot.r" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RScriptsMainFiguresAndStats/Fig2_Panels_BC_SpreadReduction.R" beforeDir="false" afterPath="$PROJECT_DIR$/R_ScriptsMainFiguresAndStats/Fig2_Panels_BC_SpreadReduction.R" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RScriptsMainFiguresAndStats/Fig2_Panels_DE_FitExamples.R" beforeDir="false" afterPath="$PROJECT_DIR$/R_ScriptsMainFiguresAndStats/Fig2_Panels_DE_FitExamples.R" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RScriptsMainFiguresAndStats/Fig3_PanelsAB_Settings_Fig4_PanelB_BH.R" beforeDir="false" afterPath="$PROJECT_DIR$/R_ScriptsMainFiguresAndStats/Fig3_PanelsAB_Settings_Fig4_PanelB_BH.R" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RScriptsMainFiguresAndStats/Fig5A.rdata" beforeDir="false" afterPath="$PROJECT_DIR$/R_ScriptsMainFiguresAndStats/Fig5A.rdata" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RScriptsMainFiguresAndStats/Fig5_BulkCorrectionROIS.R" beforeDir="false" afterPath="$PROJECT_DIR$/R_ScriptsMainFiguresAndStats/Fig5_BulkCorrectionROIS.R" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RScriptsMainFiguresAndStats/Histogram-LB_0043.csv" beforeDir="false" afterPath="$PROJECT_DIR$/R_ScriptsMainFiguresAndStats/Histogram-LB_0043.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RScriptsMainFiguresAndStats/Histogram-LB_0048.csv" beforeDir="false" afterPath="$PROJECT_DIR$/R_ScriptsMainFiguresAndStats/Histogram-LB_0048.csv" afterDir="false" />
-    </list>
+    <list default="true" id="5f030ea2-4a67-4695-894e-4df9e27768f4" name="Changes" comment="Uploading changes" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -93,14 +81,7 @@
       <workItem from="1694094717126" duration="827000" />
       <workItem from="1694102240274" duration="274000" />
       <workItem from="1694189023620" duration="4247000" />
-      <workItem from="1694433277618" duration="34016000" />
-    </task>
-    <task id="LOCAL-00047" summary="Uploading changes">
-      <created>1694449690849</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1694449690849</updated>
+      <workItem from="1694433277618" duration="34627000" />
     </task>
     <task id="LOCAL-00048" summary="Uploading changes">
       <created>1694449785552</created>
@@ -438,7 +419,14 @@
       <option name="project" value="LOCAL" />
       <updated>1694608031892</updated>
     </task>
-    <option name="localTasksCounter" value="96" />
+    <task id="LOCAL-00096" summary="Uploading changes">
+      <created>1694610686674</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1694610686675</updated>
+    </task>
+    <option name="localTasksCounter" value="97" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
