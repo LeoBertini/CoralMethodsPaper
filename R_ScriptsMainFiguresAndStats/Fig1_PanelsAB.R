@@ -1,4 +1,4 @@
-#Fig1
+#Fig1 
 
 library(readxl)
 library(ggplot2)
@@ -10,7 +10,6 @@ library(ggrepel)
 library(randomcoloR)
 library(ggnewscale)
 library(cowplot)
-
 
 
 bin_weights = function (Dataframe, band1, band2, band3, band4){
@@ -56,7 +55,7 @@ bin_weights = function (Dataframe, band1, band2, band3, band4){
 setwd("~/Library/CloudStorage/OneDrive-SharedLibraries-UniversityofBristol/grp-CT Methods paper - General/LB_Results/R_Scripts_Leo/")
 
 # importing dataset
-datapath="/Users/leonardobertini/Library/CloudStorage/OneDrive-SharedLibraries-UniversityofBristol/grp-CT Methods paper - General/LB_Results/MP_CompleteDatasetLeoFinal.xlsx" 
+datapath="/Users/leonardobertini/Library/CloudStorage/OneDrive-SharedLibraries-UniversityofBristol/grp-CT Methods paper - General/LB_Results/MP_CompleteDataset_SuppMat.xlsx" 
 
 DF = read_excel(datapath, sheet = '1_InternalCalib_WeightTests')
 DF$Scan_name = as.factor(DF$Scan_name)
@@ -65,7 +64,6 @@ DF$RealWeight = as.numeric(DF$RealWeight)
 DF$FitType =as.factor(DF$FitType)
 DF$PhantomType =as.factor(DF$PhantomType)
 DF$WeightOffset= as.numeric(DF$WeightOffset)
-DF$WeightOffset = DF$WeightOffset*100 #change to percentage
 #make the flagged 9999999 data NaN (spurious weights due to failing to find roots for inverse functions)
 DF$WeightOffset[DF$WeightOffset ==9.999999e+08] = NaN 
 
@@ -78,7 +76,6 @@ METADATA_ALL = rbind(METADATA1,METADATA2)
 #filter Fits so that spreads only have representative changes
 DF_CleanFits = DF %>% filter(grepl('Ext_Complete|Ext_AllPoints_AirMod|Narrow_Raw|Narrow_AllPoints_AirMod|Narrow_NoAirWithAlu|Narrow_NoAluWithAir|Narrow_WithAirWithAlu', FitType))
 
-
 #getting separate datasets for plot overlays in different groups
 DF_Singletons_EXT= DF_CleanFits[DF_CleanFits$PhantomType == 'Extended',]
 DF_Singletons_NORM= DF_CleanFits[DF_CleanFits$PhantomType == 'Narrow',]
@@ -89,7 +86,8 @@ DF2$Scan_name = as.factor(DF2$Scan_name)
 DF2$RealColonyDensity = as.numeric(DF2$RealColonyDensity)
 DF2$FitType =as.factor(DF2$FitType)
 DF2$PhantomType =as.factor(DF2$PhantomType)
-DF2$WeightOffset = DF2$WeightOffset*100 #change to percentage
+
+DF2 = DF2 %>% filter(grepl('Narrow_Raw_n6|Narrow_WithAir_n7|Narrow_WithAir_AirMod|Narrow_NoAirNoEpoxy|Narrow_WithAirNoInsert5', FitType))
 
                         
 DF_Replicates_NoBH = DF2 %>% filter(!grepl('_BH', Scan_name))
@@ -192,9 +190,19 @@ stat_summary(aes(x = RealColonyDensity ,
 #FIG_1A
 
 
-
+#  FIGURE 1A_EXTRA  --------------------------------------------------------
 #adding horizontal jitter points (indicative of linear correction if consistent spacing)
-datapath="/Users/leonardobertini/Library/CloudStorage/OneDrive-SharedLibraries-UniversityofBristol/grp-CT Methods paper - General/LB_Results/Jitter_test/Grey_from_ROIS.xlsx" 
+#adding extra BH recon weight test on least dense and desest coral
+
+
+
+datapath="/Users/leonardobertini/Library/CloudStorage/OneDrive-SharedLibraries-UniversityofBristol/grp-CT Methods paper - General/LB_Results/MP_CompleteDataset_SuppMat.xlsx" 
+
+
+#data for extra BH recon 
+DF_ExtraRecons =read_excel(datapath, sheet = '2.2_ExtraBH_Recons')
+DF_ExtraRecons_Clean =  DF_ExtraRecons %>% filter(grepl('Ext_Complete|Ext_AllPoints_AirMod|Narrow_Raw|Narrow_AllPoints_AirMod|Narrow_NoAirWithAlu|Narrow_NoAluWithAir|Narrow_WithAirWithAlu', FitType))
+
 
 DF_Singletons_EXT
 #dummy grouping
@@ -204,10 +212,30 @@ Dummy_group = DF_Replicates_NoBH %>%
 aaaa=distinct(Dummy_group)
 
 
-DF_jitter = read_excel(datapath, sheet = 'HorizontalJitterPlot')
+DF_jitter = read_excel(datapath, sheet = '5_ExtraJitterPlot')
 DF_jitter$Scan_slice = as.factor(DF_jitter$Scan_slice)
 
-FIG_2A = FIG_1A + geom_point(aes(x = Colony_Density , 
+FIG_2A = FIG_1A + 
+  
+  stat_summary(aes( x = RealColonyDensity ,
+                    y = WeightOffset,
+                    group=Scan_name),
+               data = DF_ExtraRecons_Clean,
+               fun = "mean",
+               geom = "point",
+               size = 1,
+               na.rm = TRUE,
+               alpha = 1, color = 'darkorange') +
+  
+  stat_summary(aes(x = RealColonyDensity ,
+                   y = WeightOffset,
+                   group = Scan_name),
+               data = DF_ExtraRecons_Clean,
+               fun.data = "mean_sdl", geom = "errorbar", fun.args = list(mult = 1), 
+               width=.01, color = 'darkorange', alpha = 0.5, na.rm = TRUE) + # adding error bars
+  
+  
+  geom_point(aes(x = Colony_Density , 
                         y = Density_Offset_y_coord, 
                         group=Scan_slice),
                     data = DF_jitter, 
@@ -224,6 +252,7 @@ FIG_2A = FIG_1A + geom_point(aes(x = Colony_Density ,
   linetype = 'dashed')+ 
   xlim(1, 1.75)
 
+FIG_2A
 
 # FIGURE 1B ---------------------------------------------------------------
 
@@ -314,7 +343,7 @@ FIG_1B = ggplot()+
         legend.box = 'horizontal'
   )
 
-#FIG_1B
+FIG_1B
 
 
 # TESTING IF Light and Heavy corals show significant relationships --------
@@ -324,6 +353,7 @@ FIG_1B = ggplot()+
 GROUPED_ALL = GROUPED_ALL %>% mutate(WeightCat =
                         case_when(RealWeight <= 1000 ~ "Light (<1000g)", 
                                   RealWeight > 1000 ~ "Heavy (>1000g)"))
+
 GROUPED_ALL$WeightCat = factor(GROUPED_ALL$WeightCat, levels = c("Light (<1000g)","Heavy (>1000g)"))
 fit_colors = c('#020079','#ff6666')
 
@@ -343,7 +373,7 @@ FIG_1B = FIG_1B +  new_scale_color() +
                  se=T,
                  alpha = 0.1)+ scale_color_manual(values = fit_colors)+
   theme(legend.position = 'none')
-#FIG_1B
+FIG_1B
 
 # All figures in GRID -----------------------------------------------------
 plot_grid(FIG_1A, FIG_1B, nrow=2, ncol=1, labels = c('a)', 'b)'))
@@ -425,4 +455,4 @@ FIG_2B_voxelsize = ggplot()+
         legend.box = 'horizontal'
   )
 
-#FIG_2B_voxelsize
+FIG_2B_voxelsize

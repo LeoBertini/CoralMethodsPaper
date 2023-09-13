@@ -1,5 +1,3 @@
-
-
 library(readxl)
 library(ggplot2)
 library(dplyr)
@@ -24,7 +22,7 @@ remove_outliers = function(dataframe){
 setwd("~/Library/CloudStorage/OneDrive-SharedLibraries-UniversityofBristol/grp-CT Methods paper - General/LB_Results/R_Scripts_Leo/")
 
 # importing data
-datapath = '/Users/leonardobertini/Library/CloudStorage/OneDrive-SharedLibraries-UniversityofBristol/grp-CT Methods paper - General/LB_Results/MP_CompleteDatasetLeoFinal.xlsx'
+datapath = "/Users/leonardobertini/Library/CloudStorage/OneDrive-SharedLibraries-UniversityofBristol/grp-CT Methods paper - General/LB_Results/MP_CompleteDataset_SuppMat.xlsx" 
 DF = read_excel(datapath, sheet = '3_XOver_WeightTests')
 DF$Scan_name = as.factor(DF$Scan_name)
 DF$RealColonyDensity = as.numeric(DF$RealColonyDensity)
@@ -32,7 +30,6 @@ DF$RealWeight = as.numeric(DF$RealWeight)
 DF$FitType =as.factor(DF$FitType)
 DF$PhantomType =as.factor(DF$PhantomType)
 DF$WeightOffset = as.numeric(DF$WeightOffset)
-DF$WeightOffset = DF$WeightOffset*100 #change to percentage
 #make the flagged 9999999 data NaN (spurious weights due to failing to find roots for inverse functions)
 DF$WeightOffset[DF$WeightOffset ==9.999999e+08] = NaN 
 
@@ -101,7 +98,7 @@ XOVER_PLOT = ggplot() +
         legend.position = "none")
   
 
-#XOVER_PLOT
+XOVER_PLOT
 
 #STATS
 
@@ -146,6 +143,8 @@ sd(DF_grouped_stats$WeightOffset_mean[DF_grouped_stats$PhantomType.x=='Narrow' &
 
 mean(DF_grouped_stats$WeightOffset_sd[DF_grouped_stats$PhantomType.x=='Narrow'& DF_grouped_stats$CalibrationApproach.x=='EXTERNAL'],)
 sd(DF_grouped_stats$WeightOffset_sd[DF_grouped_stats$PhantomType.x=='Narrow' & DF_grouped_stats$CalibrationApproach.x=='EXTERNAL'],)
+
+
 
 
 #PAIRED TESTS FIXING CALIBRATION APPROACH

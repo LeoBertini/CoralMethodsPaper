@@ -1,11 +1,13 @@
+#Figure5 - Bulk Correction
+
 library(readxl)
 library(ggplot2)
 library(dplyr)
 library(scales)
 library(cowplot)
 
-datapath="/Users/leonardobertini/Library/CloudStorage/OneDrive-SharedLibraries-UniversityofBristol/grp-CT Methods paper - General/LB_Results/Jitter_test/Grey_from_ROIS.xlsx" 
-DF_jitter = read_excel(datapath, sheet = 'BulkCorrPlot')
+datapath = "/Users/leonardobertini/Library/CloudStorage/OneDrive-SharedLibraries-UniversityofBristol/grp-CT Methods paper - General/LB_Results/MP_CompleteDataset_SuppMat.xlsx" 
+DF_jitter = read_excel(datapath, sheet = '5_BulkCorrectionFigure')
 DF_jitter$DensityROICat =as.factor(DF_jitter$DensityROICat)
 
 
@@ -39,7 +41,7 @@ FIG_5B1 = ggplot() +
               alpha = 0.1)+
   
   scale_shape_manual(values=c(22, 23))+
-  scale_color_manual(values=c('#E66100','#5D3A9B'))+
+  scale_color_manual(values=c('red','blue'))+
   
   
   theme_bw() + 
@@ -86,7 +88,7 @@ FIG_5B2 = ggplot() +
     alpha = 0.1)+
   
   scale_shape_manual(values=c(22, 23))+
-  scale_color_manual(values=c('#E66100','#5D3A9B'))+
+  scale_color_manual(values=c('red','blue'))+
 
   
   theme_bw() + 
@@ -111,8 +113,8 @@ plot_grid(FIG_5B1, FIG_5B2, nrow=1, ncol=2, labels = c('b)', 'c)'))
 
 file5A = "/Users/leonardobertini/Library/CloudStorage/OneDrive-SharedLibraries-UniversityofBristol/grp-CT Methods paper - General/LB_Results/R_Scripts_Leo/Fig5A.rdata"
 
-load(file5A)
-FIG_5A= FIG_C1
+load(file5A) #this is loaded as 'FIG_3A'
+FIG_5A= FIG_3A
 
 plot_grid(
   plot_grid(NULL, FIG_5A, NULL, nrow = 1, rel_widths = c(0.5, 1, 0.5), labels=c('','a)','')),

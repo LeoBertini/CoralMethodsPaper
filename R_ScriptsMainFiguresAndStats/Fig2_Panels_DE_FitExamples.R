@@ -1,4 +1,4 @@
-# Delta figure
+# Fit examples and histograms
 library(readxl)
 library(ggplot2)
 library(dplyr)
@@ -14,8 +14,7 @@ setwd("~/Library/CloudStorage/OneDrive-SharedLibraries-UniversityofBristol/grp-C
 
 
 # importing dataset
-datapath="/Users/leonardobertini/Library/CloudStorage/OneDrive-SharedLibraries-UniversityofBristol/grp-CT Methods paper - General/LB_Results/MP_CompleteDatasetLeoFinal.xlsx" 
-
+datapath = "/Users/leonardobertini/Library/CloudStorage/OneDrive-SharedLibraries-UniversityofBristol/grp-CT Methods paper - General/LB_Results/MP_CompleteDataset_SuppMat.xlsx" 
 
 DF = read_excel(datapath, sheet = '1_InternalCalib_WeightTests')
 DF$Scan_name = as.factor(DF$Scan_name)
@@ -24,7 +23,6 @@ DF$RealWeight = as.numeric(DF$RealWeight)
 DF$FitType =as.factor(DF$FitType)
 DF$PhantomType =as.factor(DF$PhantomType)
 DF$WeightOffset = as.numeric(DF$WeightOffset)
-DF$WeightOffset = DF$WeightOffset*100 #change to percentage
 #make the flagged 9999999 data NaN (spurious weights due to failing to find roots for inverse functions)
 DF$WeightOffset[DF$WeightOffset ==9.999999e+08] = NaN 
 
@@ -40,7 +38,7 @@ myplots = list()
 for (coral in target_coral) {
   idx=which(coral==target_coral)
   
-  #TODO Overlay histogram as secondary axis (probably easy to export as separate fig and overlay on inkscape)
+  #TODO_COMPLETE Overlay histogram as secondary axis 
   
   histo_raw = read.csv(paste('/Users/leonardobertini/Library/CloudStorage/OneDrive-SharedLibraries-UniversityofBristol/grp-CT Methods paper - General/LB_Results/R_Scripts_Leo/Histogram-',coral,'.csv',sep=''), header=TRUE)
   histo_raw = histo_raw[1:65535,]

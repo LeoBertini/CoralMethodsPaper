@@ -60,7 +60,7 @@ Python code for generating figures of X-ray histograms of replicate scans done u
 
 - [Histogram_overlays.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/HistogramsReplicateScans/Histogram_overlays.py): Plotting histogram overlays with kurtosis and skewness measurements. 
 
-## [RScriptsMainFiguresAndStats](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/RScriptsMainFiguresAndStats)
+## [R_ScriptsMainFiguresAndStats](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/R_ScriptsMainFiguresAndStats)
 
 R code to produce all base figures used in the publication. Statistical analyses therein. 
 Code written in R version 4.2.2.

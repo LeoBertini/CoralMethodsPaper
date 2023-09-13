@@ -84,7 +84,7 @@ bin_weights = function (Dataframe, band1, band2, band3, band4){
 
 
 # importing dataset
-datapath="/Users/leonardobertini/Library/CloudStorage/OneDrive-SharedLibraries-UniversityofBristol/grp-CT Methods paper - General/LB_Results/MP_CompleteDatasetLeoFinal.xlsx" 
+datapath = "/Users/leonardobertini/Library/CloudStorage/OneDrive-SharedLibraries-UniversityofBristol/grp-CT Methods paper - General/LB_Results/MP_CompleteDataset_SuppMat.xlsx" 
 
 #metadata
 METADATA1 = read_excel(datapath, sheet = '1_InternalCalib_Metadata')
@@ -98,7 +98,6 @@ DF2$RealColonyDensity = as.numeric(DF2$RealColonyDensity)
 DF2$FitType =as.factor(DF2$FitType)
 DF2$PhantomType =as.factor(DF2$PhantomType)
 DF2$WeightOffset = as.numeric(DF2$WeightOffset)
-DF2$WeightOffset = DF2$WeightOffset*100 #change to percentage
 DF2_merged = merge(DF2,METADATA_ALL, by='Scan_name')
 DF2_merged=bin_voltage(DF2_merged)
 
@@ -210,7 +209,7 @@ stat_summary(aes( x = RealColonyDensity ,
 FIG_3A
 
 #saving base fig to be used as panel A in Figure 5
-save(FIG_3A, file = "/Users/leonardobertini/Library/CloudStorage/OneDrive-SharedLibraries-UniversityofBristol/grp-CT Methods paper - General/LB_Results/R_Scripts_Leo/Fig5A.rdata")
+#save(FIG_3A, file = "/Users/leonardobertini/Library/CloudStorage/OneDrive-SharedLibraries-UniversityofBristol/grp-CT Methods paper - General/LB_Results/R_Scripts_Leo/Fig5A.rdata")
 
 
 # Figure 4B ---------------------------------------------------------------
@@ -281,7 +280,7 @@ FIG_4B
 
 # Figure 3B ---------------------------------------------------------------------
 # importing dataset
-datapath="/Users/leonardobertini/Library/CloudStorage/OneDrive-SharedLibraries-UniversityofBristol/grp-CT Methods paper - General/LB_Results/MP_CompleteDatasetLeoFinal.xlsx" 
+datapath = "/Users/leonardobertini/Library/CloudStorage/OneDrive-SharedLibraries-UniversityofBristol/grp-CT Methods paper - General/LB_Results/MP_CompleteDataset_SuppMat.xlsx" 
 
 DF = read_excel(datapath, sheet = '1_InternalCalib_WeightTests')
 DF$Scan_name = as.factor(DF$Scan_name)
@@ -290,7 +289,6 @@ DF$RealWeight = as.numeric(DF$RealWeight)
 DF$FitType =as.factor(DF$FitType)
 DF$PhantomType =as.factor(DF$PhantomType)
 DF$WeightOffset = as.numeric(DF$WeightOffset)
-DF$WeightOffset = DF$WeightOffset*100 #change to percentage
 #make the flagged 9999999 data NaN (spurious weights due to failing to find roots for inverse functions)
 DF$WeightOffset[DF$WeightOffset ==9.999999e+08] = NaN 
 
