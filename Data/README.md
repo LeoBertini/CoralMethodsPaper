@@ -7,7 +7,7 @@ Below is a brief description of files and subfolders in this directory.
  - Bulk correction results for replicate scans
 
 **Units**:
-    Weight Offsets : %
+    Weight Offsets : \%
 
     Weights : g
 
