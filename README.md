@@ -1,6 +1,6 @@
 # Introduction 
 
-This directory contains auxiliary code as well as tutorials released as Supporting Material, which accompany the following publication:
+This directory contains Supporting Material with auxiliary code as well as guided data processing tutorials, to accompany the following publication:
 
 **"How to quantify and minimise error in coral skeletal density estimates using X-ray µCT"**
 
