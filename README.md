@@ -26,7 +26,7 @@ Below, you'll find a brief description of all the directories in this repository
 
 ## [AvizoTutorials](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/AvizoTutorials)
 
-Instructions for X-ray volume operations using Avizo® on :
+Instructions for X-ray volume operations using Avizo® covering :
 
 - How to align replicate X-ray µCT scans
 
