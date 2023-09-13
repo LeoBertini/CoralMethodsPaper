@@ -5,21 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f030ea2-4a67-4695-894e-4df9e27768f4" name="Changes" comment="Uploading changes">
-      <change afterPath="$PROJECT_DIR$/Data/MP_CompleteDataset_SuppMat.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/ROI_AnalysesBulkCorrection/ROI_set_LB_Porites_ZMA-COEL-6781_140kV_Cu2mm_perc_1540.zip" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/ROI_AnalysesBulkCorrection/ROI_set_LB_Porites_ZMA-COEL-6785_140kV_Cu2mm_16-bit_perc_1430.zip" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/ROI_AnalysesBulkCorrection/Replicate_Xray_Slices/LB_Porites_ZMA-COEL-6781_140kV_Cu2mm_perc_1540.tif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/ROI_AnalysesBulkCorrection/Replicate_Xray_Slices/LB_Porites_ZMA-COEL-6781_140kV_Sn1mm_perc_1540.tif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/ROI_AnalysesBulkCorrection/Replicate_Xray_Slices/LB_Porites_ZMA-COEL-6781_180kV_Cu2mm_perc_1540.tif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/ROI_AnalysesBulkCorrection/Replicate_Xray_Slices/LB_Porites_ZMA-COEL-6781_180kV_Sn1mm_perc_1540.tif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/ROI_AnalysesBulkCorrection/Replicate_Xray_Slices/LB_Porites_ZMA-COEL-6781_220kV_Cu2mm_perc_1540.tif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/ROI_AnalysesBulkCorrection/Replicate_Xray_Slices/LB_Porites_ZMA-COEL-6781_220kV_Sn1mm_perc_1540.tif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/ROI_AnalysesBulkCorrection/Replicate_Xray_Slices/LB_Porites_ZMA-COEL-6785_140kV_Cu2mm_16-bit_perc_1430.tif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/ROI_AnalysesBulkCorrection/Replicate_Xray_Slices/LB_Porites_ZMA-COEL-6785_140kV_Sn1mm_16bit-perc__1430.tif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/ROI_AnalysesBulkCorrection/Replicate_Xray_Slices/LB_Porites_ZMA-COEL-6785_180kV_Cu2mm_16bit-perc__1430.tif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/ROI_AnalysesBulkCorrection/Replicate_Xray_Slices/LB_Porites_ZMA-COEL-6785_180kV_Sn1mm_16-bit_perc_1430.tif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/ROI_AnalysesBulkCorrection/Replicate_Xray_Slices/LB_Porites_ZMA-COEL-6785_220kV_Cu2mm_16-bit_perc_1430.tif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/ROI_AnalysesBulkCorrection/Replicate_Xray_Slices/LB_Porites_ZMA-COEL-6785_220kV_Sn1mm_16bit-perc__1430.tif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,14 +85,7 @@
       <workItem from="1694094717126" duration="827000" />
       <workItem from="1694102240274" duration="274000" />
       <workItem from="1694189023620" duration="4247000" />
-      <workItem from="1694433277618" duration="30689000" />
-    </task>
-    <task id="LOCAL-00040" summary="Uploading changes">
-      <created>1694440898314</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1694440898315</updated>
+      <workItem from="1694433277618" duration="32134000" />
     </task>
     <task id="LOCAL-00041" summary="Uploading changes">
       <created>1694441396542</created>
@@ -442,7 +423,14 @@
       <option name="project" value="LOCAL" />
       <updated>1694602892948</updated>
     </task>
-    <option name="localTasksCounter" value="89" />
+    <task id="LOCAL-00089" summary="Uploading changes">
+      <created>1694603004293</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1694603004293</updated>
+    </task>
+    <option name="localTasksCounter" value="90" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

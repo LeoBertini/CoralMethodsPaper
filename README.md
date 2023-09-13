@@ -66,4 +66,5 @@ R code to produce all base figures used in the publication. Statistical analyses
 Code written in R version 4.2.2.
 Scripts are named based on the figure they generate and are self-explanatory. 
 
-
+## [Data](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/Data/)
+Data used in the paper and figures.
