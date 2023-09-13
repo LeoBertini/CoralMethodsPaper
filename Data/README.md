@@ -10,13 +10,14 @@ Below is a brief description of files and subfolders in this directory.
 - Weight Offsets : [\%]
 - Weights : [g]
 - Voxel size: [mm]
-- Specimen volume : [cm^3^]
-- SurfaceArea : mm<sup>2
-- AreaOverVol: cm<sup>-1
-- Density: g cm<sup>-3
-
+- Specimen volume : [cm<sup>3</sup>]
+- SurfaceArea : [mm<sup>2</sup>]
+- AreaOverVol: [cm<sup>-1</sup>]
+- Density: [g cm<sup>-3</sup>]
 
 
 [ROI_AnalysesBulkCorrection](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/Data/ROI_AnalysesBulkCorrection) includes:
- - µCT X-ray images of replicate scans of 2 specimens on lower and upper end of colony density range
- - ImageJ/Figi zipped objects containing polygons that delimit selected low- and high-density regions of interest (ROIs)
+ - µCT X-ray images of replicate scans of 2 specimens situated at lower and upper end of colony density range (purple points in Fig.1A)
+ - ImageJ/Figi zipped objects containing polygons that delimit selected low- and high-density regions of interest (ROIs), 
+from which greyscale values were extracted and converted. (See tab "*5_ROI_DensityEstimates*" on 
+[MP_CompleteDataset_SuppMat.xlsx](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/Data/MP_CompleteDataset_SuppMat.xlsx) )
