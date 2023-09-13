@@ -7,13 +7,13 @@ Below is a brief description of files and subfolders in this directory.
  - Bulk correction results for replicate scans
 
 **Units**:
-    Weight Offsets : \%
-
-    Weights : g
-
-    Voxel size: mm
-
-    SurfaceArea : mm<sup>2
+- Weight Offsets : [\%]
+- Weights : [g]
+- Voxel size: [mm]
+- Specimen volume : [cm^3^]
+- SurfaceArea : mm<sup>2
+- AreaOverVol: cm<sup>-1
+- Density: g cm<sup>-3
 
 
 
