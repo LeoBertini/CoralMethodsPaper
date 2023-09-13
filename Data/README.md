@@ -25,7 +25,7 @@ from which greyscale values were extracted and converted. (See tab "*5_ROI_Densi
 ### [CoralHistograms](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/Data/CoralHistograms) includes:
 
 Zipped files of all X-ray µCT scans used in this study after being aligned, resampled and shrinkwrapped. 
-Each histogram is a .csv file, where the first column represents voxel greyscale instensity and the second column  is the voxel count. Please refer to [AvizoTutorials- Step 5](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/509f82eb5d21461247551fc28c7af863f605924e/AvizoTutorials/README.md) to learn how histograms were generated.
+Each histogram is a *.csv* file, where the first column represents voxel greyscale instensity and the second column  is the voxel count. Please refer to [AvizoTutorials- Step 5](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/509f82eb5d21461247551fc28c7af863f605924e/AvizoTutorials/README.md) to learn more about how histograms were generated.
 
 - [Histograms_REPLICATE_SCANS_RAW.zip](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/Data/CoralHistograms/Histograms_REPLICATE_SCANS_RAW.zip) 
 - [Histograms_REPLICATE_SCANS_BH.zip](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/Data/CoralHistograms/Histograms_REPLICATE_SCANS_BH.zip)
