@@ -2,7 +2,7 @@
 
 Below is a guide on how to perform semi-automated extraction of density standards embedded and also attached to a radiology phantom disc.
 
-## Step 1 - Select phantom range from X-ray stack 
+## Step 1 - Phantom range from X-ray stack 
 
 ### 1.1 Export X-ray stack
 Generate a .tif stack containing slices of the entire scan. You can use Avizo® to export a image stack of the entire volume or 

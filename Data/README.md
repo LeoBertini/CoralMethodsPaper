@@ -31,4 +31,4 @@ Each histogram is a *.csv* file, where the first column represents voxel greysca
 - [Histograms_REPLICATE_SCANS_BH.zip](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/Data/CoralHistograms/Histograms_REPLICATE_SCANS_BH.zip)
 - [Histograms_SINGLE_SCANS.zip](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/Data/CoralHistograms/Histograms_SINGLE_SCANS.zip) 
 
-Data is given in absolute and log scale. First 2<sup>16</sup> rows show raw data.
+Data is given in absolute and log scale. First 2<sup>16</sup> rows show absolute count data.
