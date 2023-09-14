@@ -10,19 +10,19 @@ The target volume (shown with 'orange' colormapping) is a scan of the same speci
 
 You'll want to give a computer a headstart first, by manually manipulating the orange volume, so that it is closely matching with the grey volume. Otherwise, this process can take a couple of hours. 
 
-![alt text]( https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/Step1.gif )
+![alt text]( https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/Step1.gif)
 
 # 2. Repeat
 
 Apply the image registration step from (1) again to ensure a perfect match. 
 
-![alt text]( https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/Step2.gif )
+![alt text](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/Step2.gif)
 
 # 3. Voxel resampling and fixing coordinate system
 
 This step ensures that the both the coordinate system and the voxelized structure of the orange volume are the same as those of the reference volume.
 
-![alt text]( https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/Step3.gif )
+![alt text](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/Step3.gif)
 
 # 4. Volume Segmentation
 
@@ -43,7 +43,7 @@ This creates a binary mask that is linked to the coral volume on the Project Vie
 This step 'masks' the volume based on the binary mask created before, so we can generate a histogram of the
 16-bit µCT dataset containing only voxel intensities and counts from the shrinkwrapped volume. 
 
-![alt text]( https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/Step5.gif )
+![alt text](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/Step5and6.gif)
 
 # 6. Extracting surface area and other volume metrics 
 
