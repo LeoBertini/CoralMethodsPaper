@@ -20,6 +20,7 @@ This work was a joint effort across people from the following institutions:
 
 
 Corresponding author: Leonardo Bertini 
+
 e-mail :  l.bertini@nhm.ac.uk  | l.bertini@bristol.ac.uk
 
 Below, you'll find a brief description of all the directories in this repository, which might have their own 'README' files with further info.
