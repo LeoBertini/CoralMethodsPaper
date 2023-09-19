@@ -40,7 +40,7 @@ Instructions for X-ray volume operations using Avizo® covering :
 
 ## [PhantomExtraction](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/PhantomExtraction)
 
-Python code for extracting (i.e., 'probing') greyscale values across an X-ray stack containing a phantom disc with embedded density standard materials :
+Python code for extracting (i.e., 'greyscale probing') greyscale values across an X-ray stack containing a phantom disc with embedded density standard materials :
 
 - [SemiAutomated_Extraction_Phantom.py](https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/PhantomExtraction/SemiAutomated_Extraction_Phantom.py): Extraction across the stack by prompting user interaction to mark density standard materials embedded in or attached around a radiology phantom.  
 
