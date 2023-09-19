@@ -1,6 +1,6 @@
 # Introduction 
 
-This repository contains Supporting Material with auxiliary code as well as guided data processing tutorials, to accompany the following publication:
+This repository contains Supporting Material with Python and R code as well as data processing tutorials to accompany the following publication:
 
 **"How to quantify and minimise error in coral skeletal density estimates using X-ray µCT"**
 
@@ -12,6 +12,9 @@ e-mail :  l.bertini@nhm.ac.uk  | l.bertini@bristol.ac.uk
 
 The code is distributed under the MIT license https://en.wikipedia.org/wiki/MIT_License
 
+
+=================== =================== =================== ===================
+
 This project was supported by:
 - [4D-Reef](https://www.4d-reef.eu/), a Marie Skłodowska-Curie Innovative Training Network funded by European Union Horizon 2020 research and innovation programme
 - The [Natural History Museum](https://www.nhm.ac.uk/) Science Investment Fund. 
@@ -22,7 +25,7 @@ This work was a joint effort across people from the following institutions:
   <img src="https://github.com/LeoBertiniNHM/CoralMethodsPaper/blob/main/PhantomExtraction/GIFs/LogoInstitutions.png" height="300" width="600" >
 </p>
 
-
+=================== =================== =================== ===================
 
 Below, you'll find a brief description of all the directories in this repository, which might have their own 'README' files with further info.
 
