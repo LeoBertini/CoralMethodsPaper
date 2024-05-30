@@ -283,7 +283,7 @@ def save_weights_extended_case(scan_folder, calib_dir, project_dir_list):
                         label=f"Standard: {insert}")
 
         # now plotting the objects and where they fall in the curve
-        symbols = ['*', 's', 'V', 'D', '<', '>']
+        symbols = ['*', 's', 'v', 'D', '<', '>']
         for k in range(0, len(features_names)):
 
             plt.scatter(features_avg_grey[k], features_avg_density[k], marker=symbols[k], color=(0, 0, 0), s=100,
