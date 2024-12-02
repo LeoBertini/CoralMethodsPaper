@@ -57,7 +57,7 @@ Once the code is running, some results are printed out to the screen
 
 
 The code will run in 'parallel' across the entire project tree for all scan folders.
-Runtime is ~60 min no matter how many scans are under a ProjectRoot (machine used had Intel Xeon 2.30 GHz 16-core CPU).
+Runtime is ~60 min (machine used had Intel Xeon 2.30 GHz 16-core CPU).
 When the run is complete, additional files with results and diagnostic figures will have been saved on the scan's directory.
 See example below (new files are highlighted)
 
