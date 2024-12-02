@@ -32,7 +32,7 @@ Make sure to run python code from terminal clients such as ***Windows PowerShell
 
 Specify your phython.exe from within your environment installation followed by the path to [Phantom_Fittings.py](https://github.com/LeoBertini/CoralMethodsPaper/blob/main/CoralWeightTests/Phantom_Fittings.py).
 
-           <user> ...PythonEnvironment/path_to/python.exe CoralWeightTests/Phantom_Fittings.py
+           <user> ...PythonEnvironment/path_to/python CoralWeightTests/Phantom_Fittings.py
 
 This involves: 
 - fitting different calibration curves using both linear, 3rd-degree polynomial, gaussian and exponential relationships across inserts from adopted phantom (11-point Extended or 6-point narrow) with their subvariations. 
