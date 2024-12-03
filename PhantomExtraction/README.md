@@ -6,7 +6,7 @@ Below is a guide on how to perform semi-automated extraction of density standard
 
 ### 1.1 Export X-ray stack
 Generate a .tif stack containing slices of the entire scan. You can use Avizo® to export an image stack of the entire volume or 
-[Fiji/ImageJ](https://imagej.net/software/fiji/) using the utility plugin provided [Vol2Any.py](https://github.com/LeoBertini/CoralMethodsPaper/blob/main/PhantomExtraction/Vol_2Any_LEO.py)
+[Fiji/ImageJ](https://imagej.net/software/fiji/) using the utility plugin provided [Vol_2Any_LEO.py](https://github.com/LeoBertini/CoralMethodsPaper/blob/main/PhantomExtraction/Vol_2Any_LEO.py)
 This utility plugin creates a TIFF folder containing the XY stack within each scan directory saved under a root directory. 
 
 See example below:
