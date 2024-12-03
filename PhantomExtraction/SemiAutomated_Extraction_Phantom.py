@@ -30,8 +30,10 @@ from ast import literal_eval
 # Working functions
 def load_images_from_folder(folder, format):
     """
+    This function finds files in a specified path containing a target file extension.
+
     :param folder: Specified path of folder containing stack of X-ray tiff images representing the radiology phantom.
-    :param format: Specified format of images to be loaded.
+    :param format: Specified format of images to be loaded. (e.g., '.tif'
     :return: a list of filenames for images that satisfy the specified format.
     """
     cv_img = []
@@ -46,6 +48,7 @@ def draw_circle(event, x, y, flags, param):
     """
     This function interacts with the user and prompts the annotation of centre regions in X-ray images containing density phantom rods, to extract greyscale values within confined areas
     It runs until the pre-determined number of features to be annotated is reached and exits for image inspection and rescalling mode.
+
     :param event: mouse instance for tracking clicks from the user using OpenCV
     :param x: mouse click position
     :param y: mouse click position
@@ -116,6 +119,7 @@ def draw_circle2(event, x, y, flags, param):
      Basic functionality:
      This function interacts with the user and prompts the annotation of centre regions in X-ray images containing density phantom rods, to extract greyscale values within confined areas
      It runs until the pre-determined number of features to be annotated is reached and exits for image inspection and rescalling mode.
+
      :param event: mouse instance for tracking clicks from the user using OpenCV
      :param x: mouse click position
      :param y: mouse click position
@@ -181,7 +185,7 @@ def draw_circle2(event, x, y, flags, param):
 
 def polynomial_regression3d(x, y, z, degree):
     """
-    A polynomial regression wrapper to predict the positions of target areas across the X-ray stack based on markings done by the user on the top and bottom X-ray slices.
+    This is a polynomial regression wrapper to predict the positions of target areas across the X-ray stack based on markings done by the user on the top and bottom X-ray slices.
 
     :param x, y : horizontal coordinates in the tiff images.
     :param z: position across the stack
@@ -203,20 +207,6 @@ def polynomial_regression3d(x, y, z, degree):
 
     model = LinearRegression().fit(X, x)
     predicted_x = model.predict(model_viz)
-
-    # TODO eventually plot with same color as insert_color
-    # plot
-    # fig = plt.figure()
-    # ax = plt.axes(projection='3d')
-    # ax.scatter(predicted_x, yy_pred.flatten(), zz_pred.flatten())
-    # ax.plot(predicted_x, y_pred, z_pred, color= 'r')
-    # ax.set_xlabel('X')
-    # ax.set_ylabel('Y')
-    # ax.set_zlabel('Z')
-    #
-    # plt.show()
-    # fig.set_dpi(150)
-
     predicted_insert_coord_XYZ = list(zip(predicted_x, y_pred, z_pred))
 
     return predicted_insert_coord_XYZ
@@ -227,9 +217,9 @@ def find_overlapping_range(interval_list):
     Functionality to be implemented in future releases.
     Helper function used to detect positions of inflexion points on greyscale series for anomaly detection.
     It traverses through a series of greyscale values testing for inflexion points and updating itself
+
     :param interval_list:
     :return: start and end positions of possible inflexion points.
-
     """
     start, end = interval_list.pop()
     while interval_list:
@@ -243,14 +233,13 @@ def find_folders_with_image_stacks(target_file_type, dir_standard_types, target_
     """
     Function for user callbacks, defining directory tree to traverse and from which X-ray data will be fetched
 
-    :param target_file_type: file extension of target images (e.g., 'tif')
+    :param target_file_type: file extension of target images (e.g., '.tif')
     :param dir_standard_types: standardised directory name (e.g., Phantom_Stack)
     :param target_skipper_file: placeholder for a path containing a string to indicate data has been extracted previously (part of a filename or dir).
      It leaves the specific parent dir out of the analysis. (e.g.,STANDARD_EXTRACTED_xxx_.csv is a file generated after successfully probing greyscale intensities and used as a tag for skipping)
     :return: returns list of directories from which the extraction of density phantom values is needed.
 
     """
-
 
     root = Tk()
     root.withdraw()
@@ -307,7 +296,8 @@ def find_folders_with_image_stacks(target_file_type, dir_standard_types, target_
 
 def get_scan_name(folder_name, dir_standard_names):
     """
-    Returns the scan name from the parent path of the X-ray
+    This function is used to obtain the X-ray dataset name
+
     :param folder_name: Directory containing the X-ray data for a single scan
     :param dir_standard_names: optional arg used to bypass user selection  of parent directories when testing
            E.g., dir_standard_names = ['CWI_Cores', 'CWI_Coral_Cores', 'NHM_fossils', 'NHM_scans']
@@ -323,12 +313,14 @@ def get_scan_name(folder_name, dir_standard_names):
 def get_vsize_from_CT_filetypes(selected_project_dir, scan_name):
 
     """
-    This function  reads different text file types from different micro-CT scanners, containing configuration data.
+    This function reads different types of text files from different micro-CT scanners, containing configuration data.
     It locates fields where the resolution of the scan is mentioned. This is the size in mm of any pixel in 2D, and the thickness of a µCT slice in 3D
+
     :param selected_project_dir: the X-ray scan directory  indicated by the user on a graphical prompt
     :param scan_name: the X-ray dataset name
     :return: the voxel size of the scan being processed, which is later appended to a dataframe containing the scan metadata and the calibration greyscale probing results
     """
+
     file_extensions = [".xtekCT", ".xtekVolume", 'xtekct']
     TargetStrings = ['VoxelSizeX=', 'Voxel size = ']
     parent_folder = os.path.join(selected_project_dir, scan_name)
@@ -410,6 +402,7 @@ def build_iterator_for_parallelism(Dataframe, Phantom_folder):
     """
     This function builds a nested list iterator to be passed to multiprocessing to allow for parallel computing across the stack on a slice-wise fashion
     :param Dataframe: reads a pandas dataframe containing X-ray metadata,  information for each of the slices across the stack, density insert parameters (predicted positions, associated colours for plotting)
+
     :param Phantom_folder: used to indicate the output dir of masked density phantom images
     :return:
     """
@@ -567,6 +560,7 @@ if __name__ == "__main__":
                         }
 
     ############# - MAIN CODE - ##################
+
     # find all dirs with phantom stacks
     folder_list, selected_project_dir, already_extracted = find_folders_with_image_stacks(target_file_type='.tif',
                                                                                           dir_standard_types=[
