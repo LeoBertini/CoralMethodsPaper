@@ -6,7 +6,7 @@ Below is a guide on how to perform semi-automated extraction of density standard
 
 ### 1.1 Export X-ray stack
 Generate a .tif stack containing slices of the entire scan. You can use Avizo® to export an image stack of the entire volume or 
-[Fiji/ImageJ](https://imagej.net/software/fiji/) using the utility plugin provided [Vol2Any.py](https://github.com/LeoBertini/CoralMethodsPaper/blob/main/Vol_2Any_LEO.py)
+[Fiji/ImageJ](https://imagej.net/software/fiji/) using the utility plugin provided [Vol2Any.py](https://github.com/LeoBertini/CoralMethodsPaper/blob/main/PhantomExtraction/Vol_2Any_LEO.py)
 This utility plugin creates a TIFF folder containing the XY stack within each scan directory saved under a root directory. 
 
 See example below:
@@ -34,7 +34,7 @@ specifying a phyton installation from an environment in which all [requirements.
 You will be prompted to specify the ProjectRoot, then you will be asked to mark phantom inserts on all scans inside ProjectRoot on just the top and bottom slices of phantom stacks.
 
 You will be asked to enter which type of phantom design you are adopting (Extended or Normal).
-After this, you'll click on the centre of each insert and type their names in the screen (as shown above).
+After this, you'll click on the centre of each insert and type their names in the screen (as shown below).
 Make sure you also probe for 'air' in an area that is free from artifacts or noise from materials used to wrap the sample.
 
 After marking on all available inserts on the top slice of the stack, you choose a scaling factor to expand the sampled area inside each insert.
