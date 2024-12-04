@@ -24,8 +24,7 @@ import tqdm
 from scipy.ndimage import gaussian_filter1d
 from sklearn.linear_model import LinearRegression
 
-
-# Working functions
+# WORKING FUNCTIONS
 def load_images_from_folder(folder, format):
     """
     This function finds files in a specified path containing a target file extension.
@@ -442,7 +441,7 @@ def build_iterator_for_parallelism(Dataframe, Phantom_folder):
 
     return iterator
 
-
+#TO INCLUDE IN THE FUTURE
 def DF_update(Dataframe):
     """
     Function to be released as future update
