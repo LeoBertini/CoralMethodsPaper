@@ -858,14 +858,15 @@ if __name__ == "__main__":
             mask = np.zeros((image_example[0], image_example[1], image_example[2]), dtype=np.uint8)
             gray_series = []
 
-            print('Building iterator for parallelism')
-            print("--- --- ---")
+            print('Building iterator for parallelism...')
+
             start_time2 = time.time()
             iterator = build_iterator_for_parallelism(Dataframe=DF, Phantom_folder=Phantom_folder)
             extracted_grays = []
+            print(f'--- Iterator created in {time.time() - start_time2} seconds ---\n')
 
             ########### Paralelized  loop START  ############################
-            print(f"Multithreading began. This may take up to 3 min to complete \n")
+            print(f"Multithreading began. This may take up to 3 min to complete")
             with multiprocessing.Pool(processes=20) as p:
                 # EXTRACTED_GRAYS_MASTER = p.starmap(get_grey_inside_circles, iterator)
                 EXTRACTED_GRAYS_MASTER = p.starmap(get_grey_inside_circles, tqdm.tqdm(iterator, total=len(iterator)))
