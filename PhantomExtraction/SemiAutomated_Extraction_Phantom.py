@@ -648,7 +648,7 @@ if __name__ == "__main__":
                 color_used = []
 
                 image = cv2.imread(image_list[item])
-                print("Original shape: ", image.shape)
+                #print("Original shape: ", image.shape)
 
                 height = image.shape[0]
                 width = image.shape[1]
@@ -660,7 +660,7 @@ if __name__ == "__main__":
                 dimensions = (new_width, new_height)
                 new_image = cv2.resize(image, dimensions, interpolation=cv2.INTER_LINEAR)
 
-                print("New shape:", new_image.shape)
+                #print("New shape:", new_image.shape)
 
                 # cv2.imshow("Resized image", new_image)
                 # cv2.waitKey(0)
@@ -674,7 +674,7 @@ if __name__ == "__main__":
                 if loop_no != 0:
                     print(
                         "\n ============ \n "
-                        "The end slice of the phantom stack is displayed next \n"
+                        "The bottom slice of the phantom stack is displayed next \n"
                         "Positions marked on the top slice will be overlaid as red dots")
 
                     input("Press Enter to continue marking inserts \n "
@@ -788,7 +788,8 @@ if __name__ == "__main__":
                 cv2.destroyAllWindows()
                 loop_no += 1
 
-            print("Initiating Phantom Extraction for scan in multithreading \n")
+            print("============")
+            print("Initiating Phantom Extraction for scan in multithreading...\n")
             # COMPLETE : TODO save overlay of image original and coloured inserts
             # COMPLETE: TODO for each insert with (X,Y,Z) pairs fit a 3D vertical linear model and get positions through the stack for insert centres
 
@@ -835,7 +836,7 @@ if __name__ == "__main__":
                 Color = np.array(DF['Color_of_insert'][insert_number])
                 predicted_centres = polynomial_regression3d(x, y, z, 2)
                 iteration_seq.append(predicted_centres)
-            print("Insert Centre positions predicted for the rest of the Phantom Stack \n")
+            print("Insert Centre positions predicted for the rest of the Phantom Stack...\n")
 
             pd.options.mode.chained_assignment = None  # default='warn' --> this supress the warning
             # COMPLETE: TODO append positions of centre circles to dataframe and prescribed densities
@@ -843,13 +844,14 @@ if __name__ == "__main__":
                 DF['Predicted_Circle_Centers_XYZ'][df_row] = iteration_seq[df_row]
                 DF['Measured_Density'][df_row] = Density_list_dic.get(DF['InsertType'][df_row])
 
-            print("Exporting Phantom insert masks for visualization")
             # COMPLETE: TODO function generate circle masks at each position across the stack for each insert - each image is an overlay of all predicted positions
 
             home_dir = Phantom_folder
             out_dir = os.path.join(home_dir, 'Phantom_Masks')
             if not os.path.isdir(out_dir):
                 os.mkdir(out_dir)
+
+            print("Exporting Phantom insert masks for visualization...")
             print(f"Phantom masks will be exported to {out_dir} \n")
 
             # get bounding box image dimensions
@@ -863,7 +865,7 @@ if __name__ == "__main__":
             start_time2 = time.time()
             iterator = build_iterator_for_parallelism(Dataframe=DF, Phantom_folder=Phantom_folder)
             extracted_grays = []
-            print(f'--- Iterator created in {time.time() - start_time2} seconds ---\n')
+            print(f'--- Iterator created in {int(time.time() - start_time2)} seconds ---\n')
 
             ########### Paralelized  loop START  ############################
             print(f"Multithreading began. This may take up to 3 min to complete")
@@ -871,8 +873,11 @@ if __name__ == "__main__":
                 # EXTRACTED_GRAYS_MASTER = p.starmap(get_grey_inside_circles, iterator)
                 EXTRACTED_GRAYS_MASTER = p.starmap(get_grey_inside_circles, tqdm.tqdm(iterator, total=len(iterator)))
 
-            ########### Parallel loop END  ############################
 
+            ########### Parallel loop END  ############################
+            print('Masks exported.')
+            print('============\n')
+            print('Saving results and diagnostic plots...')
             # unpack GRAYS AND ADD TO DF FOR PLOTTING
             DF['Extracted_Grays'] = ''
             # # COMPLETE: TODO append mean_gray_series to each insert in dataframe
@@ -1031,6 +1036,8 @@ if __name__ == "__main__":
                 df.drop(df[df['InsertType'] == 'aluminum'].index, inplace=True)
                 df.to_excel(os.path.join(Phantom_folder, f"STANDARD_EXTRACTED_VALUES_{scan_name}_PNarrow.xlsx"))
 
+            print('Density phantom extraction finished!')
+
     if already_extracted:  # all files extracted and we have items in 'already_extracted'
         userInput = ''
         while userInput.lower() not in ['y', 'yes', 'n', 'no']:
@@ -1066,4 +1073,4 @@ if __name__ == "__main__":
         elif userInput == 'n' or userInput == 'no':
             print('Exiting file update mode...')
 
-    print("--- %s seconds ---" % (time.time() - start_time))
+    print(f"Runtime {int((time.time() - start_time))} seconds")
