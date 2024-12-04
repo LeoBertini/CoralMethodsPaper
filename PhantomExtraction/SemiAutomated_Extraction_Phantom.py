@@ -859,10 +859,10 @@ if __name__ == "__main__":
             gray_series = []
 
             print('Building iterator for parallelism')
+            print("--- --- ---")
             start_time2 = time.time()
             iterator = build_iterator_for_parallelism(Dataframe=DF, Phantom_folder=Phantom_folder)
             extracted_grays = []
-            print("--- %s seconds ---" % (int(time.time() - start_time2)))
 
             ########### Paralelized  loop START  ############################
             print(f"Multithreading began. This may take up to 3 min to complete \n")
