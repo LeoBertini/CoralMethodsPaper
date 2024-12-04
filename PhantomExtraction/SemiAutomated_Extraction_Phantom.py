@@ -8,23 +8,22 @@
 #
 #  The code is distributed under the MIT license https://en.wikipedia.org/wiki/MIT_License
 
-import cv2
-import numpy as np
 import glob
-import os
-import pandas as pd
-from sklearn.linear_model import LinearRegression
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-from scipy.ndimage import gaussian_filter1d
-from tkinter import filedialog
-from tkinter import *
-from tkinter import messagebox
 import multiprocessing
+import os
 import time
+from pathlib import PureWindowsPath
+from tkinter import *
+from tkinter import filedialog
+from tkinter import messagebox
+
+import cv2
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 import tqdm
-from pathlib import Path, PureWindowsPath
-from ast import literal_eval
+from scipy.ndimage import gaussian_filter1d
+from sklearn.linear_model import LinearRegression
 
 
 # Working functions
@@ -353,7 +352,7 @@ def get_vsize_from_CT_filetypes(selected_project_dir, scan_name):
 
 def get_grey_inside_circles(coral_img, img_real_idx, x_centres, y_centres, z_centres, radius, colors, insert_names, out_dir):
     """
-    This function extract the greyscale values within marked areas by the used across the entire image stack
+    This function extracts the greyscale values within marked areas by the used across the entire image stack
 
     :param coral_img: X-ray slice
     :param img_real_idx: absolute index of slice on the stack
@@ -363,7 +362,7 @@ def get_grey_inside_circles(coral_img, img_real_idx, x_centres, y_centres, z_cen
     :param radius: the size of the circular buffer area around centre points from which greyscale probing will be done
     :param colors: dictionary of predetermined values for each density rod inside the radiology phantom (used for plots and creating masked images)
     :param insert_names: list to indicate the number of inserts existing in the radiology phantom
-    :param out_dir: path where masked sliced are saved
+    :param out_dir: path where masked slices are saved
     :return: a nested list containing density insert names, their respective colour, z_centre, and greyscale values extracted
     """
 
@@ -395,7 +394,6 @@ def get_grey_inside_circles(coral_img, img_real_idx, x_centres, y_centres, z_cen
     cv2.imwrite(out_img_name, mask_img)  # COMPLETE TODO save image of all inserts at once to speed up the loop
 
     return [insert_names, colors, z_centres, mean_grey_all_inserts]
-
 
 
 def build_iterator_for_parallelism(Dataframe, Phantom_folder):
@@ -568,7 +566,7 @@ if __name__ == "__main__":
                                                                                           target_skipper_file="STANDARD_EXTRACTED")
 
     project_dir_list = [selected_project_dir]
-    #project_dir_list = ['CWI_Cores', 'CWI_Coral_Cores', 'NHM_fossils', 'NHM_scans', 'Experiment_NHM_phase', 'Testing', 'Test']  # default project dirnames used before during testing
+    #project_dir_list = ['CWI_Cores', 'CWI_Coral_Cores', 'NHM_fossils', 'NHM_scans', 'Experiment_NHM_phase', 'Testing', 'Test']  # default project dirnames used before, during testing
 
     if folder_list:  #
         for folder in folder_list:  # looping over scan folders in main dir
@@ -633,8 +631,6 @@ if __name__ == "__main__":
                           'VoxelSize': []}
 
             # annotate manually on images to find displacement of centre of inserts
-            # images to sample centre of inserts are
-
             allx = []
             ally = []
             loop_no = 0
@@ -735,7 +731,7 @@ if __name__ == "__main__":
                 # displaying
                 cv2.namedWindow("Resized image", cv2.WINDOW_KEEPRATIO)
                 cv2.imshow("Resized image", image_overlay)
-                cv2.resizeWindow("Resized image", 400, 400)
+                #cv2.resizeWindow("Resized image", 400, 400)
                 cv2.waitKey(0)
                 cv2.destroyAllWindows()
 
@@ -778,7 +774,7 @@ if __name__ == "__main__":
                 # displaying
                 cv2.namedWindow("Resized image", cv2.WINDOW_KEEPRATIO)
                 cv2.imshow("Resized image", image_overlay)
-                cv2.resizeWindow("Resized image", 400, 400)
+                #cv2.resizeWindow("Resized image", 400, 400)
                 cv2.waitKey(0)
                 cv2.destroyAllWindows()
 
@@ -870,7 +866,7 @@ if __name__ == "__main__":
 
             ########### Paralelized  loop START  ############################
             print(f"Multithreading began. This may take up to 3 min to complete \n")
-            with multiprocessing.Pool(processes=50) as p:
+            with multiprocessing.Pool(processes=20) as p:
                 # EXTRACTED_GRAYS_MASTER = p.starmap(get_grey_inside_circles, iterator)
                 EXTRACTED_GRAYS_MASTER = p.starmap(get_grey_inside_circles, tqdm.tqdm(iterator, total=len(iterator)))
 
