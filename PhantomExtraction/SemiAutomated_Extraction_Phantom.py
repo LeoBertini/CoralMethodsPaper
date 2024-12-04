@@ -2,7 +2,7 @@
 #
 #  This is released as Supporting Material as part of the following publication:
 #  "XXXXXX" (link to paper and DOI once published).
-#  #
+#
 #
 #  Copyright (c) 2023.
 #
@@ -192,7 +192,7 @@ def polynomial_regression3d(x, y, z, degree):
     :return: a list of predicted density centres across the entire radiology phantom stack
 
     """
-    #sort data to avoid plotting problems
+    # sort data to avoid plotting problems
     # x, y, z = zip(*sorted(zip(x, y, z)))
     z_spillover = 0  # number of extra slices where coord are to be predicted in case phantom stack contains more images
     X = np.array([y, z]).reshape(-1, 2)
@@ -262,7 +262,7 @@ def find_folders_with_image_stacks(target_file_type, dir_standard_types, target_
                 for file in os.listdir(target_dir):
                     if target_file_type in file:
                         folder_scan_list.append(target_dir)
-                #print(f"Found TIF stack with {len(os.listdir(target_dir))} images in {os.path.abspath(target_dir)}")
+                # print(f"Found TIF stack with {len(os.listdir(target_dir))} images in {os.path.abspath(target_dir)}")
 
     folder_scan_list = np.unique(folder_scan_list).tolist()
 
@@ -310,7 +310,6 @@ def get_scan_name(folder_name, dir_standard_names):
 
 
 def get_vsize_from_CT_filetypes(selected_project_dir, scan_name):
-
     """
     This function reads different types of text files from different micro-CT scanners, containing configuration data.
     It locates fields where the resolution of the scan is mentioned. This is the size in mm of any pixel in 2D, and the thickness of a µCT slice in 3D
@@ -350,7 +349,8 @@ def get_vsize_from_CT_filetypes(selected_project_dir, scan_name):
     return voxelsize
 
 
-def get_grey_inside_circles(coral_img, img_real_idx, x_centres, y_centres, z_centres, radius, colors, insert_names, out_dir):
+def get_grey_inside_circles(coral_img, img_real_idx, x_centres, y_centres, z_centres, radius, colors, insert_names,
+                            out_dir):
     """
     This function extracts the greyscale values within marked areas by the used across the entire image stack
 
@@ -561,12 +561,11 @@ if __name__ == "__main__":
 
     # find all dirs with phantom stacks
     folder_list, selected_project_dir, already_extracted = find_folders_with_image_stacks(target_file_type='.tif',
-                                                                                          dir_standard_types=[
-                                                                                              'Phantom_Stack'],
+                                                                                          dir_standard_types=['Phantom_Stack'],
                                                                                           target_skipper_file="STANDARD_EXTRACTED")
 
     project_dir_list = [selected_project_dir]
-    #project_dir_list = ['CWI_Cores', 'CWI_Coral_Cores', 'NHM_fossils', 'NHM_scans', 'Experiment_NHM_phase', 'Testing', 'Test']  # default project dirnames used before, during testing
+    # project_dir_list = ['CWI_Cores', 'CWI_Coral_Cores', 'NHM_fossils', 'NHM_scans', 'Experiment_NHM_phase', 'Testing', 'Test']  # default project dirnames used before, during testing
 
     if folder_list:  #
         for folder in folder_list:  # looping over scan folders in main dir
@@ -579,7 +578,7 @@ if __name__ == "__main__":
             image_list = load_images_from_folder(folder, format='.tif')
             image_list.sort()  # sorting to make sure
 
-            target_slices = [0, int(len(image_list)) - 1]  # doing 2 images #start, and #end of stack
+            target_slices = [0, len(image_list) - 1]  # doing 2 images #start, and #end of stack
 
             Phantom_folder = os.path.join(selected_project_dir, scan_name, 'STANDARD_EXTRACT')
 
@@ -648,7 +647,7 @@ if __name__ == "__main__":
                 color_used = []
 
                 image = cv2.imread(image_list[item])
-                #print("Original shape: ", image.shape)
+                # print("Original shape: ", image.shape)
 
                 height = image.shape[0]
                 width = image.shape[1]
@@ -660,7 +659,7 @@ if __name__ == "__main__":
                 dimensions = (new_width, new_height)
                 new_image = cv2.resize(image, dimensions, interpolation=cv2.INTER_LINEAR)
 
-                #print("New shape:", new_image.shape)
+                # print("New shape:", new_image.shape)
 
                 # cv2.imshow("Resized image", new_image)
                 # cv2.waitKey(0)
@@ -731,7 +730,7 @@ if __name__ == "__main__":
                 # displaying
                 cv2.namedWindow("Resized image", cv2.WINDOW_KEEPRATIO)
                 cv2.imshow("Resized image", image_overlay)
-                #cv2.resizeWindow("Resized image", 400, 400)
+                # cv2.resizeWindow("Resized image", 400, 400)
                 cv2.waitKey(0)
                 cv2.destroyAllWindows()
 
@@ -774,7 +773,7 @@ if __name__ == "__main__":
                 # displaying
                 cv2.namedWindow("Resized image", cv2.WINDOW_KEEPRATIO)
                 cv2.imshow("Resized image", image_overlay)
-                #cv2.resizeWindow("Resized image", 400, 400)
+                # cv2.resizeWindow("Resized image", 400, 400)
                 cv2.waitKey(0)
                 cv2.destroyAllWindows()
 
@@ -872,7 +871,6 @@ if __name__ == "__main__":
             with multiprocessing.Pool(processes=20) as p:
                 # EXTRACTED_GRAYS_MASTER = p.starmap(get_grey_inside_circles, iterator)
                 EXTRACTED_GRAYS_MASTER = p.starmap(get_grey_inside_circles, tqdm.tqdm(iterator, total=len(iterator)))
-
 
             ########### Parallel loop END  ############################
             print('Masks exported.')
@@ -1062,7 +1060,7 @@ if __name__ == "__main__":
                     # TODO: amend with updates on DF
 
                     ##### HERE'S WHERE UPDATES HAPPEN
-                    # TODO existing phantom files need to be replaced following reanalyses of greyscale probing
+                    # TODO existing phantom files need to be replaced following bootstrapping reanalyses of greyscale probing
                     DF_update(Dataframe=DF)
                     # COMPLETE overwrite spreadsheet
                     print('Overwriting file...')
