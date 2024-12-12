@@ -228,6 +228,26 @@ DF_KJ=bin_voltage(DF_KJ)
 colnames(DF_KJ) = make.unique(names(DF_KJ))
 DF_KJ$BH_Corr=as.factor(DF_KJ$BH_Corr)
 
+###Stats
+#group by scan name
+DF_KJ_Stats = DF_KJ %>% 
+  group_by(Scan_name, BH_Corr) %>%
+  summarise_at(c('WeightOffset','RealColonyDensity'), list(mean = mean, sd = sd, se = ~sd(.)/sqrt(.)), na.rm=TRUE)
+DF_KJ_Stats = distinct(DF_KJ_Stats, 'Scan_name', .keep_all= TRUE)
+DF_KJ_Stats <- DF_KJ_Stats[DF_KJ_Stats$Scan_name != 'KJ_Porites_1981-3-5_140kV_Sn1_new-fil_16-bit-perc_', ] #remove single 
+DF_KJ_Stats$Scan_name=gsub("_BH", "", DF_KJ_Stats$Scan_name)
+DF_KJ_Stats = DF_KJ_Stats[c("Scan_name", "WeightOffset_mean", "BH_Corr")]
+
+
+DF_KJ_Stats$Scan_name=as.factor(DF_KJ_Stats$Scan_name)
+#we can do a 2-way anova
+t.test(DF_KJ_Stats$WeightOffset_mean[DF_KJ_Stats$BH_Corr=="YES"], 
+       DF_KJ_Stats$WeightOffset_mean[DF_KJ_Stats$BH_Corr=="NO"], paired=TRUE)
+
+summary(aov(WeightOffset_mean ~ BH_Corr, data=DF_KJ_Stats))
+
+
+##figure
 FIG_4B = ggplot()+ 
   
   geom_boxplot(data=DF_KJ, aes(x=BH_Corr, y=WeightOffset), width=0.2, alpha=0.8)+
@@ -335,7 +355,7 @@ FIG_3B_NORM = ggplot() +
   
   geom_hline(yintercept=0, color ='black') +
   
-  ylim(-12,12) +
+  ylim(-15,12) +
   xlim(1.0, 1.6) +
   
   ylab(paste("Density offset",'(%)')) +
@@ -370,7 +390,7 @@ FIG_3B_EXT = ggplot() +
   
   geom_hline(yintercept=0, color ='black') +
   
-  ylim(-12,12) +
+  ylim(-15,12) +
   xlim(1.0, 1.6) +
   
   ylab(paste("Density offset",'(%)')) +
@@ -396,7 +416,10 @@ NarrowSingleton_GROUPED = NarrowSingleton %>%
 mean(NarrowSingleton_GROUPED$WeightOffset, na.rm=TRUE)
 sd(NarrowSingleton_GROUPED$WeightOffset, na.rm=TRUE)
 
-ExtSingleton= DF_Singletons_EXT[DF_Singletons_EXT$PhantomType.x=='Extended' & DF_Singletons_EXT$ScanConditionStr == 'Medium_kV (170-190)' & DF_Singletons_EXT$MetalAndThick == 'Tin_1',]
+ExtSingleton= DF_Singletons_EXT[DF_Singletons_EXT$PhantomType.x=='Extended' & 
+                                  DF_Singletons_EXT$ScanConditionStr == 'Medium_kV (170-190)' & 
+                                  DF_Singletons_EXT$MetalAndThick == 'Tin_1',]
+
 ExtSingleton_GROUPED = ExtSingleton %>%
   group_by(Colony_label,ScanConditionStr,MetalAndThick) %>% summarise(
     WeightOffset = mean(WeightOffset,na.rm=TRUE),
@@ -406,7 +429,7 @@ ExtSingleton_GROUPED = ExtSingleton %>%
   )
 
 
-mean((ExtSingleton_GROUPED$WeightOffset), na.rm=TRUE)
+mean(ExtSingleton_GROUPED$WeightOffset, na.rm=TRUE)
 sd(ExtSingleton_GROUPED$WeightOffset, na.rm=TRUE)
 
 pairedt= t.test(ExtSingleton_GROUPED$WeightOffset,NarrowSingleton_GROUPED$WeightOffset, paired=TRUE)

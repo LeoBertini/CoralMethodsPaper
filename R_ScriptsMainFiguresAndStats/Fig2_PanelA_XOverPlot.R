@@ -156,7 +156,6 @@ ExternalDATA = DF_grouped_stats[DF_grouped_stats$CalibrationApproach.x=='EXTERNA
 t.test(WeightOffset_mean~PhantomType.x, paired=TRUE, data= ExternalDATA )
 
 # test between spreads
-t.test(WeightOffset_sd~PhantomType.x, paired=TRUE, data= InternalDATA )
 t.test(WeightOffset_sd~PhantomType.x, paired=TRUE, data= ExternalDATA )
 
 

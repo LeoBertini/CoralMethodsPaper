@@ -598,7 +598,6 @@ if __name__ == "__main__":
 
             while True:
                 try:
-
                     answer = input("Type in what kind of phantom was used (Extended or Narrow)?: \n")
                     if answer.lower() == 'extended':
                         insert_list = ["Air", "Sugar", "Coffee", "Oil", "Aluminum", "Epoxy",
@@ -707,7 +706,7 @@ if __name__ == "__main__":
                 dictionary['Color_of_insert'].append(color_used)
                 dictionary['VoxelSize'].append(voxel_size)
 
-                # draw filled circle in white on black background as mask
+                # draw filled circles on black background as mask
                 mask = np.zeros((height, width, 3), dtype=np.uint8)
                 radius = int(10 * scale_factor)
 

@@ -73,25 +73,26 @@ METADATA1 = read_excel(datapath, sheet = '1_InternalCalib_Metadata')
 METADATA2 = read_excel(datapath, sheet = '2_MultipleSettings_Metadata')
 METADATA_ALL = rbind(METADATA1,METADATA2)
 
-#filter Fits so that spreads only have representative changes
+#filtering spreads
 DF_CleanFits = DF %>% filter(grepl('Ext_Complete|Ext_AllPoints_AirMod|Narrow_Raw|Narrow_AllPoints_AirMod|Narrow_NoAirWithAlu|Narrow_NoAluWithAir|Narrow_WithAirWithAlu', FitType))
 
 #getting separate datasets for plot overlays in different groups
 DF_Singletons_EXT= DF_CleanFits[DF_CleanFits$PhantomType == 'Extended',]
 DF_Singletons_NORM= DF_CleanFits[DF_CleanFits$PhantomType == 'Narrow',]
 
-#import multiple seetings dataset
+#import multiple settings dataset
 DF2 = read_excel(datapath, sheet = '2_MultipleSettings_WeightTest')
 DF2$Scan_name = as.factor(DF2$Scan_name)
 DF2$RealColonyDensity = as.numeric(DF2$RealColonyDensity)
 DF2$FitType =as.factor(DF2$FitType)
 DF2$PhantomType =as.factor(DF2$PhantomType)
 
-DF2 = DF2 %>% filter(grepl('Narrow_Raw_n6|Narrow_WithAir_n7|Narrow_WithAir_AirMod|Narrow_NoAirNoEpoxy|Narrow_WithAirNoInsert5', FitType))
+#DF2 = DF2 %>% filter(grepl('Narrow_Raw_n6|Narrow_WithAir_n7|Narrow_WithAir_AirMod|Narrow_NoAirNoEpoxy|Narrow_WithAirNoInsert5', FitType)) #includes 6 fit types
 
-                        
+sort(unique(DF2$FitType))
+
+#  Uncorrected for BH dataset
 DF_Replicates_NoBH = DF2 %>% filter(!grepl('_BH', Scan_name))
-
 
 #  BH dataset --------------------------------------------------------
 DF_Replicates_BH = DF2 %>% filter(grepl('_BH', Scan_name))
@@ -201,7 +202,7 @@ datapath="/Users/leonardobertini/Library/CloudStorage/OneDrive-SharedLibraries-U
 
 #data for extra BH recon 
 DF_ExtraRecons =read_excel(datapath, sheet = '2.2_ExtraBH_Recons')
-DF_ExtraRecons_Clean =  DF_ExtraRecons %>% filter(grepl('Ext_Complete|Ext_AllPoints_AirMod|Narrow_Raw|Narrow_AllPoints_AirMod|Narrow_NoAirWithAlu|Narrow_NoAluWithAir|Narrow_WithAirWithAlu', FitType))
+DF_ExtraRecons_Clean =  DF_ExtraRecons %>% filter(grepl('Ext_Complete|Ext_AllPoints_AirMod', FitType))
 
 
 DF_Singletons_EXT
@@ -209,7 +210,6 @@ DF_Singletons_EXT
 Dummy_group = DF_Replicates_NoBH %>%
   group_by(Scan_name) %>%
   summarise_at(c('WeightOffset'), list(mean = mean), na.rm=TRUE)
-aaaa=distinct(Dummy_group)
 
 
 DF_jitter = read_excel(datapath, sheet = '5_ExtraJitterPlot')
@@ -256,8 +256,7 @@ FIG_2A
 
 # FIGURE 1B ---------------------------------------------------------------
 
-DF_ALL1 = DF
-DF_ALL_1 = merge(DF_ALL1, METADATA_ALL, by='Scan_name') #single scans
+DF_ALL_1 = merge(DF, METADATA_ALL, by='Scan_name') #single scans
 DF_ALL_2 = merge(DF_Replicates_NoBH, METADATA_ALL, by='Scan_name') #replicate scans
 
 DF_ALL = rbind(DF_ALL_1,DF_ALL_2) #all raw
