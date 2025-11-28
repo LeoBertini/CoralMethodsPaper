@@ -1,5 +1,3 @@
-# Introduction 
-
 This repository contains Supporting Material with Python and R code as well as data processing tutorials to accompany the following publication:
 
                   **"How to quantify and minimise error in coral skeletal density estimates using X-ray µCT"**
