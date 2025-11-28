@@ -86,7 +86,7 @@ def draw_circle(event, x, y, flags, param):
 
             cv2.putText(new_image, txt, (x - 10, y + 20), font, fontScale=0.4, color=(255, 255, 255), thickness=1)
 
-            print(f"Point for {txt} marked on image. Coordinates are ({x},{y})")
+            print(f"Point for {txt} marked on image. Coordinates are ({x},{y}).")
 
             # update list
             for entry in dummy_list:
