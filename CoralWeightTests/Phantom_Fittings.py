@@ -690,13 +690,13 @@ def extended_case(DATA, scan_folder, project_dir_list):
                 'Narrow_WithAirWithAlu']
 
     list_of_points_ext = [
-        ['air', 'sugar', 'coffee', 'oil', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5', 'aluminum'],
+        ['air', 'sweetener', 'coffee', 'oil', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5', 'aluminum'],
         ['epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5'],
 
-        ['air', 'sugar', 'coffee', 'oil', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5'],
-        ['sugar', 'coffee', 'oil', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5', 'aluminum'],
+        ['air', 'sweetener', 'coffee', 'oil', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5'],
+        ['sweetener', 'coffee', 'oil', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5', 'aluminum'],
 
-        ['sugar', 'coffee', 'oil', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5'],
+        ['sweetener', 'coffee', 'oil', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5'],
 
         ['epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5', 'aluminum'],
         ['air', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5'],
@@ -752,7 +752,7 @@ def extended_case(DATA, scan_folder, project_dir_list):
     # LOWER AND UPPER CI bounds for extracted values
 
     list_of_points_ext = [
-        ['air', 'sugar', 'coffee', 'oil', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5', 'aluminum'],
+        ['air', 'sweetener', 'coffee', 'oil', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5', 'aluminum'],
         ['epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5']]
 
     fittypes = ['Ext_AllPoints_LowerBnd', 'Narrow_AllPoints_LowerBnd']
@@ -808,7 +808,7 @@ def extended_case(DATA, scan_folder, project_dir_list):
 
     fittypes = ['Ext_AllPoints_AirMod_Pos500', 'Narrow_AllPoints_AirMod_Pos500']
     list_of_points_ext = [
-        ['air', 'sugar', 'coffee', 'oil', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5', 'aluminum'],
+        ['air', 'sweetener', 'coffee', 'oil', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5', 'aluminum'],
         ['air', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5']]
 
     for points, fitname in zip(list_of_points_ext, fittypes):
