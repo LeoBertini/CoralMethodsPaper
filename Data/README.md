@@ -34,5 +34,5 @@ Each histogram is a *.csv* file, where the first column represents voxel greysca
 Data is given in absolute and log scale. First 2<sup>16</sup> rows show absolute count data.
 
 ### µCT datasets
-- Low-resolution µCT scans (i.e. down-sampled datasets) are deposited on [MorphoSource](https://www.morphosource.org/) for easy visualization.
+- Low-resolution µCT scans (i.e. down-sampled datasets) are deposited on [MorphoSource](https://www.morphosource.org/) for easy visualisation.
 - High-resolution µCT scans are deposited on the [Bristol Research Data Repository](https://data.bris.ac.uk/data/). Each coral scan takes ~50Gb of disk space.
