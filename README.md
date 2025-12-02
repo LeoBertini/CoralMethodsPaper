@@ -6,9 +6,9 @@ This repository contains Supporting Material with Python and R code as well as d
 
                                 (link to paper and DOI once published).
                                 
-                                Corresponding author: Leonardo Bertini 
+                                Corresponding author: Erica J Hendy (and Leonardo Bertni) 
                                 
-                                e-mail :  l.bertini@nhm.ac.uk  | l.bertini@bristol.ac.uk
+                                e-mail :  e.hendy@bristol.ac.uk (l.bertini@nhm.ac.uk)
 
               The code is distributed under the MIT license https://en.wikipedia.org/wiki/MIT_License
 
