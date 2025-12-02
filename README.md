@@ -2,15 +2,15 @@
 
 This repository contains Supporting Material with code, data processing tutorials and links to µCT datasets to accompany the following publication:
 
-            **"How to quantify and minimise error in coral skeletal density estimates using X-ray µCT"**
+    **"How to quantify and minimise error in coral skeletal density estimates using X-ray µCT"**
 
-                                (link to paper and DOI once published).
-                                
-                                Corresponding author: Erica J Hendy (and Leonardo Bertini) 
-                                
-                                e-mail :  e.hendy@bristol.ac.uk (l.bertini@nhm.ac.uk)
+                        (link to paper and DOI once published).
+                        
+                        Corresponding author: Erica J Hendy (and Leonardo Bertini) 
+                        
+                        e-mail :  e.hendy@bristol.ac.uk (l.bertini@nhm.ac.uk)
 
-              The code is distributed under the MIT license https://en.wikipedia.org/wiki/MIT_License
+      The code is distributed under the MIT license https://en.wikipedia.org/wiki/MIT_License
 
 
 This project was supported by:
