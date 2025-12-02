@@ -17,7 +17,7 @@ Below is a brief description of files and subfolders in this directory.
 
 
 ### [ROI_AnalysesBulkCorrection](https://github.com/LeoBertini/CoralMethodsPaper/blob/main/Data/ROI_AnalysesBulkCorrection) includes:
- - µCT X-ray images of replicate scans of 2 specimens situated at lower and upper end of colony density range (purple points in Fig.1A)
+ - µCT X-ray images of replicate scans of 2 specimens situated at lower and upper end of colony density range (purple points in Fig.2A, also clearly indicated in Fig.6a)
  - Fiji/ImageJ zipped objects containing polygons that delimit selected low- and high-density regions of interest (ROIs), 
 from which greyscale values were extracted and converted. (See tab "*5_ROI_DensityEstimates*" on 
 [MP_CompleteDataset_SuppMat.xlsx](https://github.com/LeoBertini/CoralMethodsPaper/blob/main/Data/MP_CompleteDataset_SuppMat.xlsx) )
@@ -32,3 +32,7 @@ Each histogram is a *.csv* file, where the first column represents voxel greysca
 - [Histograms_SINGLE_SCANS.zip](https://github.com/LeoBertini/CoralMethodsPaper/blob/main/Data/CoralHistograms/Histograms_SINGLE_SCANS.zip) 
 
 Data is given in absolute and log scale. First 2<sup>16</sup> rows show absolute count data.
+
+### µCT datasets
+- Low-resolution µCT scans (i.e. down-sampled datasets) are deposited on [MorphoSource](https://www.morphosource.org/) for easy visualization.
+- High-resolution µCT scans are deposited on the [Bristol Research Data Repository](https://data.bris.ac.uk/data/). Each coral scan takes ~50Gb of disk space.
