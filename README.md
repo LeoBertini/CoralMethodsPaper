@@ -1,12 +1,12 @@
 ## Introduction
 
-This repository contains Supporting Material with Python and R code as well as data processing tutorials to accompany the following publication:
+This repository contains Supporting Material with code, data processing tutorials and links to µCT datasets to accompany the following publication:
 
             **"How to quantify and minimise error in coral skeletal density estimates using X-ray µCT"**
 
                                 (link to paper and DOI once published).
                                 
-                                Corresponding author: Erica J Hendy (and Leonardo Bertni) 
+                                Corresponding author: Erica J Hendy (and Leonardo Bertini) 
                                 
                                 e-mail :  e.hendy@bristol.ac.uk (l.bertini@nhm.ac.uk)
 
