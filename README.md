@@ -6,9 +6,9 @@ This repository contains Supporting Material with code, data processing tutorial
 
                         (link to paper and DOI once published).
                         
-                        Corresponding author: Erica J Hendy (and Leonardo Bertini) 
+                        Corresponding author: Leonardo Bertini
                         
-                        e-mail :  e.hendy@bristol.ac.uk (l.bertini@nhm.ac.uk)
+                        e-mail : l.bertini@nhm.ac.uk | l.bertini@bristol.ac.uk
 
       The code is distributed under the MIT license https://en.wikipedia.org/wiki/MIT_License
 
