@@ -1,6 +1,6 @@
 ## Introduction
 
-This repository contains Supporting Material with code, data processing tutorials and links to µCT datasets to accompany the following publication:
+This repository contains Supporting Material with code, data processing tutorials and links to datasets that accompany the following publication:
 
     **"How to quantify and minimise error in coral skeletal density estimates using X-ray µCT"**
 
