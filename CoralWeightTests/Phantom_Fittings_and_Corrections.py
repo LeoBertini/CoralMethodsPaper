@@ -99,6 +99,9 @@ def get_vsize_from_CT_filetypes(folder):
 def func_poly3(x, a, b, c, d):
     return a * (x ** 3) + b * (x ** 2) + c * x + d
 
+def func_linear(x, a, b):
+    return a * x + b
+
 
 def save_weights_extended_case(scan_folder, calib_dir, project_dir_list):
     warnings.filterwarnings("ignore")
@@ -130,7 +133,6 @@ def save_weights_extended_case(scan_folder, calib_dir, project_dir_list):
 
     # CALCULATE VIRTUAL WEIGHT FROM Histogram applying different functions
     # for each histogram in scanfolder
-
     # Find and read each histogram csv data for selected scan, then calculate virtual weight
     csv_files = []
 
@@ -147,7 +149,7 @@ def save_weights_extended_case(scan_folder, calib_dir, project_dir_list):
         features_avg_density = []
         features_avg_grey = []
 
-        for csv_file in csv_files:  # each csv inside scanfolder
+        for csv_file in csv_files:  # each csv inside scanfolder (one coral can have subvolumes segmented and their histograms)
             scan_name_patched = csv_file.split('Histogram-')[-1].split('.csv')[0]
             print('Histograms found... importing data from csv files...')
             print(csv_file)
@@ -175,135 +177,189 @@ def save_weights_extended_case(scan_folder, calib_dir, project_dir_list):
                     coefficients = pd.eval(Calib_data['Coefficients_High_Low_Order'][item])
                     corr_factor = Calib_data['Density_Correction_Factor'][item]
 
-                    a, b, c, d = coefficients
+                    defaults_coeffs = [0, 0, 0, 0] #max out number of coefficients to accept cases of linear or poly3
+                    a, b, *rest = coefficients
+                    if any(x!=0 for x in rest):
+                        c, d = rest
+                        is_poly3 = True
+                    else:
+                        is_poly3 = False
+
                     print('Calibration coefficients found')
                     print(coefficients)
-                    break
 
-            func_p = (lambda x, a, b, c, d: a * (x ** 3) + b * (
-                    x ** 2) + c * x + d)  # define function to find inverse with the coefficients found
+                    # fitting inverse curve to retrieve grays
+                    den_inserts = [0.1261, 0.26, 0.904, 1.13, 1.26, 1.44, 1.65, 1.77, 1.92, 2.7]
 
-            # fitting inverse curve to retreive grays
-            den_inserts = [0.1261, 0.26, 0.904, 1.13, 1.26, 1.44, 1.65, 1.77, 1.92, 2.7]
-            Grey_Inserts = [func_p(item, a, b, c, d) for item in den_inserts]
-            a1, b1, c1, d1 = "", "", "", ""
-            popt, pcov = curve_fit(func_poly3, Grey_Inserts, den_inserts, maxfev=5000)
-            a1, b1, c1, d1 = popt[0], popt[1], popt[2], popt[3]  # coefficients for inverse (Grey-->Density)
+                    if is_poly3:
+                        func_p = (lambda x, a, b, c, d: a * (x ** 3) + b * (
+                            x ** 2) + c * x + d)  # define function to find inverse with the coefficients found
 
-            # find inverse to get density estimate from gray value in domain of curve
-            inverse_func = inversefunc(func_p, args=(a, b, c, d))
+                        Grey_Inserts = [func_p(item, a, b, c, d) for item in den_inserts]
+                        a1, b1, c1, d1 = "", "", "", ""
+                        popt, pcov = curve_fit(func_poly3, Grey_Inserts, den_inserts, maxfev=5000)
+                        a1, b1, c1, d1 = popt[0], popt[1], popt[2], popt[3]  # coefficients for inverse (Grey-->Density)
 
-            print(
-                '\nCalculating virtual weight for the following objects histogram and applying density correction:')
-            print(csv_file)
-            weight_corrected = []
-            weight_uncorrected = []
-            vol = []
-            density_pred = []
-            density_bin_corrected = []
-            weight_bin_corrected = []
+                        # find inverse to get density estimate from gray value in domain of curve
+                        inverse_func = inversefunc(func_p, args=(a, b, c, d))
 
-            for line in range(1, len(hist_scan_filtered[col_names[0]])):
-                grey = int(np.floor(hist_scan_filtered[col_names[0]][line]))
-                count = hist_scan_filtered[col_names[1]][line]
+                    else:
+                        func_p = (lambda x, a, b, c, d: a * x + b)
+                        Grey_Inserts = [func_p(item, a, b, c, d) for item in den_inserts]
+                        a1, b1, c1, d1 = "", "", "", ""
+                        popt, pcov = curve_fit(func_linear, Grey_Inserts, den_inserts, maxfev=5000)
+                        a1, b1, c1, d1 = popt[0], popt[1], 0, 0  # coefficients for inverse (Grey-->Density)
 
-                # find density prediction from grey (essentially the inverted fit)
-                # density_estimate = abs(inverse_func(grey))  # Inverse_Function contains a list of inverted functions in memory
-                density_estimate = func_p(grey, a1, b1, c1, d1)
-                if grey < Grey_Inserts[0]:
-                    density_estimate = 0
-                # todo amend for non-real domain (inflexions)
+                        # find inverse to get density estimate from gray value in domain of curve
+                        inverse_func = inversefunc(func_p, args=(a, b, c, d))
 
-                density_pred.append(float(density_estimate))
-                density_bin_corrected.append(density_estimate * corr_factor)
-                # They are arranged in same order as the ones in the dictionary
-                # no need to feed coefficients
-                weight_uncorrected.append(density_estimate * abs(count) * voxel_volume)
-                weight_bin_corrected.append(density_estimate * corr_factor * abs(count) * voxel_volume)
-                weight_corrected.append(weight_bin_corrected)
 
-                vol_bin = abs(count) * voxel_volume
-                vol.append(vol_bin)
+                    print(
+                        '\nCalculating virtual weight for the following objects histograms and applying density correction:')
+                    print(csv_file)
+                    weight_corrected = []
+                    weight_uncorrected = []
+                    vol = []
+                    density_pred = []
+                    density_bin_corrected = []
+                    weight_bin_corrected = []
 
-            print('Total estimated weight')
-            print(sum(weight_bin_corrected))
-            print('Total estimated volume')
-            print(sum(vol))
-            print('\n')
+                    for line in range(1, len(hist_scan_filtered[col_names[0]])):
+                        grey = int(np.floor(hist_scan_filtered[col_names[0]][line]))
+                        count = hist_scan_filtered[col_names[1]][line]
 
-            x_grey = list(range(1, 2 ** 16 - 1))
-            features_names.append(os.path.basename(csv_file).split('Histogram-')[1].split('.csv')[0])
-            features_avg_density.append(sum(weight_bin_corrected) / sum(vol))
-            features_avg_grey.append(np.interp((sum(weight_bin_corrected) / sum(vol)), density_pred, x_grey))
+                        # find density prediction from grey (essentially the inverted fit)
+                        # density_estimate = abs(inverse_func(grey))  # Inverse_Function contains a list of inverted functions in memory
+                        density_estimate = func_p(grey, a1, b1, c1, d1)
+                        if grey < Grey_Inserts[0]:
+                            density_estimate = 0
+                        # todo amend for non-real domain (inflexions)
 
-            ResultsDF.at[result_row, 'Scan_name'] = scan_name_patched
-            ResultsDF.at[result_row, 'Weight_estimate'] = (sum(weight_uncorrected))
-            ResultsDF.at[result_row, 'Volume_estimate'] = (sum(vol))
-            ResultsDF.at[result_row, 'Calibration_File_From'] = Calib_data['FitType'][item]
-            ResultsDF.at[result_row, 'Grey_vals'] = list(range(1, 2 ** 16))
-            ResultsDF.at[result_row, 'Density_vals'] = density_pred
-            ResultsDF.at[result_row, 'Density_corrected'] = density_bin_corrected
-            ResultsDF.at[result_row, 'Weight_corrected'] = sum(weight_bin_corrected)
-            ResultsDF.at[result_row, 'Histogram_Source_File'] = os.path.basename(csv_file)
+                        density_pred.append(float(density_estimate))
+                        density_bin_corrected.append(density_estimate * corr_factor)
+                        # They are arranged in same order as the ones in the dictionary
+                        # no need to feed coefficients
+                        weight_uncorrected.append(density_estimate * abs(count) * voxel_volume)
+                        weight_bin_corrected.append(density_estimate * corr_factor * abs(count) * voxel_volume)
+                        weight_corrected.append(weight_bin_corrected)
 
-            result_row += 1
+                        vol_bin = abs(count) * voxel_volume
+                        vol.append(vol_bin)
+
+                    print('Total estimated weight')
+                    print(sum(weight_bin_corrected))
+                    print('Total estimated volume')
+                    print(sum(vol))
+                    print('\n')
+
+                    ResultsDF.at[result_row, 'Scan_name'] = scan_name_patched
+                    ResultsDF.at[result_row, 'Weight_estimate'] = (sum(weight_uncorrected))
+                    ResultsDF.at[result_row, 'Volume_estimate'] = (sum(vol))
+                    ResultsDF.at[result_row, 'Calibration_File_From'] = Calib_data['FitType'][item]
+                    ResultsDF.at[result_row, 'Grey_vals'] = list(range(1, 2 ** 16))
+                    ResultsDF.at[result_row, 'Density_vals'] = density_pred
+                    ResultsDF.at[result_row, 'Density_corrected'] = density_bin_corrected
+                    ResultsDF.at[result_row, 'Weight_corrected'] = sum(weight_bin_corrected)
+                    ResultsDF.at[result_row, 'Histogram_Source_File'] = os.path.basename(csv_file)
+
+                    result_row += 1
+                    x_grey = list(range(1, 2 ** 16 - 1))
+                    features_names.append(os.path.basename(csv_file).split('Histogram-')[1].split('.csv')[0])
+                    features_avg_density.append(sum(weight_bin_corrected) / sum(vol))
+                    features_avg_grey.append(np.interp((sum(weight_bin_corrected) / sum(vol)), density_pred, x_grey))
+
+                    ####### TODO Change to function for basic diagnostic plot
+                    fig, ax1 = plt.subplots(figsize=[12, 8])
+
+                    #### importing greys and density from phanton fittings file:
+                    for file in os.listdir(scan_folder):
+                        if 'Phantom_Fittings_and_Weights' in file and 'PNarrow' not in file:
+                            print(os.path.join(scan_folder, file))
+                            scan_fittings = pd.read_excel(os.path.join(scan_folder, file))
+
+
+                    y_0 = scan_fittings.loc[scan_fittings['FitType'] == Calib_data['FitType'][item], 'Density_vals']
+                    y_0 = [ eval(_) for _ in y_0][0]
+                    x_grey_0 = scan_fittings.loc[scan_fittings['FitType'] == Calib_data['FitType'][item], 'Gray_vals']
+                    x_grey_0 = [ eval(_) for _ in x_grey_0][0]
+
+                    insert_names = scan_fittings.loc[scan_fittings['FitType'] == Calib_data['FitType'][item], 'Insert_type']
+                    insert_names =  [eval(_) for _ in insert_names][0]
+                    insert_colour = scan_fittings.loc[scan_fittings['FitType'] == Calib_data['FitType'][item], 'Insert_color']
+                    insert_colour =  [eval(_) for _ in insert_colour][0]
+                    insert_colour = [eval(_) for _ in insert_colour]
+
+                    #bundle into a dictionary
+                    Density_list_dic0 = {}
+                    for insert_name, density, grey, color in zip(insert_names, y_0, x_grey_0, insert_colour):
+                        Density_list_dic0[insert_name] = {'den': density,
+                                                        'grey': grey,
+                                                        'color': tuple((c/255) for c in color)}
+
+
+                    y_1 = density_pred
+                    y_2 = density_bin_corrected
+
+
+                    plt.grid(True, linestyle='--', color='grey', linewidth=0.5)
+                    ax1.plot(x_grey, y_1, 'k--', label='raw calibration-invert func')
+                    ax1.plot(x_grey, y_2, label='bulk offset calibration')
+
+                    Density_list_dic = {
+                        'air': {'den': 0.001225, 'grey': func_p(0.001225, a, b, c, d),
+                                'color': (211 / 255, 211 / 255, 211 / 255)},
+                        'epoxy': {'den':  1.13, 'grey': func_p(1.13, a, b, c, d), 'color': (0, 0, 255 / 255)},
+                        'insert1': {'den': 1.26, 'grey': func_p(1.26, a, b, c, d), 'color': (0, 255 / 255, 0)},
+                        'insert2': {'den': 1.44, 'grey': func_p(1.44, a, b, c, d), 'color': (255 / 255, 0, 0)},
+                        'insert3': {'den': 1.65, 'grey': func_p(1.65, a, b, c, d), 'color': (0, 255 / 255, 255 / 255)},
+                        'insert4': {'den': 1.77, 'grey': func_p(1.77, a, b, c, d), 'color': (255 / 255, 255 / 255, 0)},
+                        'insert5': {'den': 1.92, 'grey': func_p(1.92, a, b, c, d), 'color': (255 / 255, 0, 255 / 255)},
+                        'sweetener': {'den': 0.1261, 'grey': func_p(0.1261, a, b, c, d), 'color': (0, 0, 128 / 255)},
+                        'oil': {'den': 0.905, 'grey': func_p(0.904, a, b, c, d), 'color': (0, 128 / 255, 128 / 255)},
+                        'coffee': {'den': 0.26, 'grey': func_p(0.26, a, b, c, d), 'color': (128 / 255, 128 / 255, 0)},
+                        'aluminium': {'den': 2.7, 'grey': func_p(2.7, a, b, c, d), 'color': (0, 128 / 255, 0)}}
+
+                    for insert in Density_list_dic0.keys():
+                        density_insert = Density_list_dic0[insert]['den']
+                        grey_insert = Density_list_dic0[insert]['grey']
+                        insert_color = Density_list_dic0[insert]['color']
+                        ax1.scatter(grey_insert, density_insert, marker='o', color=insert_color,
+                                    label=f"Standard: {insert}")
+
+                    for insert in Density_list_dic.keys():
+                        density_insert = Density_list_dic[insert]['den']
+                        grey_insert = Density_list_dic[insert]['grey']
+                        insert_color = Density_list_dic[insert]['color']
+                        ax1.scatter(grey_insert, density_insert, marker='+', color=insert_color,
+                                    label=f"Standard: {insert}")
+
+                    # now plotting the objects and where they fall in the curve
+                    symbols = ['*', 's', 'v', 'D', '<', '>']
+                    for k in range(0, len(features_names)):
+                        ax1.scatter(features_avg_grey[k], features_avg_density[k], marker=symbols[k], color=(0, 0, 0), s=100,
+                                    label=features_names[k])
+
+                    ax2 = ax1.twinx()
+                    grey_count_plot = list(hist_scan_filtered[col_names[1]])
+                    ax2.plot(x_grey, grey_count_plot[1:], 'k', color='darkblue', alpha=1, label='Whole Specimen Histogram')
+
+                    ax1.legend(loc='upper right', bbox_to_anchor=(0.5, 1), fancybox=True, shadow=True, ncol=2)
+                    ax1.set_ylabel('Density [$\mathregular{g.cm^{-3}}$]')
+                    ax1.set_xlabel('Grey Value [0:$\mathregular{(2^{16}-1)}$]')
+                    plt.rcParams["font.family"] = "Arial"
+                    ax1.set_ylim(-0.0001, 4)
+                    ax2.set_ylim(0, max(grey_count_plot[1:]) * 1.1)
+                    ax2.set_ylabel('Voxel Count')
+                    ax2.yaxis.label.set_color('darkblue')  # setting up Y-axis label color to blue
+                    ax2.tick_params(axis='y', colors='darkblue')
+                    ax2.legend(loc='upper right', bbox_to_anchor=(1, 1), fancybox=True, shadow=True, ncol=1)
+                    plt.savefig(
+                        os.path.join(scan_folder, 'Diagnostic_Plots_Specimen_' + os.path.basename(scan_folder) + "_" + Calib_data['FitType'][item] + '.png'),
+                        dpi=300)
 
         # saving results
         ResultsDF.to_excel(os.path.join(path_for_csvs,
-                                        'Results_Density_Corrected_' + scan_name_patched + '_BasedOn_' +
-                                        Calib_data['FitType'][item] + '.xlsx'), index=False)
-
-        ####### basic diagnostic plot
-        fig, ax1 = plt.subplots(figsize=[12, 8])
-        y_1 = density_pred
-        y_2 = density_bin_corrected
-        plt.grid(True, linestyle='--', color='grey', linewidth=0.5)
-
-        ax1.plot(x_grey, y_1, 'k--', label='raw calibration')
-        ax1.plot(x_grey, y_2, label='bulk offset calibration')
-
-        Density_list_dic = {
-            'air': {'den': 0.001225, 'grey': func_p(0.001225, a, b, c, d), 'color': (211 / 255, 211 / 255, 211 / 255)},
-            'epoxy': {'den': 1.13, 'grey': func_p(1.13, a, b, c, d), 'color': (0, 0, 255 / 255)},
-            'insert1': {'den': 1.26, 'grey': func_p(1.26, a, b, c, d), 'color': (0, 255 / 255, 0)},
-            'insert2': {'den': 1.44, 'grey': func_p(1.44, a, b, c, d), 'color': (255 / 255, 0, 0)},
-            'insert3': {'den': 1.65, 'grey': func_p(1.65, a, b, c, d), 'color': (0, 255 / 255, 255 / 255)},
-            'insert4': {'den': 1.77, 'grey': func_p(1.77, a, b, c, d), 'color': (255 / 255, 255 / 255, 0)},
-            'insert5': {'den': 1.92, 'grey': func_p(1.92, a, b, c, d), 'color': (255 / 255, 0, 255 / 255)},
-            'sweetener': {'den': 0.1261, 'grey': func_p(0.1261, a, b, c, d), 'color': (0, 0, 128 / 255)},
-            'oil': {'den': 0.905, 'grey': func_p(0.904, a, b, c, d), 'color': (0, 128 / 255, 128 / 255)},
-            'coffee': {'den': 0.26, 'grey': func_p(0.26, a, b, c, d), 'color': (128 / 255, 128 / 255, 0)},
-            'aluminium': {'den': 2.7, 'grey': func_p(2.7, a, b, c, d), 'color': (0, 128 / 255, 0)}}
-
-        for insert in Density_list_dic.keys():
-            density_insert = Density_list_dic[insert]['den']
-            grey_insert = Density_list_dic[insert]['grey']
-            insert_color = Density_list_dic[insert]['color']
-            ax1.scatter(grey_insert, density_insert, marker='o', color=insert_color,
-                        label=f"Standard: {insert}")
-
-        # now plotting the objects and where they fall in the curve
-        symbols = ['*', 's', 'v', 'D', '<', '>']
-        for k in range(0, len(features_names)):
-            ax1.scatter(features_avg_grey[k], features_avg_density[k], marker=symbols[k], color=(0, 0, 0), s=100,
-                        label=features_names[k])
-
-        ax2 = ax1.twinx()
-        grey_count_plot = list(hist_scan_filtered[col_names[1]])
-        ax2.plot(x_grey, grey_count_plot[1:], 'k', color='darkblue', alpha=1, label='Whole Specimen Histogram')
-
-        ax1.legend(loc='upper right', bbox_to_anchor=(0.5, 1), fancybox=True, shadow=True, ncol=2)
-        ax1.set_ylabel('Density [$\mathregular{g.cm^{-3}}$]')
-        ax1.set_xlabel('Grey Value [0:$\mathregular{(2^{16}-1)}$]')
-        plt.rcParams["font.family"] = "Arial"
-        ax1.set_ylim(-0.0001, 4)
-        ax2.set_ylim(0, max(grey_count_plot[1:])*1.1)
-        ax2.set_ylabel('Voxel Count')
-        ax2.yaxis.label.set_color('darkblue')  # setting up Y-axis label color to blue
-        ax2.tick_params(axis='y', colors='darkblue')
-        ax2.legend(loc='upper right', bbox_to_anchor=(1, 1), fancybox=True, shadow=True, ncol=1)
-        plt.savefig(os.path.join(scan_folder, 'Diagnostic_Plots_Specimen_' + os.path.basename(scan_folder) + '.png'),
-                    dpi=300)
+                                        'Results_Density_Corrected_' + scan_name_patched + '.xlsx'), index=False)
 
 
 if __name__ == '__main__':
