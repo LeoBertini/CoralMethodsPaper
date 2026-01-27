@@ -188,6 +188,7 @@ def save_weights_extended_case(scan_folder, calib_dir, project_dir_list):
                     print('Calibration coefficients found')
                     print(coefficients)
 
+                    #TODO IMPORT VALUES FROM PHANTOM DETAILS IN SPREADSHEET STANDARD_EXTRACTED_VALUES...
                     # fitting inverse curve to retrieve grays
                     den_inserts = [0.1261, 0.26, 0.904, 1.13, 1.26, 1.44, 1.65, 1.77, 1.92, 2.7]
 
@@ -305,6 +306,7 @@ def save_weights_extended_case(scan_folder, calib_dir, project_dir_list):
                     ax1.plot(x_grey, y_1, 'k--', label='raw calibration-invert func')
                     ax1.plot(x_grey, y_2, label='bulk offset calibration')
 
+                    #TODO IMPORT VALUES FROM PHANTOM DETAILS IN SPREADSHEET STANDARD_EXTRACTED_VALUES...
                     Density_list_dic = {
                         'air': {'den': 0.001225, 'grey': func_p(0.001225, a, b, c, d),
                                 'color': (211 / 255, 211 / 255, 211 / 255)},
