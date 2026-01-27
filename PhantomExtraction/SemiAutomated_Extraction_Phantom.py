@@ -2,61 +2,50 @@
 #
 #  This is released as Supporting Material as part of the following publication:
 #  "XXXXXX" (link to paper and DOI once published).
-#
+#  #
 #
 #  Copyright (c) 2023.
 #
 #  The code is distributed under the MIT license https://en.wikipedia.org/wiki/MIT_License
 
-import glob
-import multiprocessing
-import os
-import time
-from pathlib import PureWindowsPath
-from tkinter import *
-from tkinter import filedialog
-from tkinter import messagebox
 import cv2
-import matplotlib.pyplot as plt
 import numpy as np
+import glob
+import os
 import pandas as pd
-import tqdm
-from scipy.ndimage import gaussian_filter1d
+from holoviews.plotting.bokeh.styles import font_size
 from sklearn.linear_model import LinearRegression
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from scipy.ndimage import gaussian_filter1d
+from tkinter import filedialog
+from tkinter import *
+import multiprocessing
+import time
+import tqdm
+from pathlib import Path, PureWindowsPath
+from ast import literal_eval
 
-# WORKING FUNCTIONS
+
+# Working functions
 def load_images_from_folder(folder, format):
-    """
-    This function finds files in a specified path containing a target file extension.
-
-    :param folder: Specified path of folder containing stack of X-ray tiff images representing the radiology phantom.
-    :param format: Specified format of images to be loaded. (e.g., '.tif'
-    :return: a list of filenames for images that satisfy the specified format.
-    """
     cv_img = []
-    for img in glob.glob(os.path.join(folder, "*" + f"{format}")):
-        cv_img.append(img)
+    # for img in glob.glob(os.path.join(folder, "*" + f"{format}")):
+    #     cv_img.append(img)
+    #
+    for img in os.listdir(folder):
+        if format in img:
+            cv_img.append(os.path.join(folder, img))
     # print(f"Found Phantom tif stack in {folder}")
 
     return cv_img
 
 
 def draw_circle(event, x, y, flags, param):
-    """
-    This function interacts with the user and prompts the annotation of centre regions in X-ray images containing density phantom rods, to extract greyscale values within confined areas
-    It runs until the pre-determined number of features to be annotated is reached and exits for image inspection and rescalling mode.
-
-    :param event: mouse instance for tracking clicks from the user using OpenCV
-    :param x: mouse click position
-    :param y: mouse click position
-    :return: updates global variables specified below appending to their specific dictionaries and saves a preview of the annotated image in parent directory
-    """
-
     global mouseX, mouseY, counter, insert_list, txt, dummy_list, Color_list_dic, color_used, target_slices, item, Phantom_folder, initial_slice_tag, new_image, annotation_vals, scale_factor
     entered_list = []
-
     if event == cv2.EVENT_LBUTTONDOWN:
-        if counter < len(insert_list):
+        if counter <= len(insert_list) - 1:
 
             if counter != 0:
                 print("Please inform which type of insert you are marking from the list below:")
@@ -86,7 +75,8 @@ def draw_circle(event, x, y, flags, param):
 
             cv2.putText(new_image, txt, (x - 10, y + 20), font, fontScale=0.4, color=(255, 255, 255), thickness=1)
 
-            print(f"Point for {txt} marked on image. Coordinates are ({x},{y}).")
+            print(f"Point for {txt} marked on image")
+            print('Coordinates', x, ' ', y)
 
             # update list
             for entry in dummy_list:
@@ -100,38 +90,20 @@ def draw_circle(event, x, y, flags, param):
             ally.append(y)
             print('Click on the next insert \n')
 
-        if counter == len(insert_list):
-            print("All inserts annotated. Press ESC to enter image rescaling mode.")
-
         cv2.imwrite(os.path.join(Phantom_folder,
                                  f"Slice_{item + initial_slice_tag}_Phantom_Scaled_Annotated_Phantom_slice.png"),
                     new_image)
 
 
 def draw_circle2(event, x, y, flags, param):
-    """
-     This function adds a preview overlay of previously annotated density inserts to check for misalignment issues or mislabelling by the user.
-     Same behaviour as draw_circle but invoked when bottom X-ray slice is brought to the user.
-
-     Basic functionality:
-     This function interacts with the user and prompts the annotation of centre regions in X-ray images containing density phantom rods, to extract greyscale values within confined areas
-     It runs until the pre-determined number of features to be annotated is reached and exits for image inspection and rescalling mode.
-
-     :param event: mouse instance for tracking clicks from the user using OpenCV
-     :param x: mouse click position
-     :param y: mouse click position
-     :return: updates global variables specified below appending to their specific dictionaries and saves a preview of the annotated image in parent directory
-     """
-
     global mouseX, mouseY, counter, insert_list, txt, dummy_list, Color_list_dic, color_used, target_slices, item, Phantom_folder, initial_slice_tag, new_image, allx, ally, annotation_vals, scale_factor
     entered_list = []
     # displaying the annotated circles from previous images in red
-
     for pair in zip(allx, ally):
         cv2.circle(new_image, pair, int(10 * scale_factor / 2), (0, 0, 255), -1)
 
     if event == cv2.EVENT_LBUTTONDOWN:
-        if counter < len(insert_list):
+        if counter <= len(insert_list) - 1:
 
             if counter != 0:
                 print("Please inform which type of insert you are marking from the list below:")
@@ -160,7 +132,8 @@ def draw_circle2(event, x, y, flags, param):
 
             cv2.putText(new_image, txt, (x - 10, y + 20), font, fontScale=0.4, color=(255, 255, 255), thickness=1)
 
-            print(f"Point for {txt} marked on image. Coordinates are ({x},{y})")
+            print(f"Point for {txt} marked on image")
+            print('Coordinates', x, ' ', y)
 
             # update list
             for entry in dummy_list:
@@ -172,24 +145,12 @@ def draw_circle2(event, x, y, flags, param):
             mouseY.append(y)
             print('Click on the next insert \n')
 
-        if counter == len(insert_list):
-            print("All inserts annotated. Press ESC to enter image rescaling mode.")
-
         cv2.imwrite(os.path.join(Phantom_folder,
                                  f"Slice_{item + initial_slice_tag}_Phantom_Scaled_Annotated_Phantom_slice.png"),
                     new_image)
 
 
 def polynomial_regression3d(x, y, z, degree):
-    """
-    This is a polynomial regression wrapper to predict the positions of target areas across the X-ray stack based on markings done by the user on the top and bottom X-ray slices.
-
-    :param x, y : horizontal coordinates in the tiff images.
-    :param z: position across the stack
-    :param degree: adjusted based on polynomial complexity desired
-    :return: a list of predicted density centres across the entire radiology phantom stack
-
-    """
     # sort data to avoid plotting problems
     # x, y, z = zip(*sorted(zip(x, y, z)))
     z_spillover = 0  # number of extra slices where coord are to be predicted in case phantom stack contains more images
@@ -204,20 +165,25 @@ def polynomial_regression3d(x, y, z, degree):
 
     model = LinearRegression().fit(X, x)
     predicted_x = model.predict(model_viz)
-    predicted_insert_coord_XYZ = list(zip(predicted_x, y_pred, z_pred))
 
+    # TODO eventually plot with same color as insert_color
+    # plot
+    # fig = plt.figure()
+    # ax = plt.axes(projection='3d')
+    # ax.scatter(predicted_x, yy_pred.flatten(), zz_pred.flatten())
+    # #ax.plot(predicted_x, y_pred, z_pred, color= 'r')
+    # ax.set_xlabel('X')
+    # ax.set_ylabel('Y')
+    # ax.set_zlabel('Z')
+    #
+    # plt.show()
+    # fig.set_dpi(150)
+
+    predicted_insert_coord_XYZ = list(zip(predicted_x, y_pred, z_pred))
     return predicted_insert_coord_XYZ
 
 
 def find_overlapping_range(interval_list):
-    """
-    Functionality to be implemented in future releases.
-    Helper function used to detect positions of inflexion points on greyscale series for anomaly detection.
-    It traverses through a series of greyscale values testing for inflexion points and updating itself
-
-    :param interval_list:
-    :return: start and end positions of possible inflexion points.
-    """
     start, end = interval_list.pop()
     while interval_list:
         start_temp, end_temp = interval_list.pop()
@@ -227,21 +193,9 @@ def find_overlapping_range(interval_list):
 
 
 def find_folders_with_image_stacks(target_file_type, dir_standard_types, target_skipper_file):
-    """
-    Function for user callbacks, defining directory tree to traverse and from which X-ray data will be fetched
-
-    :param target_file_type: file extension of target images (e.g., '.tif')
-    :param dir_standard_types: standardised directory name (e.g., Phantom_Stack)
-    :param target_skipper_file: placeholder for a path containing a string to indicate data has been extracted previously (part of a filename or dir).
-     It leaves the specific parent dir out of the analysis. (e.g.,STANDARD_EXTRACTED_xxx_.csv is a file generated after successfully probing greyscale intensities and used as a tag for skipping)
-    :return: returns list of directories from which the extraction of density phantom values is needed.
-
-    """
-
     root = Tk()
     root.withdraw()
-    messagebox.showinfo(title='Select paths', message="Select the drive and parent folder where µCT scans are saved")
-    drive_letter = filedialog.askdirectory(title='Select the drive where scans are saved (eg: C: or D:)')
+    Drive_Letter = filedialog.askdirectory(title='Select the drive where scans are saved (eg: C: or D:)')
     root.update()
 
     # Selecting parent folder where scan folders are
@@ -250,76 +204,57 @@ def find_folders_with_image_stacks(target_file_type, dir_standard_types, target_
     main_dir = filedialog.askdirectory(title='Select the Parent folder where Scans are saved')
     root.update()
 
-    print("Traversing directories in the tree...")
-    folder_scan_list = []
-    for (dirpath, dirnames, filenames) in os.walk(os.path.join(drive_letter, main_dir)):
+    folder_list = []
+    for (dirpath, dirnames, filenames) in os.walk(os.path.join(Drive_Letter, main_dir)):
         for direct in dirnames:
+            # print(direct)
             if str.lower(direct) in [str.lower(element) for element in
                                      dir_standard_types]:  # pass everything to lower case in case dirnames are either upper or lower case
+                print(os.path.abspath(os.path.join(dirpath, direct)))
                 target_dir = os.path.join(dirpath, direct)
                 for file in os.listdir(target_dir):
                     if target_file_type in file:
-                        folder_scan_list.append(target_dir)
-                # print(f"Found TIF stack with {len(os.listdir(target_dir))} images in {os.path.abspath(target_dir)}")
+                        folder_list.append(target_dir)
+                print(f"Found TIF stack with {len(os.listdir(target_dir))} images in {os.path.abspath(target_dir)}")
 
-    folder_scan_list = np.unique(folder_scan_list).tolist()
+    folder_list = np.unique(folder_list).tolist()
 
     dummy = []
     print('Checking if any of the scans have had Phantom values extracted already to then ignore \n')
     # COMPLETE TODO FILTER FOLDERS WHICH ALREADY HAVE A "STANDARD_EXTRACTED_VALUES.xlsx"
 
-    for (dirpath, dirnames, filenames) in os.walk(os.path.join(drive_letter, main_dir)):
+    for (dirpath, dirnames, filenames) in os.walk(os.path.join(Drive_Letter, main_dir)):
         for name in filenames:
             if target_skipper_file in name:
                 # print(dirpath)
+                print(f"Phantom already extracted in "f"{os.path.abspath(dirpath)}")
                 dummy.append(os.path.dirname(dirpath))
 
     dummy = np.unique(dummy).tolist()
     already_extracted = dummy
-
     for flagged_dir in dummy:
-        for long_path in folder_scan_list:
+        for long_path in folder_list:
             if flagged_dir in long_path:
-                folder_scan_list.remove(long_path)
+                folder_list.remove(long_path)
 
-    # fixing path issues to work across platforms (Unix and Windows)
-    folder_list_paths_corrected = [os.path.abspath(item) for item in folder_scan_list]
+    #fixing path issues to work across platforms (Unix and Windows)
+    folder_list_paths_corrected = [os.path.abspath(item) for item in folder_list]
     already_extracted_paths_corrected = [os.path.abspath(item) for item in already_extracted]
-    for dir in already_extracted_paths_corrected:
-        print(f"Phantom already extracted in "f"{dir}. Movin to next folder.\n")
 
     return folder_list_paths_corrected, os.path.abspath(main_dir), already_extracted_paths_corrected
 
 
 def get_scan_name(folder_name, dir_standard_names):
-    """
-    This function is used to obtain the X-ray dataset name
-
-    :param folder_name: Directory containing the X-ray data for a single scan
-    :param dir_standard_names: optional arg used to bypass user selection  of parent directories when testing
-           E.g., dir_standard_names = ['CWI_Cores', 'CWI_Coral_Cores', 'NHM_fossils', 'NHM_scans']
-    :return: The X-ray dataset name adopted
-    """
-
+    # dir_standard_names = ['CWI_Cores', 'CWI_Coral_Cores', 'NHM_fossils', 'NHM_scans']
     project_folder = dir_standard_names[-1]
-    scan_name = str(PureWindowsPath(folder_name.split(project_folder)[-1])).split('STANDARD_EXTRACT')[0].split('\\')[
-        1]  # works on both Windows and Unix and uses 'STANDARD_EXTRACT' as splitter
+    scan_name = str(PureWindowsPath(folder_name.split(project_folder)[-1])).split('STANDARD_EXTRACT')[0].split('\\')[1]# works on both Windows and Unix and uses 'STANDARD_EXTRACT' as splitter
     return scan_name
 
 
 def get_vsize_from_CT_filetypes(selected_project_dir, scan_name):
-    """
-    This function reads different types of text files from different micro-CT scanners, containing configuration data.
-    It locates fields where the resolution of the scan is mentioned. This is the size in mm of any pixel in 2D, and the thickness of a µCT slice in 3D
-
-    :param selected_project_dir: the X-ray scan directory  indicated by the user on a graphical prompt
-    :param scan_name: the X-ray dataset name
-    :return: the voxel size of the scan being processed, which is later appended to a dataframe containing the scan metadata and the calibration greyscale probing results
-    """
-
     file_extensions = [".xtekCT", ".xtekVolume", 'xtekct']
     TargetStrings = ['VoxelSizeX=', 'Voxel size = ']
-    parent_folder = os.path.join(selected_project_dir, scan_name)
+    parent_folder = os.path.join(selected_project_dir,scan_name)
 
     # MAIN_PATH=os.path.join(Drive_Letter, main_dir)
 
@@ -330,7 +265,7 @@ def get_vsize_from_CT_filetypes(selected_project_dir, scan_name):
                 target_file_path = os.path.abspath(os.path.join(root, name))
 
     dummy_size = []
-    with open(target_file_path, 'rt') as myfile:  # Open for reading text
+    with open(target_file_path, 'rt') as myfile:  # Open lorem.txt for reading text
         contents = myfile.read()  # Read the entire file to a string
         for each_line in contents.split("\n"):
             if any([item in each_line for item in TargetStrings]):
@@ -347,23 +282,10 @@ def get_vsize_from_CT_filetypes(selected_project_dir, scan_name):
     return voxelsize
 
 
-def get_grey_inside_circles(coral_img, img_real_idx, x_centres, y_centres, z_centres, radius, colors, insert_names,
-                            out_dir):
-    """
-    This function extracts the greyscale values within marked areas by the used across the entire image stack
-
-    :param coral_img: X-ray slice
-    :param img_real_idx: absolute index of slice on the stack
-    :param x_centres: predicted horizontal for a density rod inside the radiology phantom
-    :param y_centres: predicted horizontal for a density rod inside the radiology phantom
-    :param z_centres: predicted vertical for a density rod inside the radiology phantom
-    :param radius: the size of the circular buffer area around centre points from which greyscale probing will be done
-    :param colors: dictionary of predetermined values for each density rod inside the radiology phantom (used for plots and creating masked images)
-    :param insert_names: list to indicate the number of inserts existing in the radiology phantom
-    :param out_dir: path where masked slices are saved
-    :return: a nested list containing density insert names, their respective colour, z_centre, and greyscale values extracted
-    """
-
+def get_grey_inside_circles(coral_img, img_real_idx, x_centres, y_centres, z_centres, radius, colors,
+                            insert_names, initial_slice_tag, out_dir):
+    # test line
+    # mask_img, coral_img, img_real_idx, x_centres, y_centres, z_centres, radius, colors, insert_names, initial_slice_tag, out_dir = iterator[0]
     mean_grey_all_inserts = []
     coral_img = cv2.imread(coral_img, -1)
     mask_img = np.zeros((coral_img.shape[0], coral_img.shape[1], 3), dtype=np.uint8)
@@ -395,13 +317,6 @@ def get_grey_inside_circles(coral_img, img_real_idx, x_centres, y_centres, z_cen
 
 
 def build_iterator_for_parallelism(Dataframe, Phantom_folder):
-    """
-    This function builds a nested list iterator to be passed to multiprocessing to allow for parallel computing across the stack on a slice-wise fashion
-    :param Dataframe: reads a pandas dataframe containing X-ray metadata,  information for each of the slices across the stack, density insert parameters (predicted positions, associated colours for plotting)
-
-    :param Phantom_folder: used to indicate the output dir of masked density phantom images
-    :return:
-    """
     iterator = []
     # build iterator tuple
     out_dir = os.path.join(Phantom_folder, 'Phantom_Masks')
@@ -437,91 +352,84 @@ def build_iterator_for_parallelism(Dataframe, Phantom_folder):
             insert_names.append(insert_name)
 
         iterator.append(
-            (coral_img, img_real_idx, x_centres, y_centres, z_centres, radius, colors, insert_names, out_dir))
+            (coral_img, img_real_idx, x_centres, y_centres, z_centres, radius, colors, insert_names,
+             initial_slice_tag, out_dir))
 
     return iterator
 
-#TO INCLUDE IN THE FUTURE
+
 def DF_update(Dataframe):
-    """
-    Function to be released as future update
-    :param Dataframe:
-    :return: greyscale values extracted based on bootstrapping for error analysis.
-    """
+    # COMPLETE : TODO append to Dataframe start_position and end_position for series extraction based on series inflexions or visual
+    infls_dummy_list = []
+    # find inflexion points
+    for insert in range(0, len(Dataframe['InsertType'])):
+        infls_tested = []
+        series = literal_eval(Dataframe['Extracted_Grays'][insert])
+        # smooth
+        smooth = gaussian_filter1d(series, len(series) * 0.2)
+        # compute second derivative
+        smooth_d2 = np.gradient(np.gradient(smooth))
+        # find switching points
+        infls = np.where(np.diff(np.sign(smooth_d2)))[0]
 
-    print('This functionality needs to be implemented in the future.')
+        if len(infls) < 2:
+            infls_tested = [0, len(series)]
+        if len(infls) >= 2:
+            infls_tested = [min(infls), max(infls)]
 
-    # # COMPLETE : TODO append to Dataframe start_position and end_position for series extraction based on series inflexions or visual
-    # infls_dummy_list = []
-    # # find inflexion points
-    # for insert in range(0, len(Dataframe['InsertType'])):
-    #     infls_tested = []
-    #     series = literal_eval(Dataframe['Extracted_Grays'][insert])
-    #     # smooth
-    #     smooth = gaussian_filter1d(series, len(series) * 0.2)
-    #     # compute second derivative
-    #     smooth_d2 = np.gradient(np.gradient(smooth))
-    #     # find switching points
-    #     infls = np.where(np.diff(np.sign(smooth_d2)))[0]
-    #
-    #     if len(infls) < 2:
-    #         infls_tested = [0, len(series)]
-    #     if len(infls) >= 2:
-    #         infls_tested = [min(infls), max(infls)]
-    #
-    #     infls_dummy_list.append(infls_tested)
-    #
-    # Dataframe['Slice_range'] = ''
-    # Dataframe['Median_Gray_for_Calib'] = ''
-    # Dataframe['Median_CI_95'] = ''
-    # Dataframe['Median_StdError'] = ''
-    # Dataframe['Scan_name'] = ''
-    # Dataframe['Phantom_type'] = ''
-    #
-    # initial_slice_tag = literal_eval(Dataframe['XYZ'][0])[0][-1]
-    # for insert in range(0, len(Dataframe['InsertType'])):
-    #     Dataframe['Slice_range'][insert] = [item + initial_slice_tag for item in infls_dummy_list[insert]]
-    #
-    #     series = literal_eval(Dataframe['Extracted_Grays'][insert])
-    #     ranged = series[infls_dummy_list[insert][0]:
-    #                     infls_dummy_list[insert][1]]
-    #
-    #     # COMPLETE TODO append median gray for insert inside selected envelope
-    #     Dataframe['Median_Gray_for_Calib'][insert] = round(np.median(ranged), 2)
-    #     Dataframe['Scan_name'] = scan_name
-    #
-    #     # applying bootstrapping of median
-    #     # create 95% confidence interval for population median based on bootstrapping
-    #     np.random.seed(13)
-    #     boot_sample_medians = []
-    #     std_error = []
-    #     number_iterations = 10000
-    #
-    #     sample_1 = np.random.choice(series,
-    #                                 size=int(
-    #                                     len(series)))  # flag numbers in population to randomly change
-    #
-    #     for i in range(number_iterations):
-    #         boot_sample = np.random.choice(sample_1, replace=True, size=int(len(series)))
-    #         boot_median = np.median(boot_sample)
-    #         boot_sample_medians.append(boot_median)
-    #
-    #     # stand error and confidence interval of the median
-    #     # std
-    #     std_error = np.std(boot_sample_medians)
-    #     # the average value of repeated samples' median values
-    #     # C.I.
-    #     boot_median_CI = np.percentile(boot_sample_medians, [2.5, 97.5])
-    #     CI = boot_median_CI.tolist()
-    #
-    #     Dataframe['Median_CI_95'][insert] = CI
-    #     Dataframe['Median_StdError'][insert] = std_error
-    #     if len(Dataframe['InsertType']) <= 7:
-    #         answer = 'narrow'
-    #     else:
-    #         answer = 'extended'
-    #
-    #     Dataframe['Phantom_type'][insert] = answer.lower()
+        infls_dummy_list.append(infls_tested)
+
+    Dataframe['Slice_range'] = ''
+    Dataframe['Median_Gray_for_Calib'] = ''
+    Dataframe['Median_CI_95'] = ''
+    Dataframe['Median_StdError'] = ''
+    Dataframe['Scan_name'] = ''
+    Dataframe['Phantom_type'] = ''
+
+    initial_slice_tag = literal_eval(Dataframe['XYZ'][0])[0][-1]
+    for insert in range(0, len(Dataframe['InsertType'])):
+        Dataframe['Slice_range'][insert] = [item + initial_slice_tag for item in infls_dummy_list[insert]]
+
+        series = literal_eval(Dataframe['Extracted_Grays'][insert])
+        ranged = series[infls_dummy_list[insert][0]:
+                        infls_dummy_list[insert][1]]
+
+        # COMPLETE TODO append median gray for insert inside selected envelope
+        Dataframe['Median_Gray_for_Calib'][insert] = round(np.median(ranged), 2)
+        Dataframe['Scan_name'] = scan_name
+
+        # applying bootstrapping of median
+        # create 95% confidence interval for population median based on bootstrapping
+        np.random.seed(13)
+        boot_sample_medians = []
+        std_error = []
+        number_iterations = 10000
+
+        sample_1 = np.random.choice(series,
+                                    size=int(
+                                        len(series)))  # flag numbers in population to randomly change
+
+        for i in range(number_iterations):
+            boot_sample = np.random.choice(sample_1, replace=True, size=int(len(series)))
+            boot_median = np.median(boot_sample)
+            boot_sample_medians.append(boot_median)
+
+        # stand error and confidence interval of the median
+        # std
+        std_error = np.std(boot_sample_medians)
+        # the average value of repeated samples' median values
+        # C.I.
+        boot_median_CI = np.percentile(boot_sample_medians, [2.5, 97.5])
+        CI = boot_median_CI.tolist()
+
+        Dataframe['Median_CI_95'][insert] = CI
+        Dataframe['Median_StdError'][insert] = std_error
+        if len(Dataframe['InsertType']) <= 7:
+            answer = 'narrow'
+        else:
+            answer = 'extended'
+
+        Dataframe['Phantom_type'][insert] = answer.lower()
 
 
 if __name__ == "__main__":
@@ -529,46 +437,56 @@ if __name__ == "__main__":
     start_time = time.time()
     ############# - #initialize dictionaries - ##################
 
-    ##TODO load excel spreadsheet with phantom details
-
-    # this is a list in RGB (be aware sometimes matplotlib does bgr, so check plots down the line)
-    Color_list_dic = {'air': (255, 255, 255),
-                      'epoxy': (0, 0, 255),
-                      'insert1': (0, 255, 0),
-                      'insert2': (255, 0, 0),
-                      'insert3': (0, 255, 255),
-                      'insert4': (255, 255, 0),
-                      'insert5': (255, 0, 255),
-                      'sweetener': (0, 0, 128),
-                      'oil': (0, 128, 128),
-                      'coffee': (128, 128, 0),
-                      'aluminum': (0, 128, 0)}
-
-    Density_list_dic = {'air': 0.001225,
-                        'epoxy': 1.13,
-                        'insert1': 1.26,
-                        'insert2': 1.44,
-                        'insert3': 1.65,
-                        'insert4': 1.77,
-                        'insert5': 1.92,
-                        'sweetener': 0.1261,
-                        'oil': 0.904,
-                        'coffee': 0.26,
-                        'aluminum': 2.7
-                        }
+    #this is a list in RGB (be aware sometimes matplotlib does bgr, so check plots down the line)
+    # Color_list_dic = {'air': (255, 255, 255),
+    #                   'epoxy': (0, 0, 255),
+    #                   'insert1': (0, 255, 0),
+    #                   'insert2': (255, 0, 0),
+    #                   'insert3': (0, 255, 255),
+    #                   'insert4': (255, 255, 0),
+    #                   'insert5': (255, 0, 255),
+    #                   'sugar': (0, 0, 128),
+    #                   'oil': (0, 128, 128),
+    #                   'coffee': (128, 128, 0),
+    #                   'aluminum': (0, 128, 0)}
+    #
+    # Density_list_dic = {'air': 0.001225,
+    #                     'epoxy': 1.13,
+    #                     'insert1': 1.26,
+    #                     'insert2': 1.44,
+    #                     'insert3': 1.65,
+    #                     'insert4': 1.77,
+    #                     'insert5': 1.92,
+    #                     'sugar': 0.1261,
+    #                     'oil': 0.904,
+    #                     'coffee': 0.26,
+    #                     'aluminum': 2.7
+    #                     }
 
     ############# - MAIN CODE - ##################
-
     # find all dirs with phantom stacks
     folder_list, selected_project_dir, already_extracted = find_folders_with_image_stacks(target_file_type='.tif',
-                                                                                          dir_standard_types=['Phantom_Stack'],
-                                                                                          target_skipper_file="STANDARD_EXTRACTED")
+                                                                       dir_standard_types=['Phantom_Stack'],
+                                                                       target_skipper_file="STANDARD_EXTRACTED")
 
-    project_dir_list = [selected_project_dir]
-    # project_dir_list = ['CWI_Cores', 'CWI_Coral_Cores', 'NHM_fossils', 'NHM_scans', 'Experiment_NHM_phase', 'Testing', 'Test']  # default project dirnames used before, during testing
+    project_dir_list = ['CWI_Cores', 'CWI_Coral_Cores', 'NHM_fossils', 'NHM_scans', 'Experiment_NHM_phase', 'Testing', 'Test'] #default project dirnames used before
+    project_dir_list.append(selected_project_dir) #super important line so user defines which one is the project directory as the top level one they selected during dialog box
 
-    if folder_list:  #
+    #import phantom details from spreadsheet
+    root = Tk()
+    root.withdraw()
+    PhantomDetails = filedialog.askopenfilename(title='Select the spreadsheet with the Phantom information')
+    root.update()
+    dummy=pd.read_excel(PhantomDetails).to_dict(orient='list')
+
+    Color_list_dic = dict(zip(dummy["InsertName"], [eval(dummy["InsertRGB"][i]) for i in range(0,len(dummy["InsertRGB"]))])) #this converts RGB tuple pairs from str to int and zip together
+    Density_list_dic = dict(zip(dummy["InsertName"], dummy["InsertDensity"]))
+
+    if folder_list: #
         for folder in folder_list:  # looping over scan folders in main dir
+            # folder = folder_list[0]
+            # folder = "D:\\CWI_Core\\Core_Phantom_New\\orbit1\\recon"
+            # scan_name = folder.split('orbit')[0].split("\\")[2]
 
             scan_name = get_scan_name(folder_name=folder,
                                       dir_standard_names=project_dir_list)
@@ -578,9 +496,12 @@ if __name__ == "__main__":
             image_list = load_images_from_folder(folder, format='.tif')
             image_list.sort()  # sorting to make sure
 
-            target_slices = [0, len(image_list) - 1]  # doing 2 images #start, and #end of stack
+            target_slices = [0, int(len(image_list)) - 1]  # doing 2 images #start, middle and end of stack
 
-            Phantom_folder = os.path.join(selected_project_dir, scan_name, 'STANDARD_EXTRACT')
+
+            Phantom_folder = os.path.dirname(folder)
+            #Phantom_folder = os.path.join(selected_project_dir,scan_name, 'STANDARD_EXTRACT')
+
 
             # showing first image to user to define type of phantom (Extended or Narrow phantom)
             first_image = cv2.imread(image_list[0])
@@ -594,16 +515,16 @@ if __name__ == "__main__":
             first_image_rzise = cv2.resize(first_image, dimensions, interpolation=cv2.INTER_LINEAR)
 
             cv2.imshow("Resized image", first_image_rzise)
-            print(f'Displaying top slice of phantom stack...\n {image_list[0]}')
+            print(image_list[0])
             print("Look at the Phantom Image Displayed, then Press ESC to go back to cmd line")
             cv2.waitKey(0)
 
             while True:
                 try:
+
                     answer = input("Type in what kind of phantom was used (Extended or Narrow)?: \n")
                     if answer.lower() == 'extended':
-                        insert_list = ["Air", "Sweetener", "Coffee", "Oil", "Aluminum", "Epoxy",
-                                       "Insert1", "Insert2", "Insert3", "Insert4", "Insert5"]
+                        insert_list = dummy["InsertName"]
                         print(f"Phantom type is {answer}. Sample image window closed")
                         break
                     if answer.lower() == 'narrow':
@@ -629,6 +550,8 @@ if __name__ == "__main__":
                           'VoxelSize': []}
 
             # annotate manually on images to find displacement of centre of inserts
+            # images to sample centre of inserts are
+
             allx = []
             ally = []
             loop_no = 0
@@ -646,7 +569,7 @@ if __name__ == "__main__":
                 color_used = []
 
                 image = cv2.imread(image_list[item])
-                # print("Original shape: ", image.shape)
+                print("Original shape: ", image.shape)
 
                 height = image.shape[0]
                 width = image.shape[1]
@@ -658,7 +581,7 @@ if __name__ == "__main__":
                 dimensions = (new_width, new_height)
                 new_image = cv2.resize(image, dimensions, interpolation=cv2.INTER_LINEAR)
 
-                # print("New shape:", new_image.shape)
+                print("New shape:", new_image.shape)
 
                 # cv2.imshow("Resized image", new_image)
                 # cv2.waitKey(0)
@@ -668,16 +591,6 @@ if __name__ == "__main__":
                 counter = 0
 
                 dummy_list = [str.lower(insert_name) for insert_name in insert_list]
-
-                if loop_no != 0:
-                    print(
-                        "\n ============ \n "
-                        "The bottom slice of the phantom stack is displayed next \n"
-                        "Positions marked on the top slice will be overlaid as red dots")
-
-                    input("Press Enter to continue marking inserts \n "
-                          "============")
-
                 print("You'll be marking inserts from the list below:")
                 [print(str.lower(insert_name)) for insert_name in insert_list]
                 print(f"Click on centre point of one of the inserts you want to annotate:")
@@ -690,8 +603,6 @@ if __name__ == "__main__":
                 while True:
                     cv2.imshow("Resized image", new_image)
                     if cv2.waitKey(10) & 0xFF == 27:
-                        print(
-                            "Look at the real size of sampled areas. If too small, you'll be able to increase circular sampling areas in the next step.\nPress ESC.")
                         break
                 cv2.destroyAllWindows()  # when ESC is pressed
 
@@ -708,7 +619,7 @@ if __name__ == "__main__":
                 dictionary['Color_of_insert'].append(color_used)
                 dictionary['VoxelSize'].append(voxel_size)
 
-                # draw filled circles on black background as mask
+                # draw filled circle in white on black background as mask
                 mask = np.zeros((height, width, 3), dtype=np.uint8)
                 radius = int(10 * scale_factor)
 
@@ -729,7 +640,7 @@ if __name__ == "__main__":
                 # displaying
                 cv2.namedWindow("Resized image", cv2.WINDOW_KEEPRATIO)
                 cv2.imshow("Resized image", image_overlay)
-                # cv2.resizeWindow("Resized image", 400, 400)
+                cv2.resizeWindow("Resized image", 400, 400)
                 cv2.waitKey(0)
                 cv2.destroyAllWindows()
 
@@ -745,11 +656,10 @@ if __name__ == "__main__":
                 # validating user input
                 while True:
                     try:
-                        pct = int(input("type a number between 200-300 \n"))
-                        print('If satisfactory sampling areas are marked, press ESC.')
+                        pct = int(input("type a number between 1-300 \n"))
                         break
                     except ValueError:
-                        print("Type in a valid number")
+                        print("Sorry, type in a valid number")
 
                 radius = int(radius * (1 + pct / 100))
                 mask = np.zeros((height, width, 3), dtype=np.uint8)
@@ -772,7 +682,7 @@ if __name__ == "__main__":
                 # displaying
                 cv2.namedWindow("Resized image", cv2.WINDOW_KEEPRATIO)
                 cv2.imshow("Resized image", image_overlay)
-                # cv2.resizeWindow("Resized image", 400, 400)
+                cv2.resizeWindow("Resized image", 400, 400)
                 cv2.waitKey(0)
                 cv2.destroyAllWindows()
 
@@ -786,8 +696,7 @@ if __name__ == "__main__":
                 cv2.destroyAllWindows()
                 loop_no += 1
 
-            print("============")
-            print("Initiating Phantom Extraction for scan in multithreading...\n")
+            print("Initiating Phantom Extraction for scan in multithreading \n")
             # COMPLETE : TODO save overlay of image original and coloured inserts
             # COMPLETE: TODO for each insert with (X,Y,Z) pairs fit a 3D vertical linear model and get positions through the stack for insert centres
 
@@ -814,6 +723,7 @@ if __name__ == "__main__":
                     radius_dummy = dictionary['Radius'][iteration]
 
                 reorg_dic['XYZ'].append(position_list)
+                # reorg_dic['Slice_path'].append(dictionary['Slice_path'][iteration])
                 reorg_dic['Slice_path'].append(slice_list)
                 reorg_dic['VoxelSize'].append(voxel_size)
                 reorg_dic['Color_of_insert'].append(colordummy)
@@ -834,7 +744,7 @@ if __name__ == "__main__":
                 Color = np.array(DF['Color_of_insert'][insert_number])
                 predicted_centres = polynomial_regression3d(x, y, z, 2)
                 iteration_seq.append(predicted_centres)
-            print("Insert Centre positions predicted for the rest of the Phantom Stack...\n")
+            print("Insert Centre positions predicted for the rest of the Phantom Stack \n")
 
             pd.options.mode.chained_assignment = None  # default='warn' --> this supress the warning
             # COMPLETE: TODO append positions of centre circles to dataframe and prescribed densities
@@ -842,14 +752,13 @@ if __name__ == "__main__":
                 DF['Predicted_Circle_Centers_XYZ'][df_row] = iteration_seq[df_row]
                 DF['Measured_Density'][df_row] = Density_list_dic.get(DF['InsertType'][df_row])
 
+            print("Exporting Phantom insert masks for visualization")
             # COMPLETE: TODO function generate circle masks at each position across the stack for each insert - each image is an overlay of all predicted positions
 
             home_dir = Phantom_folder
             out_dir = os.path.join(home_dir, 'Phantom_Masks')
             if not os.path.isdir(out_dir):
                 os.mkdir(out_dir)
-
-            print("Exporting Phantom insert masks for visualization...")
             print(f"Phantom masks will be exported to {out_dir} \n")
 
             # get bounding box image dimensions
@@ -858,24 +767,21 @@ if __name__ == "__main__":
             mask = np.zeros((image_example[0], image_example[1], image_example[2]), dtype=np.uint8)
             gray_series = []
 
-            print('Building iterator for parallelism...')
-
+            print('Building iterator for parallelism')
             start_time2 = time.time()
             iterator = build_iterator_for_parallelism(Dataframe=DF, Phantom_folder=Phantom_folder)
             extracted_grays = []
-            print(f'--- Iterator created in {int(time.time() - start_time2)} seconds ---\n')
+            print("--- %s seconds ---" % (int(time.time() - start_time2)))
 
             ########### Paralelized  loop START  ############################
-            print(f"Multithreading began. This may take up to 3 min to complete")
-            with multiprocessing.Pool(processes=20) as p:
+            print(f"Multithreading began. This may take up to 3 min to complete \n")
+            with multiprocessing.Pool(processes=50) as p:
                 # EXTRACTED_GRAYS_MASTER = p.starmap(get_grey_inside_circles, iterator)
                 EXTRACTED_GRAYS_MASTER = p.starmap(get_grey_inside_circles, tqdm.tqdm(iterator, total=len(iterator)))
 
-            ########### Parallel loop END  ############################
-            print('Masks exported.')
-            print('============\n')
-            print('Saving results and diagnostic plots...')
-            # unpack GRAYS AND ADD TO DF FOR PLOTTING
+            ########### Paralelized  loop END  ############################
+
+            # unpack GRAYS MASTER AND ADD TO DF FOR PLOTTING
             DF['Extracted_Grays'] = ''
             # # COMPLETE: TODO append mean_gray_series to each insert in dataframe
             for insert_number in range(0, len(DF['InsertType'])):
@@ -887,8 +793,8 @@ if __name__ == "__main__":
             # Saving Dataframe logfile, so if needed to update phantom final file there's no need to click on inserts and do manual extraction again, simply read this file in update mode
             DF.to_excel(os.path.join(Phantom_folder, f"PhantomLogFile_{scan_name}.xlsx"), index=False)
 
-            # COMPLETE : TODO append to DF start_position and end_position for series extraction based on series inflexions
-            # APPENDING EXTRA COLUMNS (BELOW IS SIMILAR TO DF_UPDATE function)
+            # COMPLETE : TODO append to DF start_position and end_position for series extraction based on series inflexions or visual
+            #APPENDING EXTRA COLUMNS (BELOW IS SIMILAR TO DF_UPDATE function)
             infls_dummy_list = []
             # find inflexion points
             for insert in range(0, len(DF['InsertType'])):
@@ -1004,13 +910,12 @@ if __name__ == "__main__":
             # find common interval
             # overlap_range = find_overlapping_range(infls_dummy_list)
             # ax.axvspan(max(overlap_range), min(overlap_range), alpha=0.1, color='magenta', fill=('/'))
-
             ax.set_ylim([0, 70000])
             # Shrink current axis by 20%
             box = ax.get_position()
             ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
             # Put a legend to the right of the current axis
-            ax.legend(label_list, loc='center left', bbox_to_anchor=(1, 0.5))
+            ax.legend(label_list, loc='center left', bbox_to_anchor=(1, 0.5), fontsize='small')
             ax.grid('on')
             # ax.legend(loc='upper right')
             ax.set_xlabel('Slice number')
@@ -1024,18 +929,16 @@ if __name__ == "__main__":
             # COMPLETE todo convert Dataframe to CSV spreadsheet
             DF.to_excel(os.path.join(Phantom_folder, f"STANDARD_EXTRACTED_VALUES_{scan_name}.xlsx"), index=False)
 
-            if answer.lower() == 'extended':  # if extended phantom, then also save a file with just the 5 inserts and epoxy --> for comparisson on how the fit improves when having extended phantom
+            if answer.lower() =='extended': #if extended phantom, then also save a file with just the 5 inserts and epoxy --> for comparisson on how the fit improves when having extended phantom
                 df = DF
-                # df.drop(df[df['InsertType'] == 'air'].index, inplace=True)
-                df.drop(df[df['InsertType'] == 'sweetener'].index, inplace=True)
+                #df.drop(df[df['InsertType'] == 'air'].index, inplace=True)
+                df.drop(df[df['InsertType'] == 'sugar'].index, inplace=True)
                 df.drop(df[df['InsertType'] == 'oil'].index, inplace=True)
                 df.drop(df[df['InsertType'] == 'coffee'].index, inplace=True)
                 df.drop(df[df['InsertType'] == 'aluminum'].index, inplace=True)
                 df.to_excel(os.path.join(Phantom_folder, f"STANDARD_EXTRACTED_VALUES_{scan_name}_PNarrow.xlsx"))
 
-            print('Density phantom extraction finished!')
-
-    if already_extracted:  # all files extracted and we have items in 'already_extracted'
+    if already_extracted: #all files extracted and we have items in 'already_extracted'
         userInput = ''
         while userInput.lower() not in ['y', 'yes', 'n', 'no']:
             userInput = input('Would you like to perform a file update on Phantom Files? (Y/N): ')
@@ -1045,21 +948,24 @@ if __name__ == "__main__":
             print('Entered file update mode')
 
             for folder in already_extracted:
-                # TODO append median confidence interval for each insert in STANDARD_EXTRACT_FILE
+               #TODO append median confidence interval for each insert in STANDARD_EXTRACT_FILE
                 scan_name = get_scan_name(folder_name=folder,
                                           dir_standard_names=project_dir_list)
 
-                Phantom_folder = os.path.join(selected_project_dir, scan_name, 'STANDARD_EXTRACT')
 
-                for file in glob.glob(os.path.join(Phantom_folder, 'STANDARD_EXTRACTED') + '*.xlsx'):
+                Phantom_folder = os.path.join(selected_project_dir,scan_name, 'STANDARD_EXTRACT')
+
+
+
+                for file in glob.glob(os.path.join(Phantom_folder,'STANDARD_EXTRACTED') + '*.xlsx'):
                     print('Located the following file to update')
                     print(file)
-                    DF = pd.read_excel(file, index_col=0)  # importing data form excel file
+                    DF = pd.read_excel(file, index_col=0) #importing data form excel file
 
-                    # TODO: amend with updates on DF
+                    #TODO: amend with updates on DF
 
                     ##### HERE'S WHERE UPDATES HAPPEN
-                    # TODO existing phantom files need to be replaced following bootstrapping reanalyses of greyscale probing
+
                     DF_update(Dataframe=DF)
                     # COMPLETE overwrite spreadsheet
                     print('Overwriting file...')
@@ -1070,4 +976,5 @@ if __name__ == "__main__":
         elif userInput == 'n' or userInput == 'no':
             print('Exiting file update mode...')
 
-    print(f"Runtime {int((time.time() - start_time))} seconds")
+
+    print("--- %s seconds ---" % (time.time() - start_time))
