@@ -10,19 +10,19 @@ The target volume (shown with 'orange' colormapping) is a scan of the same speci
 
 You'll want to give a computer a headstart first, by manually manipulating the orange volume, so that it is closely matching with the grey volume. Otherwise, this process can take a couple of hours. 
 
-![alt text]( https://github.com/LeoBertini/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/Step1.gif)
+<img src="AvizoTutorials/GIF_images/Step1.gif" width="110%" height="110%">
 
 # 2. Repeat
 
 Apply the image registration step from (1) again to ensure a perfect match. 
 
-![alt text](https://github.com/LeoBertini/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/Step2.gif)
+<img src="AvizoTutorials/GIF_images/Step2.gif" width="110%" height="110%">
 
 # 3. Voxel resampling and fixing coordinate system
 
 This step ensures that the both the coordinate system and the voxelized structure of the orange volume are the same as those of the reference volume.
 
-![alt text](https://github.com/LeoBertini/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/Step3.gif)
+<img src="AvizoTutorials/GIF_images/Step3.gif" width="110%" height="110%">
 
 # 4. Volume Segmentation
 
@@ -34,7 +34,7 @@ to expand the selection across the entire slice stack every single time you adju
 Once you are happy with the selected portions of the volume, this can be added to a material.
 In this case the material is called 'Inside'. 
 
-![alt text]( https://github.com/LeoBertini/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/Step4.gif )
+<img src="AvizoTutorials/GIF_images/Step4.gif" width="110%" height="110%">
 
 This creates a binary mask that is linked to the coral volume on the Project View panel. 
 
@@ -43,7 +43,7 @@ This creates a binary mask that is linked to the coral volume on the Project Vie
 This step 'masks' the volume based on the binary mask created before, so we can generate a histogram of the
 16-bit µCT dataset containing only voxel intensities and counts from the shrinkwrapped volume. 
 
-![alt text](https://github.com/LeoBertini/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/Step5and6.gif)
+<img src="AvizoTutorials/GIF_images/Step5and6.gif" width="110%" height="110%">
 
 # 6. Extracting surface area and other volume metrics 
 
@@ -53,7 +53,7 @@ Using the masked shrinkwrapped volume, we now can extract a range of metrics.
 
 Attach a 'Generate Surface module' to the label field.
 
-![alt text]( https://github.com/LeoBertini/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/ImagesVolmetrics/Picture1.png )
+<img src="AvizoTutorials/GIF_images/ImagesVolmetrics/Picture1.png" width="100%" height="100%">
 
 ## Step 2: Simplify surface 
 
@@ -63,13 +63,13 @@ make calculations run a lot faster.
 This overwrites the surface object, so if you want to see a Before/After then duplicate and simplify on the copied surface object instead. 
 - Preserve slice structure and you can also hit fast
 
-![alt text]( https://github.com/LeoBertini/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/ImagesVolmetrics/Picture2.png )
+<img src="AvizoTutorials/GIF_images/ImagesVolmetrics/Picture2.png" width="100%" height="100%">
 
 ## Step 3: Smooth surface 
 
 Attach a Smooth Surface module to the simplified surface object (set iterations to 3)
 
-![alt text]( https://github.com/LeoBertini/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/ImagesVolmetrics/Picture3.png )
+<img src="AvizoTutorials/GIF_images/ImagesVolmetrics/Picture3.png" width="100%" height="100%">
 
 
 ## Step 4: Get general volume statistics
@@ -84,7 +84,7 @@ Measure Group should be a default or a saved group that includes for example the
 
 Look at the ‘.analysis’ object for results table
 
-![alt text]( https://github.com/LeoBertini/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/ImagesVolmetrics/Picture4.png )
+<img src="AvizoTutorials/GIF_images/ImagesVolmetrics/Picture4.png" width="110%" height="110%">
 
 ### Optional: Get different measures in 3D 
 
@@ -96,13 +96,13 @@ Look at the ‘.analysis’ object for results table.
 
 ## Step 5 - Save information in a '.VolMetrics' file
 
-Open any text editor (e.g., Notepad or TextEdit) and insert volume information alogside the specimen's RealWeight as displayed below:
+Open any text editor (e.g., Notepad or TextEdit) and insert volume information alongside the specimen's RealWeight as displayed below:
 
-<img src="https://github.com/LeoBertini/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/ImagesVolmetrics/Picture5.png" height="400" width="600" >
+<img src="AvizoTutorials/GIF_images/ImagesVolmetrics/Picture5.png" height="400" width="600" >
 
 Then save with extension '.VolMetrics' into the respective scan folder.
 
-![alt text]( https://github.com/LeoBertini/CoralMethodsPaper/blob/main/AvizoTutorials/GIF_images/ImagesVolmetrics/Picture6.png )
+<img src="AvizoTutorials/GIF_images/ImagesVolmetrics/Picture6.png" width="110%" height="110%">
 
 
 ## Project Directory structure
@@ -110,20 +110,21 @@ Then save with extension '.VolMetrics' into the respective scan folder.
 The following folder structure is advised as this ensures code runs smoothly and subsequent files are saved in the right places.
 The ProjectRoot can be any folder under which single-scan folders are saved. See example below:
 
-![alt text](https://github.com/LeoBertini/CoralMethodsPaper/blob/main/PhantomExtraction/GIFs/DirectoryTreeExample.jpg)
+<img src="PhantomExtraction/GIFs/DirectoryTreeExample.jpg" width="80%" height="80%">
+
 
 **Inside the scan folder, the following files can be found:**
 
 - X-ray volume and reconstruction configuration files (respectively ***.raw***, ***.vgi*** and ***.xtekVolume*** extensions)
 - a text file containing information about the specimen and additional volumetric measurements (***.VolMetrics*** extension)
 - the histogram of the shrinkwraped masked volume (***.csv*** extension)
-- the results from weight tests (***.xlsx*** extension) - created after running [Phantom_Fittings.py](https://github.com/LeoBertini/CoralMethodsPaper/blob/main/CoralWeightTests)
-- diagnostic plots from calibration curves and respective weight tests (***.png*** extension) - created after running [WeightTest_DiagnosticFigures.py](https://github.com/LeoBertini/CoralMethodsPaper/blob/main/CoralWeightTests)
+- the results from mass tests (***.xlsx*** extension) - created after running [Phantom_Fittings.py](../CoralMassTests/Phantom_Fittings.py)
+- diagnostic plots from calibration curves and respective mass tests (***.png*** extension) - created after running [MassTest_DiagnosticFigures.py](../CoralMassTests/MassTest_DiagnosticFigures.py)
 
 Additionally, scan folders should have secondary directories containing:
 
 - a .tif image stack of the X-ray scan  (***'TIFF'***), which can be exported through Avizo® or using Fiji/ImageJ.
-- density standard extraction (***'STANDARD_EXTRACT'*** ). Refer to [PhantomExtraction](https://github.com/LeoBertini/CoralMethodsPaper/blob/main/PhantomExtraction) for more info
+- density standard extraction (***'STANDARD_EXTRACT'*** ). Refer to [PhantomExtraction](../PhantomExtraction) for more info. 
 
 
 

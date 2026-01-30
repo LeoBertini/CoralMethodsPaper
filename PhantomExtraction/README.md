@@ -52,5 +52,5 @@ A phantom's bottom slice which was marked for probing areas looks like this:
 The results are saved on a spreadsheet *'STANDARD_EXTRACTED_VALUES_ScanXX.xlsx'*.
 A plot of the greyscale series and median grey values for each insert is also created for diagnostic purposes.
 
-![PhantomExtractedValuesOverlay.png](GIFs/PhantomExtractedValuesOverlay.png)
+<img src="GIFs/PhantomExtractedValuesOverlay.png" width="80%" height="80%">
 
