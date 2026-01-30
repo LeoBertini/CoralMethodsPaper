@@ -9,7 +9,7 @@ Make sure your ProjectRoot contains individualized folders for each scans with s
 The ProjectRoot can be any folder under which single-scan folders are saved. 
 See example below:
 
-<img src="PhantomExtraction/GIFs/DirectoryTreeExample.jpg" width="80%" height="80%">
+<img src="../PhantomExtraction/GIFs/DirectoryTreeExample.jpg" width="80%" height="80%">
 
 **Inside the scan folder, the following files can be found:**
 
@@ -43,7 +43,7 @@ This involves:
 See example below:
 
 <p align="center">
-  <img src="CoralMassTests/IMGs/PowerShellExample.png" width="110%" height="110%" >
+  <img src="../CoralMassTests/IMGs/PowerShellExample.png" width="110%" height="110%" >
 </p>
 
 You'll be prompted to indicate the ProjectRoot containing all the individual scan folders.
@@ -51,7 +51,7 @@ Input files used are: *ScanXX.xtekVolume*, *Histogram-ScanXX.csv* and *STANDARD_
 Once the code is running, some results are printed out to the screen
 
 <p align="center">
-  <img src="CoralMassTests/IMGs/PowerShellExample2.png" >
+  <img src="../CoralMassTests/IMGs/PowerShellExample2.png" >
 </p>
 
 The code will run in 'parallel' across the entire project tree for all scan folders.
@@ -60,13 +60,13 @@ When the run is complete, additional files with results and diagnostic figures w
 See example below (new files are highlighted)
 
 <p align="center">
-  <img src="CoralMassTests/IMGs/CreatedFilesExample1.png" >
+  <img src="../CoralMassTests/IMGs/CreatedFilesExample1.png" >
 </p>
 
 Next, you can call [MassTest_DiagnosticFigures.py](MassTest_DiagnosticFigures.py) which creates diagnostic plots like the one below:
 
 <p align="center">
-  <img src="CoralMassTests/IMGs/Example_Diagnostic_Plots_Scan_LB_0043.png" >
+  <img src="../CoralMassTests/IMGs/Example_Diagnostic_Plots_Scan_LB_0043.png" >
 </p>
 
 You can use [ResultsAggregator.py](ResultsAggregator.py) to merge .VolMetrics data to the resulting dataframe and also go through the ProjectRoot and bind all the results into a single spreadsheet. 
@@ -74,5 +74,5 @@ You can use [ResultsAggregator.py](ResultsAggregator.py) to merge .VolMetrics da
 In the end, you should have a scan directory populated with the highlighted files:
 
 <p align="center">
-  <img src="CoralMassTests/IMGs/CreatedFilesExample2.png" >
+  <img src="../CoralMassTests/IMGs/CreatedFilesExample2.png" >
 </p>
