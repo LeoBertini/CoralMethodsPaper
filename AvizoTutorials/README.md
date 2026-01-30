@@ -10,6 +10,7 @@ The target volume (shown with 'orange' colormapping) is a scan of the same speci
 
 You'll want to give a computer a headstart first, by manually manipulating the orange volume, so that it is closely matching with the grey volume. Otherwise, this process can take a couple of hours. 
 
+![Step1.gif](GIF_images/Step1.gif)
 <img src="AvizoTutorials/GIF_images/Step1.gif" width="110%" height="110%">
 
 # 2. Repeat
