@@ -28,31 +28,31 @@ Copy the slice range to ProjecRoot/ScanXX/STANDARD_EXTRACT/PhantomStack.
 
 ## Step 2 - Run Phantom Extraction code 
  
-Run [SemiAutomated_Extraction_Phantom.py](SemiAutomated_Extraction_Phantom.py) 
-[SemiAutomated_Extraction_Phantom.py](https://github.com/LeoBertini/CoralMethodsPaper/blob/main/PhantomExtraction/SemiAutomated_Extraction_Phantom.py) from any Terminal (e.g., Windows PowerShell) by
+Run [SemiAutomated_Extraction_Phantom.py](SemiAutomated_Extraction_Phantom.py) from any Terminal (e.g., Windows PowerShell) by
 specifying a phyton installation from an environment in which all [requirements.txt](https://github.com/LeoBertini/CoralMethodsPaper/blob/main/requirements.txt) have been installed. 
 
 You will be prompted to specify the ProjectRoot, then you will be asked to mark phantom inserts on all scans inside ProjectRoot on just the top and bottom slices of phantom stacks.
 
-You will be asked to enter which type of phantom design you are adopting (Extended or Normal).
+You will be asked to import a template spreadsheet [PhantomDetails.xlsx](PhantomDetails.xlsx) containing details of your Phantom and then enter which type of phantom design you are adopting (Extended or Normal). 
 After this, you'll click on the centre of each insert and type their names in the screen (as shown below).
 Make sure you also probe for 'air' in an area that is free from artifacts or noise from materials used to wrap the sample.
 
 After marking on all available inserts on the top slice of the stack, you choose a scaling factor to expand the sampled area inside each insert.
-This scaling factor allows for adjustments across scans of different resolutions (usually a scalling factor between 200-300 is ideal for scans with resolutions between 50-100 µm)
+This scaling factor allows for adjustments across scans of different resolutions (usually a scaling factor between 200-300 is ideal for scans with resolutions between 50-100 µm)
 Then, the bottom slice will be brought forward for marking. Initial positions on the top slice are shown as 'red dots' for guidance. 
 
 After marking the inserts again, positions across the entire phantom stack are predicted and greyscale values extracted.
-![alt text](https://github.com/LeoBertini/CoralMethodsPaper/blob/main/PhantomExtraction/GIFs/PhantomExtract3.gif)
+
+![PhantomExtract3.gif](GIFs/PhantomExtract3.gif)
 
 A phantom's bottom slice which was marked for probing areas looks like this:
-![alt text](https://github.com/LeoBertini/CoralMethodsPaper/blob/main/PhantomExtraction/GIFs/PhantomMarkedExample.png)
+
+![PhantomMarkedExample.png](GIFs/PhantomMarkedExample.png)
 
 The results are saved on a spreadsheet *'STANDARD_EXTRACTED_VALUES_ScanXX.xlsx'*.
 A plot of the greyscale series and median grey values for each insert is also created for diagnostic purposes.
 
-![alt text](https://github.com/LeoBertini/CoralMethodsPaper/blob/main/PhantomExtraction/GIFs/PhantomExtractedValuesOverlay.png)
-
+![PhantomExtractedValuesOverlay.png](GIFs/PhantomExtractedValuesOverlay.png)
 
 
 
