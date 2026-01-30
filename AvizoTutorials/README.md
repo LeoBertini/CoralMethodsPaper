@@ -16,13 +16,13 @@ You'll want to give a computer a headstart first, by manually manipulating the o
 
 Apply the image registration step from (1) again to ensure a perfect match. 
 
-<img src="AvizoTutorials/GIF_images/Step2.gif" width="110%" height="110%">
+<img src="GIF_images/Step2.gif" width="110%" height="110%">
 
 # 3. Voxel resampling and fixing coordinate system
 
 This step ensures that the both the coordinate system and the voxelized structure of the orange volume are the same as those of the reference volume.
 
-<img src="AvizoTutorials/GIF_images/Step3.gif" width="110%" height="110%">
+<img src="GIF_images/Step3.gif" width="110%" height="110%">
 
 # 4. Volume Segmentation
 
@@ -34,7 +34,7 @@ to expand the selection across the entire slice stack every single time you adju
 Once you are happy with the selected portions of the volume, this can be added to a material.
 In this case the material is called 'Inside'. 
 
-<img src="AvizoTutorials/GIF_images/Step4.gif" width="110%" height="110%">
+<img src="GIF_images/Step4.gif" width="110%" height="110%">
 
 This creates a binary mask that is linked to the coral volume on the Project View panel. 
 
@@ -43,7 +43,7 @@ This creates a binary mask that is linked to the coral volume on the Project Vie
 This step 'masks' the volume based on the binary mask created before, so we can generate a histogram of the
 16-bit µCT dataset containing only voxel intensities and counts from the shrinkwrapped volume. 
 
-<img src="AvizoTutorials/GIF_images/Step5and6.gif" width="110%" height="110%">
+<img src="GIF_images/Step5and6.gif" width="110%" height="110%">
 
 # 6. Extracting surface area and other volume metrics 
 
@@ -53,7 +53,7 @@ Using the masked shrinkwrapped volume, we now can extract a range of metrics.
 
 Attach a 'Generate Surface module' to the label field.
 
-<img src="AvizoTutorials/GIF_images/ImagesVolmetrics/Picture1.png" width="100%" height="100%">
+<img src="GIF_images/ImagesVolmetrics/Picture1.png" width="100%" height="100%">
 
 ## Step 2: Simplify surface 
 
@@ -63,13 +63,13 @@ make calculations run a lot faster.
 This overwrites the surface object, so if you want to see a Before/After then duplicate and simplify on the copied surface object instead. 
 - Preserve slice structure and you can also hit fast
 
-<img src="AvizoTutorials/GIF_images/ImagesVolmetrics/Picture2.png" width="100%" height="100%">
+<img src="GIF_images/ImagesVolmetrics/Picture2.png" width="100%" height="100%">
 
 ## Step 3: Smooth surface 
 
 Attach a Smooth Surface module to the simplified surface object (set iterations to 3)
 
-<img src="AvizoTutorials/GIF_images/ImagesVolmetrics/Picture3.png" width="100%" height="100%">
+<img src="GIF_images/ImagesVolmetrics/Picture3.png" width="100%" height="100%">
 
 
 ## Step 4: Get general volume statistics
@@ -84,7 +84,7 @@ Measure Group should be a default or a saved group that includes for example the
 
 Look at the ‘.analysis’ object for results table
 
-<img src="AvizoTutorials/GIF_images/ImagesVolmetrics/Picture4.png" width="110%" height="110%">
+<img src="GIF_images/ImagesVolmetrics/Picture4.png" width="110%" height="110%">
 
 ### Optional: Get different measures in 3D 
 
@@ -98,11 +98,11 @@ Look at the ‘.analysis’ object for results table.
 
 Open any text editor (e.g., Notepad or TextEdit) and insert volume information alongside the specimen's RealWeight as displayed below:
 
-<img src="AvizoTutorials/GIF_images/ImagesVolmetrics/Picture5.png" height="400" width="600" >
+<img src="GIF_images/ImagesVolmetrics/Picture5.png" height="400" width="600" >
 
 Then save with extension '.VolMetrics' into the respective scan folder.
 
-<img src="AvizoTutorials/GIF_images/ImagesVolmetrics/Picture6.png" width="110%" height="110%">
+<img src="GIF_images/ImagesVolmetrics/Picture6.png" width="110%" height="110%">
 
 
 ## Project Directory structure
@@ -110,7 +110,7 @@ Then save with extension '.VolMetrics' into the respective scan folder.
 The following folder structure is advised as this ensures code runs smoothly and subsequent files are saved in the right places.
 The ProjectRoot can be any folder under which single-scan folders are saved. See example below:
 
-<img src="PhantomExtraction/GIFs/DirectoryTreeExample.jpg" width="80%" height="80%">
+<img src="../PhantomExtraction/GIFs/DirectoryTreeExample.jpg" width="80%" height="80%">
 
 
 **Inside the scan folder, the following files can be found:**
