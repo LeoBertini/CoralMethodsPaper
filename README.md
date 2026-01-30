@@ -8,7 +8,7 @@ This repository contains Supporting Material with code, data processing tutorial
                         
                         Corresponding author: Leonardo Bertini
                         
-                        e-mail : l.bertini@nhm.ac.uk | l.bertini@bristol.ac.uk
+                        e-mail : l.bertini@nhm.ac.uk | l.bertini@bristol.ac.uk 
 
       The code is distributed under the MIT license https://en.wikipedia.org/wiki/MIT_License
 
@@ -17,12 +17,13 @@ This project was supported by:
 - [4D-Reef](https://www.4d-reef.eu/), a Marie Skłodowska-Curie Innovative Training Network funded by European Union Horizon 2020 research and innovation programme
 - The [Natural History Museum](https://www.nhm.ac.uk/) Science Investment Fund. 
 - [SYNTHESIS+](https://www.synthesys.info/) museum initiative transnational access.
+- The [University of Bristol](https://www.bristol.ac.uk/earthsciences/) Covid Recovery Fund. 
+
 
 This work was a joint effort across people from the following institutions:
 <p align="center">
-  <img src="https://github.com/LeoBertini/CoralMethodsPaper/blob/main/PhantomExtraction/GIFs/LogoInstitutions.png" height="300" width="600" >
+<img src="./PhantomExtraction/GIFs/LogoInstitutions.png" alt="drawing" height="300" width="600"/>
 </p>
-
 
 Below, you'll find a brief description of all the directories in this repository, which might have their own 'README' files with further info.
 

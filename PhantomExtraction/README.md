@@ -10,8 +10,7 @@ Generate a .tif stack containing slices of the entire scan. You can use Avizo® 
 This utility plugin creates a TIFF folder containing the XY stack within each scan directory saved under a root directory. 
 
 See example below:
-
-![alt text](https://github.com/LeoBertini/CoralMethodsPaper/blob/main/PhantomExtraction/GIFs/PhantomExtract1.gif)
+![PhantomExtract1.gif](GIFs/PhantomExtract1.gif)
 
 ### 1.2 Select phantom range
 Select only part of the stack containing the phantom and where all inserts are visible (including attached materials).
