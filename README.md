@@ -4,13 +4,13 @@ This repository contains Supporting Material with code, data processing tutorial
 
     **"How to quantify and minimise error in coral skeletal density estimates using X-ray µCT"**
 
-                        (link to paper and DOI once published).
+                        (link to paper URL and DOI once published).
                         
                         Corresponding author: Leonardo Bertini
                         
-                        e-mail : l.bertini@nhm.ac.uk | l.bertini@bristol.ac.uk 
+                    e-mail : l.bertini@nhm.ac.uk | l.bertini@bristol.ac.uk
 
-      The code is distributed under the MIT license https://en.wikipedia.org/wiki/MIT_License
+      The code is distributed under a CC-BY license https://creativecommons.org/licenses/by/4.0/
 
 
 This project was supported by:
@@ -37,20 +37,20 @@ Instructions for X-ray volume operations using Avizo® covering :
 
 - How to export 16-bit single-binned histogram datasets for large X-ray volumes
 
-- How to extract volume metrics (e.g., Volume and SurfaceArea for example)
+- How to extract volume metrics (e.g., Volume and SurfaceArea)
 
 - How to create a '.VolMetrics' file containing information from a respective scan
 
 ## [PhantomExtraction](PhantomExtraction)
 
-Python code for extracting greyscale values from an X-ray stack containing a phantom disc with embedded density standard materials (i.e., 'greyscale probing'):
+Python code for extracting greyscale values from an X-ray stack of a density phantom disc containing embedded density standard materials (i.e., 'greyscale probing'):
 
 -[SemiAutomated_Extraction_Phantom.py](PhantomExtraction/SemiAutomated_Extraction_Phantom.py): Extraction across the stack by prompting user interaction to mark density standard materials embedded in or attached around a radiology phantom.  
 
 - [ExtractStandard.py](PhantomExtraction/ExtractStandard.py): Automated extraction of phantom density inserts using computer vision to detect regular circular features across the phantom stack. 
 
 ## [CoralMassTests](CoralMassTests)
-Python code for density calibration and mass tests on X-ray µCT volumes that have been previously shrinkwraped (Refer to [AvizoTutorials](AvizoTutorials)) :
+Python code for density calibration and mass tests on X-ray µCT volumes that have been previously shrinkwraped (refer to [AvizoTutorials](AvizoTutorials)) :
 
 - [Phantom_Fittings.py](CoralMassTests/Phantom_Fittings.py): Fitting different calibration curves to PhantomExtract results and performing mass tests.
 
@@ -62,7 +62,7 @@ Python code for density calibration and mass tests on X-ray µCT volumes that ha
 Python code for generating figures of X-ray histograms of replicate scans done under varying settings
 
 - [Histogram_overlays.py](HistogramsReplicateScans/Histogram_overlays.py)
-- 
+
 ## [R_ScriptsMainFiguresAndStats](R_ScriptsMainFiguresAndStats)
 
 R code to produce all base figures used in the publication. Statistical analyses therein. 

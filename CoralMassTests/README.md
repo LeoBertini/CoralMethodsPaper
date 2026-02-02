@@ -5,7 +5,7 @@ A brief description of each Python script is given below:
 
 ## Directory structure
 
-Make sure your ProjectRoot contains individualized folders for each scans with specific subdirectories as this ensures code runs smoothly and subsequent files are saved in the right places .
+Make sure your ProjectRoot contains individualized folders for each scan with specific subdirectories so that the code runs smoothly and subsequent files are saved in the right places.
 The ProjectRoot can be any folder under which single-scan folders are saved. 
 See example below:
 
@@ -28,11 +28,14 @@ Additionally, scan folders should have secondary directories containing:
 ## Usage
 
 Configure a python environment and install all necessary libraries/packages (see [requirements.txt](../requirements.txt)).
-Make sure to run python code from terminal clients such as ***Windows PowerShell*** (code won't run from a Python Console in some platforms, due to multi-threading optimization). 
+Make sure to run python code from terminal clients such as ***Windows PowerShell*** or the ***macOS Terminal*** (code won't run from a Python Console from within some IDEs due to multi-threading optimization). 
 
-Specify your phython.exe from within your environment installation followed by the path to [Phantom_Fittings.py](Phantom_Fittings.py).
+Specify your phython install from within your environment installation followed by the path to [Phantom_Fittings.py](Phantom_Fittings.py).
 
-           <user> ...PythonEnvironment/path_to/python CoralmassTests/Phantom_Fittings.py
+```bash          
+(venv)
+<user> ...PythonEnvironment/path_to/python CoralmassTests/Phantom_Fittings.py
+```
 
 This involves: 
 - fitting different calibration curves using both linear, 3rd-degree polynomial, gaussian and exponential relationships across inserts from adopted phantom (11-point Extended or 6-point narrow) with their subvariations. 
@@ -54,9 +57,9 @@ Once the code is running, some results are printed out to the screen
   <img src="../CoralMassTests/IMGs/PowerShellExample2.png" >
 </p>
 
-The code will run in 'parallel' across the entire project tree for all scan folders.
+The code will run in 'parallel' across the entire project tree for all scan folders (~81 acquisitions).
 Runtime is ~60 min (machine used had Intel Xeon 2.30 GHz 16-core CPU).
-When the run is complete, additional files with results and diagnostic figures will have been saved on the scan's directory.
+When the run is complete, additional files with results and diagnostic figures will have been saved on their respective scan directory.
 See example below (new files are highlighted)
 
 <p align="center">
