@@ -928,7 +928,6 @@ if __name__ == "__main__":
             # COMPLETE todo convert Dataframe to CSV spreadsheet
             #patch to address 'np.float64' and other 'np.XXnn' labels being carried onto the spreadsheet
             np.set_printoptions(legacy='1.25')
-
             DF.to_excel(os.path.join(Phantom_folder, f"STANDARD_EXTRACTED_VALUES_{scan_name}.xlsx"), index=False)
 
             if answer.lower() =='extended': #if extended phantom, then also save a file with just the 5 inserts and epoxy --> for comparisson on how the fit improves when having extended phantom
