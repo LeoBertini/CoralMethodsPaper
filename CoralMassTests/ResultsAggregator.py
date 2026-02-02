@@ -1,13 +1,11 @@
-
-#  This software was developed by Leonardo Bertini (l.bertini@nhm.ac.uk) at the Natural History Museum (London,UK).
+#  This software was developed by Leonardo Bertini (l.bertini@nhm.ac.uk) at the Natural History Museum (London,UK) and the University of Bristol (UK)
 #
 #  This is released as Supporting Material as part of the following publication:
-#  "XXXXXX" (link to paper and DOI once published).
-#  #
+#  "How to quantify and minimise error in coral skeletal density estimates using X-ray µCT"
 #
 #  Copyright (c) 2023.
 #
-#  The code is distributed under the MIT license https://en.wikipedia.org/wiki/MIT_License
+#  The code is distributed under the CC-BY license https://creativecommons.org/licenses/by/4.0/
 
 import numpy as np
 import os
