@@ -1,12 +1,11 @@
-#  This software was developed by Leonardo Bertini (l.bertini@nhm.ac.uk) at the Natural History Museum (London,UK).
+#  This software was developed by Leonardo Bertini (l.bertini@nhm.ac.uk) at the Natural History Museum (London,UK) and the University of Bristol (UK)
 #
 #  This is released as Supporting Material as part of the following publication:
-#  "XXXXXX" (link to paper and DOI once published).
-#  #
+#  "How to quantify and minimise error in coral skeletal density estimates using X-ray µCT"
 #
 #  Copyright (c) 2023.
 #
-#  The code is distributed under the MIT license https://en.wikipedia.org/wiki/MIT_License
+#  The code is distributed under the CC-BY license https://creativecommons.org/licenses/by/4.0/
 
 import cv2
 import numpy as np
@@ -927,6 +926,9 @@ if __name__ == "__main__":
             plt.savefig(os.path.join(Phantom_folder, f"Overlay_Extracted_Vals_{scan_name}.png"), dpi=300)
 
             # COMPLETE todo convert Dataframe to CSV spreadsheet
+            #patch to address 'np.float64' and other 'np.XXnn' labels being carried onto the spreadsheet
+            np.set_printoptions(legacy='1.25')
+
             DF.to_excel(os.path.join(Phantom_folder, f"STANDARD_EXTRACTED_VALUES_{scan_name}.xlsx"), index=False)
 
             if answer.lower() =='extended': #if extended phantom, then also save a file with just the 5 inserts and epoxy --> for comparisson on how the fit improves when having extended phantom
@@ -938,7 +940,7 @@ if __name__ == "__main__":
                 df.drop(df[df['InsertType'] == 'aluminum'].index, inplace=True)
                 df.to_excel(os.path.join(Phantom_folder, f"STANDARD_EXTRACTED_VALUES_{scan_name}_PNarrow.xlsx"))
 
-    if already_extracted: #all files extracted and we have items in 'already_extracted'
+    if already_extracted: #all files extracted, and we have items in 'already_extracted'
         userInput = ''
         while userInput.lower() not in ['y', 'yes', 'n', 'no']:
             userInput = input('Would you like to perform a file update on Phantom Files? (Y/N): ')
