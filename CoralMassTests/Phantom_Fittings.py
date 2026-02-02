@@ -145,7 +145,6 @@ def calibration_points_filter(DATAFRAME, points_used, GreyCI_mode, AirMod):
     if GreyCI_mode:
         for item in points_used:
             x.append(DATAFRAME[DATAFRAME['InsertType'] == item]['Measured_Density'].item())
-
         if GreyCI_mode == 'UpperCI':
             for item in points_used:
                 y.append(DATAFRAME[DATAFRAME['InsertType'] == item]['UpperCI'].item())
@@ -966,7 +965,7 @@ def extended_case(DATA, scan_folder, project_dir_list):
                 Dataframe.at[item, 'Volume_estimate'] = (sum(vol))
                 Dataframe.at[item, 'Calibration_File_From'] = phantom_calib_being_used
 
-            # TODOD remove NoAlu_n6 for normal phantom - this is removing densest insert of phantom and not the Alu attachment.
+            # Complete TODO remove NoAlu_n6 for normal phantom - this is removing the densest insert of phantom and not the Alu attachment.
             Dataframe.to_excel(
                 os.path.join(path_for_csvs,
                              'Phantom_Fittings_and_Weights_' + scan_name_patched + '_BasedOn_' + phantom_calib_being_used + '.xlsx'),
