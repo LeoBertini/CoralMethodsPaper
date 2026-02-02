@@ -1,14 +1,15 @@
-#  This software was developed by Leonardo Bertini (l.bertini@nhm.ac.uk) at the Natural History Museum (London,UK).
+#  This software was developed by Leonardo Bertini (l.bertini@nhm.ac.uk) at the Natural History Museum (London,UK) and the University of Bristol (UK)
 #
 #  This is released as Supporting Material as part of the following publication:
-#  "XXXXXX" (link to paper and DOI once published).
-#  #
+#  "How to quantify and minimise error in coral skeletal density estimates using X-ray µCT"
 #
 #  Copyright (c) 2023.
 #
-#  The code is distributed under the MIT license https://en.wikipedia.org/wiki/MIT_License
+#  The code is distributed under the CC-BY license https://creativecommons.org/licenses/by/4.0/
 
 import numpy as np
+# patch to address 'np.float64' and other 'np.XXnn' labels being carried onto the spreadsheet
+np.set_printoptions(legacy='1.25')
 import time
 import os
 import pandas as pd
@@ -124,6 +125,7 @@ def calibration_points_filter(DATAFRAME, points_used, GreyCI_mode, AirMod):
 
     if not GreyCI_mode and not AirMod:
         for item in points_used:
+            print(item)
             x.append(DATAFRAME[DATAFRAME['InsertType'] == item]['Measured_Density'].item())
             y.append(DATAFRAME[DATAFRAME['InsertType'] == item]['Median_Gray_for_Calib'].item())
 
@@ -690,17 +692,17 @@ def extended_case(DATA, scan_folder, project_dir_list):
                 'Narrow_WithAirWithAlu']
 
     list_of_points_ext = [
-        ['air', 'sweetener', 'coffee', 'oil', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5', 'aluminum'],
+        ['air', 'sweetener', 'coffee', 'oil', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5', 'aluminium'],
         ['epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5'],
 
         ['air', 'sweetener', 'coffee', 'oil', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5'],
-        ['sweetener', 'coffee', 'oil', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5', 'aluminum'],
+        ['sweetener', 'coffee', 'oil', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5', 'aluminium'],
 
         ['sweetener', 'coffee', 'oil', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5'],
 
-        ['epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5', 'aluminum'],
+        ['epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5', 'aluminium'],
         ['air', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5'],
-        ['air', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5', 'aluminum'],
+        ['air', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5', 'aluminium'],
     ]
 
     # linear
@@ -752,7 +754,7 @@ def extended_case(DATA, scan_folder, project_dir_list):
     # LOWER AND UPPER CI bounds for extracted values
 
     list_of_points_ext = [
-        ['air', 'sweetener', 'coffee', 'oil', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5', 'aluminum'],
+        ['air', 'sweetener', 'coffee', 'oil', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5', 'aluminium'],
         ['epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5']]
 
     fittypes = ['Ext_AllPoints_LowerBnd', 'Narrow_AllPoints_LowerBnd']
@@ -808,7 +810,7 @@ def extended_case(DATA, scan_folder, project_dir_list):
 
     fittypes = ['Ext_AllPoints_AirMod_Pos500', 'Narrow_AllPoints_AirMod_Pos500']
     list_of_points_ext = [
-        ['air', 'sweetener', 'coffee', 'oil', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5', 'aluminum'],
+        ['air', 'sweetener', 'coffee', 'oil', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5', 'aluminium'],
         ['air', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5']]
 
     for points, fitname in zip(list_of_points_ext, fittypes):
