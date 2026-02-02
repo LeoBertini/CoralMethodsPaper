@@ -1,12 +1,11 @@
-#  This software was developed by Leonardo Bertini (l.bertini@nhm.ac.uk) at the Natural History Museum (London,UK).
+#  This software was developed by Leonardo Bertini (l.bertini@nhm.ac.uk) at the Natural History Museum (London,UK) and the University of Bristol (UK)
 #
 #  This is released as Supporting Material as part of the following publication:
-#  "XXXXXX" (link to paper and DOI once published).
-#  #
+#  "How to quantify and minimise error in coral skeletal density estimates using X-ray µCT"
 #
 #  Copyright (c) 2023.
 #
-#  The code is distributed under the MIT license https://en.wikipedia.org/wiki/MIT_License
+#  The code is distributed under the CC-BY license https://creativecommons.org/licenses/by/4.0/
 
 import numpy as np
 import time
@@ -150,7 +149,7 @@ for scan_folder in folder_list:
             Weight_Fittings.append(os.path.join(path_for_csvs, file))  # list of xlsx dataframe
 
 
-    #Complete : TODO go through entire three. at the moment only picking up the first directory
+    #Complete : TODO go through entire three.
     if csv_files and Weight_Fittings:  # not if empty list
 
         for csv_file in csv_files:  # each csv inside scanfolder
@@ -169,7 +168,7 @@ for scan_folder in folder_list:
 
             for weight_file in Weight_Fittings:
 
-               if scan_name_patched in weight_file: #this is added so that matching Histo and Phantom Phintings are grabbed and others are skipped
+               if scan_name_patched in weight_file: #this is added so that matching Histo and Phantom fits are grabbed and others are skipped
 
                     # run plot function
                     fig = plt.figure(figsize=(11.69, 8.27), constrained_layout=TRUE)
@@ -198,13 +197,13 @@ for scan_folder in folder_list:
                     for i in range(0, len(MainFits)):
 
                         if 'Linear' in MainFits['FitType'][i]:
-                            MainFits['index'][i] = 1
+                            MainFits.loc[i, 'index'] = 1
                         if 'Poly' in MainFits['FitType'][i]:
-                            MainFits['index'][i] = 2
+                            MainFits.loc[i, 'index']  = 2
                         if 'Gaussian' in MainFits['FitType'][i]:
-                            MainFits['index'][i] = 3
+                            MainFits.loc[i, 'index']  = 3
                         if 'Exp' in MainFits['FitType'][i]:
-                            MainFits['index'][i] = 4
+                            MainFits.loc[i, 'index']  = 4
 
                     #now sort dataframe
                     MainFits = MainFits.sort_values(by=['index'], ascending=True)
