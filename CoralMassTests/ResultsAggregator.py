@@ -165,11 +165,9 @@ for scan_folder in folder_list:
                     # sorted3 = sorted3.reset_index(drop=True)
                     MainFits = rawdata.sort_values(["FitType"])
 
-                    MainFits.reset_index(inplace=True)
+                    df_all = pd.concat([df_all if not df_all.empty else None, MainFits])
 
-                    df_all = df_all.append(MainFits)
-
-    df_all = df_all.drop(columns=['index'], axis=1)
+    #df_all = df_all.drop(columns=['index'], axis=1)
 
     # TODO append a coral's volume metrics metadata from Volmetrics text file:
     # Volume metrics
