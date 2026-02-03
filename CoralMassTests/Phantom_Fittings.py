@@ -659,7 +659,7 @@ def narrow_case(DATA, scan_folder, project_dir_list):
                 Dataframe.at[item, 'Volume_estimate'] = (sum(vol))
                 Dataframe.at[item, 'Calibration_File_From'] = phantom_calib_being_used
 
-            # TODOD remove NoAlu_n6 for normal phantom - this is removing densest insert of phantom and not the Alu attachment.
+            # TODO remove NoAlu_n6 for normal phantom - this is removing densest insert of phantom and not the Alu attachment.
             Dataframe.to_excel(
                 os.path.join(path_for_csvs,
                              'Phantom_Fittings_and_Weights_' + scan_name_patched + '_BasedOn_' + phantom_calib_being_used + '.xlsx'),

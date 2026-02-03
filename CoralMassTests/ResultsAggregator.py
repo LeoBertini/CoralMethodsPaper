@@ -125,7 +125,7 @@ for scan_folder in folder_list:
         if 'Phantom_Fittings_and_Weights' in file:
             Weight_Fittings.append(os.path.join(path_for_csvs, file))  # list of xlsx dataframe
 
-    Weight_Fittings = list(set(Weight_Fittings))  # removes duplicate values grabed by loop
+    Weight_Fittings = list(set(Weight_Fittings))  # removes duplicate values grabbed by loop
 
     # initialise empty dataframe to collect all the best fits inside each of the Phantom_Fittings files
     df_all = pd.DataFrame(columns=['Scan_name',
@@ -152,7 +152,7 @@ for scan_folder in folder_list:
             scan_name_patched = csv_file.split('Histogram-')[-1].split('.csv')[0]
 
             for weight_file in Weight_Fittings:
-                if scan_name_patched in weight_file:  # this is added so that matching Histo and Phantom Phintings are grabbed and others are skipped
+                if scan_name_patched in weight_file:  # this is added so that matching Histo and Phantom fits are grabbed and others are skipped
 
                     print(weight_file)
                     rawdata = pd.read_excel(weight_file)
@@ -219,7 +219,7 @@ for scan_folder in folder_list:
         MeanShapeAP_dummy.append(MeanShapeAP)
         MeanSymmetry_dummy.append(MeanSymmetry)
 
-        # TODO apppend new columns to dataset
+        # TODO append new columns to dataset
 
     df_all['WeightOffset'] = Offset
     df_all['VirtualDensity'] = VirtualDensity

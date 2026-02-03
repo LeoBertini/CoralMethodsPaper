@@ -8,7 +8,7 @@ In the animation below, the reference volume is shown with 'grey' colormapping.
 
 The target volume (shown with 'orange' colormapping) is a scan of the same specimen, but still not segmented and containing the phantom disc. 
 
-You'll want to give a computer a headstart first, by manually manipulating the orange volume, so that it is closely matching with the grey volume. Otherwise, this process can take a couple of hours. 
+You'll want to give a computer a head start first, by manually manipulating the orange volume, so that it is closely matching with the grey volume. Otherwise, this process can take a couple of hours. 
 
 <img src="GIF_images/Step1.gif" width="110%" height="110%">
 

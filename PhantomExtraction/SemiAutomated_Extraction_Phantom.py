@@ -444,7 +444,7 @@ if __name__ == "__main__":
     #                   'insert3': (0, 255, 255),
     #                   'insert4': (255, 255, 0),
     #                   'insert5': (255, 0, 255),
-    #                   'sweeetener': (0, 0, 128),
+    #                   'sweetener': (0, 0, 128),
     #                   'oil': (0, 128, 128),
     #                   'coffee': (128, 128, 0),
     #                   'aluminum': (0, 128, 0)}
@@ -456,7 +456,7 @@ if __name__ == "__main__":
     #                     'insert3': 1.65,
     #                     'insert4': 1.77,
     #                     'insert5': 1.92,
-    #                     'sweeetener': 0.1261,
+    #                     'sweetener': 0.1261,
     #                     'oil': 0.904,
     #                     'coffee': 0.26,
     #                     'aluminum': 2.7
@@ -772,13 +772,13 @@ if __name__ == "__main__":
             extracted_grays = []
             print("--- %s seconds ---" % (int(time.time() - start_time2)))
 
-            ########### Paralelized  loop START  ############################
+            ########### Parallelized  loop START  ############################
             print(f"Multithreading began. This may take up to 3 min to complete \n")
             with multiprocessing.Pool(processes=50) as p:
                 # EXTRACTED_GRAYS_MASTER = p.starmap(get_grey_inside_circles, iterator)
                 EXTRACTED_GRAYS_MASTER = p.starmap(get_grey_inside_circles, tqdm.tqdm(iterator, total=len(iterator)))
 
-            ########### Paralelized  loop END  ############################
+            ########### Parallelized  loop END  ############################
 
             # unpack GRAYS MASTER AND ADD TO DF FOR PLOTTING
             DF['Extracted_Grays'] = ''
