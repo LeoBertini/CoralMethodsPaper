@@ -125,7 +125,6 @@ def calibration_points_filter(DATAFRAME, points_used, GreyCI_mode, AirMod):
 
     if not GreyCI_mode and not AirMod:
         for item in points_used:
-            print(item)
             x.append(DATAFRAME[DATAFRAME['InsertType'] == item]['Measured_Density'].item())
             y.append(DATAFRAME[DATAFRAME['InsertType'] == item]['Median_Gray_for_Calib'].item())
 
@@ -427,7 +426,7 @@ def narrow_case(DATA, scan_folder, project_dir_list):
 
         # TODO fit types based on upper and lower CIs of median grey from extracted inserts
 
-        # doing simulations in chunks of neg and postivive transformations of median signal
+        # doing simulations in chunks of neg and positive transformations of median signal
         # Todo import CI boundaries
         CIs = DATA['Median_CI_95'].astype('O')
         Lower = []
@@ -971,7 +970,6 @@ def extended_case(DATA, scan_folder, project_dir_list):
                              'Phantom_Fittings_and_Weights_' + scan_name_patched + '_BasedOn_' + phantom_calib_being_used + '.xlsx'),
                 index=False)
 
-
 def save_weigths(scan_folder, project_dir_list):
     warnings.filterwarnings("ignore")
 
@@ -979,13 +977,13 @@ def save_weigths(scan_folder, project_dir_list):
     DATA = DATA.sort_values(by='Measured_Density')  # sorting so that values are in ascending order (easy to exclude air)
 
     # find Normal phantom pairing and skip
-    if 'PNormal' in scan_folder or len(DATA) <=7:
+    if 'PNarrow' in scan_folder:
         print('Assuming a narrow phantom for file')
         print(scan_folder)
         print('Make sure you have used the "narrow_case" function to calculate weights')
         narrow_case(DATA, scan_folder, project_dir_list)
 
-    if 'PNormal' not in scan_folder or len(DATA) > 7:
+    if 'PNarrow' not in scan_folder:
         print('Assuming an extended phantom for file')
         print(scan_folder)
         print('Make sure you have used the "extended_case" function to calculate weights')
@@ -998,7 +996,7 @@ if __name__ == '__main__':
     if platform == "darwin":
         print('This is a Mac')
         multiprocessing.set_start_method(
-            'fork')  # Changing this to "fork" (on MAc platforms) otherwise miltiprocessing won't run
+            'fork')  # Changing this to "fork" (on Mac platforms) otherwise miltiprocessing won't run
 
     startTime = time.time()
 
@@ -1016,6 +1014,7 @@ if __name__ == '__main__':
     if len(folder_list) != 0:
         with multiprocessing.Pool(processes=40) as p:
             p.starmap(save_weigths, iterable)
+
     else:
         ('All Scans have had their weight estimates extracted')
 

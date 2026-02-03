@@ -444,7 +444,7 @@ if __name__ == "__main__":
     #                   'insert3': (0, 255, 255),
     #                   'insert4': (255, 255, 0),
     #                   'insert5': (255, 0, 255),
-    #                   'sugar': (0, 0, 128),
+    #                   'sweeetener': (0, 0, 128),
     #                   'oil': (0, 128, 128),
     #                   'coffee': (128, 128, 0),
     #                   'aluminum': (0, 128, 0)}
@@ -456,7 +456,7 @@ if __name__ == "__main__":
     #                     'insert3': 1.65,
     #                     'insert4': 1.77,
     #                     'insert5': 1.92,
-    #                     'sugar': 0.1261,
+    #                     'sweeetener': 0.1261,
     #                     'oil': 0.904,
     #                     'coffee': 0.26,
     #                     'aluminum': 2.7
@@ -930,10 +930,10 @@ if __name__ == "__main__":
             np.set_printoptions(legacy='1.25')
             DF.to_excel(os.path.join(Phantom_folder, f"STANDARD_EXTRACTED_VALUES_{scan_name}.xlsx"), index=False)
 
-            if answer.lower() =='extended': #if extended phantom, then also save a file with just the 5 inserts and epoxy --> for comparisson on how the fit improves when having extended phantom
+            if answer.lower() =='extended': #if extended phantom, then also save a file with just the 5 inserts and epoxy --> for comparison on how the fit improves when having extended phantom
                 df = DF
                 #df.drop(df[df['InsertType'] == 'air'].index, inplace=True)
-                df.drop(df[df['InsertType'] == 'sugar'].index, inplace=True)
+                df.drop(df[df['InsertType'] == 'sweetener'].index, inplace=True)
                 df.drop(df[df['InsertType'] == 'oil'].index, inplace=True)
                 df.drop(df[df['InsertType'] == 'coffee'].index, inplace=True)
                 df.drop(df[df['InsertType'] == 'aluminum'].index, inplace=True)
@@ -955,9 +955,6 @@ if __name__ == "__main__":
 
 
                 Phantom_folder = os.path.join(selected_project_dir,scan_name, 'STANDARD_EXTRACT')
-
-
-
                 for file in glob.glob(os.path.join(Phantom_folder,'STANDARD_EXTRACTED') + '*.xlsx'):
                     print('Located the following file to update')
                     print(file)
