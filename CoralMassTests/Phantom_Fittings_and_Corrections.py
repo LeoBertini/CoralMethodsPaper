@@ -319,8 +319,8 @@ def save_weights_extended_case(scan_folder, calib_dir, project_dir_list):
                         'insert4': {'den': 1.77, 'grey': func_p(1.77, a, b, c, d), 'color': (255 / 255, 255 / 255, 0)},
                         'insert5': {'den': 1.92, 'grey': func_p(1.92, a, b, c, d), 'color': (255 / 255, 0, 255 / 255)},
                         'sweetener': {'den': 0.1261, 'grey': func_p(0.1261, a, b, c, d), 'color': (0, 0, 128 / 255)},
-                        'oil': {'den': 0.905, 'grey': func_p(0.904, a, b, c, d), 'color': (0, 128 / 255, 128 / 255)},
-                        'coffee': {'den': 0.26, 'grey': func_p(0.26, a, b, c, d), 'color': (128 / 255, 128 / 255, 0)},
+                        'oil': {'den': 0.905, 'grey': func_p(0.904, a, b, c, d), 'color': (128 / 255, 128 / 255, 0) },
+                        'coffee': {'den': 0.26, 'grey': func_p(0.26, a, b, c, d), 'color': (0, 128 / 255, 128 / 255)},
                         'aluminium': {'den': 2.7, 'grey': func_p(2.7, a, b, c, d), 'color': (0, 128 / 255, 0)}}
 
                     for insert in Density_list_dic0.keys():
