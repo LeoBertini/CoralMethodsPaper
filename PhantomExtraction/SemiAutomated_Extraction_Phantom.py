@@ -516,7 +516,7 @@ if __name__ == "__main__":
             print("Original shape: ", first_image.shape)
 
             # We want the new image to be 60% of the original image
-            scale_factor = 0.6
+            scale_factor = 0.4
             new_height = int(first_image.shape[0] * scale_factor)
             new_width = int(first_image.shape[1] * scale_factor)
             dimensions = (new_width, new_height)
@@ -649,9 +649,9 @@ if __name__ == "__main__":
                 cv2.namedWindow("Resized image", cv2.WINDOW_KEEPRATIO)
                 cv2.imshow("Resized image", image_overlay)
                 cv2.resizeWindow("Resized image", 600, 600)
+                print('Press ESC to resize sampling areas.')
                 cv2.waitKey(0)
                 cv2.destroyAllWindows()
-                print('Press ESC to resize sampling areas.')
 
                 # saving overlay and mask
                 cv2.imwrite(os.path.join(Phantom_folder,
@@ -703,7 +703,7 @@ if __name__ == "__main__":
                                          f"Slice_{item + initial_slice_tag}_Phantom_Original_Annotated_Phantom_slice.png"),
                             image_overlay)
 
-                if loop_no == 0:
+                if loop_no ==0:
                     print('Press ESC to close image and start annotating the next slice.')
 
                 if loop_no == 1:
