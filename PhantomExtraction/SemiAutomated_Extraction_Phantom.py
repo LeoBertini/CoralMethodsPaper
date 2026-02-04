@@ -13,11 +13,12 @@ import glob
 import os
 import pandas as pd
 from holoviews.plotting.bokeh.styles import font_size
+from param.ipython import message
 from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from scipy.ndimage import gaussian_filter1d
-from tkinter import filedialog
+from tkinter import filedialog, messagebox
 from tkinter import *
 import multiprocessing
 import time
@@ -28,6 +29,15 @@ from ast import literal_eval
 
 # Working functions
 def load_images_from_folder(folder, format):
+
+    """
+    This function finds files in a specified path containing a target file extension.
+
+    :param folder: Specified path of folder containing stack of X-ray tiff images representing the radiology phantom.
+    :param format: Specified format of images to be loaded. (e.g., '.tif'
+    :return: a list of filenames for images that satisfy the specified format.
+    """
+
     cv_img = []
     # for img in glob.glob(os.path.join(folder, "*" + f"{format}")):
     #     cv_img.append(img)
@@ -41,6 +51,18 @@ def load_images_from_folder(folder, format):
 
 
 def draw_circle(event, x, y, flags, param):
+
+    """
+    This function interacts with the user and prompts the annotation of centre regions in X-ray images containing density phantom rods, to extract greyscale values within confined areas
+    It runs until the pre-determined number of features to be annotated is reached and exits for image inspection and rescalling mode.
+
+    :param event: mouse instance for tracking clicks from the user using OpenCV
+    :param x: mouse click position
+    :param y: mouse click position
+    :return: updates global variables specified below appending to their specific dictionaries and saves a preview of the annotated image in parent directory
+    """
+
+
     global mouseX, mouseY, counter, insert_list, txt, dummy_list, Color_list_dic, color_used, target_slices, item, Phantom_folder, initial_slice_tag, new_image, annotation_vals, scale_factor
     entered_list = []
     if event == cv2.EVENT_LBUTTONDOWN:
@@ -87,7 +109,10 @@ def draw_circle(event, x, y, flags, param):
             mouseY.append(y)
             allx.append(x)
             ally.append(y)
-            print('Click on the next insert \n')
+            if dummy_list: #if list is not empty
+                print('Click on the next insert \n')
+            else:
+                print('All points annotated. Press ESC to continue.')
 
         cv2.imwrite(os.path.join(Phantom_folder,
                                  f"Slice_{item + initial_slice_tag}_Phantom_Scaled_Annotated_Phantom_slice.png"),
@@ -95,6 +120,21 @@ def draw_circle(event, x, y, flags, param):
 
 
 def draw_circle2(event, x, y, flags, param):
+
+    """
+     This function adds a preview overlay of previously annotated density inserts to check for misalignment issues or mislabelling by the user.
+     Same behaviour as draw_circle but invoked when bottom X-ray slice is brought to the user.
+
+     Basic functionality:
+     This function interacts with the user and prompts the annotation of centre regions in X-ray images containing density phantom rods, to extract greyscale values within confined areas
+     It runs until the pre-determined number of features to be annotated is reached and exits for image inspection and rescalling mode.
+
+     :param event: mouse instance for tracking clicks from the user using OpenCV
+     :param x: mouse click position
+     :param y: mouse click position
+     :return: updates global variables specified below appending to their specific dictionaries and saves a preview of the annotated image in parent directory
+     """
+
     global mouseX, mouseY, counter, insert_list, txt, dummy_list, Color_list_dic, color_used, target_slices, item, Phantom_folder, initial_slice_tag, new_image, allx, ally, annotation_vals, scale_factor
     entered_list = []
     # displaying the annotated circles from previous images in red
@@ -113,7 +153,7 @@ def draw_circle2(event, x, y, flags, param):
                 if str.lower(txt) not in dummy_list or str.lower(txt) in entered_list:
                     print("Sorry, Choose from the options above")
                 else:
-                    #  successfully parsed!
+                    # successfully parsed!
                     # we're ready to exit the loop.
                     entered_list.append(str.lower(txt))
                     break
@@ -142,7 +182,11 @@ def draw_circle2(event, x, y, flags, param):
             counter += 1
             mouseX.append(x)
             mouseY.append(y)
-            print('Click on the next insert \n')
+            if dummy_list: #if list is not empty
+                print('Click on the next insert \n')
+            else:
+                print('All points annotated. Press ESC to continue.')
+
 
         cv2.imwrite(os.path.join(Phantom_folder,
                                  f"Slice_{item + initial_slice_tag}_Phantom_Scaled_Annotated_Phantom_slice.png"),
@@ -150,6 +194,17 @@ def draw_circle2(event, x, y, flags, param):
 
 
 def polynomial_regression3d(x, y, z, degree):
+
+    """
+    This is a polynomial regression wrapper to predict the positions of target areas across the X-ray stack based on markings done by the user on the top and bottom X-ray slices.
+
+    :param x, y : horizontal coordinates in the tiff images.
+    :param z: position across the stack
+    :param degree: adjusted based on polynomial complexity desired
+    :return: a list of predicted density centres across the entire radiology phantom stack
+
+    """
+
     # sort data to avoid plotting problems
     # x, y, z = zip(*sorted(zip(x, y, z)))
     z_spillover = 0  # number of extra slices where coord are to be predicted in case phantom stack contains more images
@@ -183,6 +238,16 @@ def polynomial_regression3d(x, y, z, degree):
 
 
 def find_overlapping_range(interval_list):
+
+    """
+    Functionality to be implemented in future releases.
+    Helper function used to detect positions of inflexion points on greyscale series for anomaly detection.
+    It traverses through a series of greyscale values testing for inflexion points and updating itself
+
+    :param interval_list:
+    :return: start and end positions of possible inflexion points.
+    """
+
     start, end = interval_list.pop()
     while interval_list:
         start_temp, end_temp = interval_list.pop()
@@ -192,9 +257,22 @@ def find_overlapping_range(interval_list):
 
 
 def find_folders_with_image_stacks(target_file_type, dir_standard_types, target_skipper_file):
+
+    """
+    Function for user callbacks, defining directory tree to traverse and from which X-ray data will be fetched
+
+    :param target_file_type: file extension of target images (e.g., '.tif')
+    :param dir_standard_types: standardised directory name (e.g., Phantom_Stack)
+    :param target_skipper_file: placeholder for a path containing a string to indicate data has been extracted previously (part of a filename or dir).
+     It leaves the specific parent dir out of the analysis. (e.g.,STANDARD_EXTRACTED_xxx_.csv is a file generated after successfully probing greyscale intensities and used as a tag for skipping)
+    :return: returns list of directories from which the extraction of density phantom values is needed.
+
+    """
+    messagebox.showwarning(title="Program Start", message="Select the Parent folder where a series of µCT scans are saved")
+
     root = Tk()
     root.withdraw()
-    Drive_Letter = filedialog.askdirectory(title='Select the drive where scans are saved (eg: C: or D:)')
+    Drive_Letter = filedialog.askdirectory(title='Select the Parent folder where a series of µCT scans are saved')
     root.update()
 
     # Selecting parent folder where scan folders are
@@ -244,6 +322,17 @@ def find_folders_with_image_stacks(target_file_type, dir_standard_types, target_
 
 
 def get_scan_name(folder_name, dir_standard_names):
+
+    """
+    This function is used to obtain the X-ray dataset name
+
+    :param folder_name: Directory containing the X-ray data for a single scan
+    :param dir_standard_names: optional arg used to bypass user selection  of parent directories when testing
+           E.g., dir_standard_names = ['CWI_Cores', 'CWI_Coral_Cores', 'NHM_fossils', 'NHM_scans']
+    :return: The X-ray dataset name adopted
+    """
+
+
     # dir_standard_names = ['CWI_Cores', 'CWI_Coral_Cores', 'NHM_fossils', 'NHM_scans']
     project_folder = dir_standard_names[-1]
     scan_name = str(PureWindowsPath(folder_name.split(project_folder)[-1])).split('STANDARD_EXTRACT')[0].split('\\')[1]# works on both Windows and Unix and uses 'STANDARD_EXTRACT' as splitter
@@ -251,6 +340,17 @@ def get_scan_name(folder_name, dir_standard_names):
 
 
 def get_vsize_from_CT_filetypes(selected_project_dir, scan_name):
+
+    """
+    This function reads different types of text files from different micro-CT scanners, containing configuration data.
+    It locates fields where the resolution of the scan is mentioned. This is the size in mm of any pixel in 2D, and the thickness of a µCT slice in 3D
+
+    :param selected_project_dir: the X-ray scan directory  indicated by the user on a graphical prompt
+    :param scan_name: the X-ray dataset name
+    :return: the voxel size of the scan being processed, which is later appended to a dataframe containing the scan metadata and the calibration greyscale probing results
+    """
+
+
     file_extensions = [".xtekCT", ".xtekVolume", 'xtekct']
     TargetStrings = ['VoxelSizeX=', 'Voxel size = ']
     parent_folder = os.path.join(selected_project_dir,scan_name)
@@ -283,6 +383,23 @@ def get_vsize_from_CT_filetypes(selected_project_dir, scan_name):
 
 def get_grey_inside_circles(coral_img, img_real_idx, x_centres, y_centres, z_centres, radius, colors,
                             insert_names, initial_slice_tag, out_dir):
+
+    """
+    This function extracts the greyscale values within marked areas by the used across the entire image stack
+
+    :param coral_img: X-ray slice
+    :param img_real_idx: absolute index of slice on the stack
+    :param x_centres: predicted horizontal for a density rod inside the radiology phantom
+    :param y_centres: predicted horizontal for a density rod inside the radiology phantom
+    :param z_centres: predicted vertical for a density rod inside the radiology phantom
+    :param radius: the size of the circular buffer area around centre points from which greyscale probing will be done
+    :param colors: dictionary of predetermined values for each density rod inside the radiology phantom (used for plots and creating masked images)
+    :param insert_names: list to indicate the number of inserts existing in the radiology phantom
+    :param out_dir: path where masked slices are saved
+    :return: a nested list containing density insert names, their respective colour, z_centre, and greyscale values extracted
+    """
+
+
     # test line
     # mask_img, coral_img, img_real_idx, x_centres, y_centres, z_centres, radius, colors, insert_names, initial_slice_tag, out_dir = iterator[0]
     mean_grey_all_inserts = []
@@ -316,6 +433,15 @@ def get_grey_inside_circles(coral_img, img_real_idx, x_centres, y_centres, z_cen
 
 
 def build_iterator_for_parallelism(Dataframe, Phantom_folder):
+
+    """
+    This function builds a nested list iterator to be passed to multiprocessing to allow for parallel computing across the stack on a slice-wise fashion
+    :param Dataframe: reads a pandas dataframe containing X-ray metadata,  information for each of the slices across the stack, density insert parameters (predicted positions, associated colours for plotting)
+
+    :param Phantom_folder: used to indicate the output dir of masked density phantom images
+    :return:
+    """
+
     iterator = []
     # build iterator tuple
     out_dir = os.path.join(Phantom_folder, 'Phantom_Masks')
@@ -356,8 +482,15 @@ def build_iterator_for_parallelism(Dataframe, Phantom_folder):
 
     return iterator
 
-
 def DF_update(Dataframe):
+
+    """
+    Function to be released as future release
+    :param Dataframe:
+    :return: greyscale values extracted based on bootstrapping for error analysis.
+    """
+
+
     # COMPLETE : TODO append to Dataframe start_position and end_position for series extraction based on series inflexions or visual
     infls_dummy_list = []
     # find inflexion points
@@ -472,6 +605,7 @@ if __name__ == "__main__":
     project_dir_list.append(selected_project_dir) #super important line so user defines which one is the project directory as the top level one they selected during dialog box
 
     #import phantom details from spreadsheet
+    messagebox.showwarning(title="Phantom Details", message="Select the spreadsheet 'PhantomDetails.xlsx' with the Phantom information")
     root = Tk()
     root.withdraw()
     PhantomDetails = filedialog.askopenfilename(title='Select the spreadsheet with the Phantom information')
@@ -483,9 +617,6 @@ if __name__ == "__main__":
 
     if folder_list: #
         for folder in folder_list:  # looping over scan folders in main dir
-            # folder = folder_list[0]
-            # folder = "D:\\CWI_Core\\Core_Phantom_New\\orbit1\\recon"
-            # scan_name = folder.split('orbit')[0].split("\\")[2]
 
             scan_name = get_scan_name(folder_name=folder,
                                       dir_standard_names=project_dir_list)
@@ -497,17 +628,14 @@ if __name__ == "__main__":
 
             target_slices = [0, int(len(image_list)) - 1]  # doing 2 images #start, middle and end of stack
 
-
             Phantom_folder = os.path.dirname(folder)
-            #Phantom_folder = os.path.join(selected_project_dir,scan_name, 'STANDARD_EXTRACT')
-
 
             # showing first image to user to define type of phantom (Extended or Narrow phantom)
             first_image = cv2.imread(image_list[0])
             print("Original shape: ", first_image.shape)
 
             # We want the new image to be 60% of the original image
-            scale_factor = 0.4
+            scale_factor = 0.6
             new_height = int(first_image.shape[0] * scale_factor)
             new_width = int(first_image.shape[1] * scale_factor)
             dimensions = (new_width, new_height)
@@ -530,7 +658,6 @@ if __name__ == "__main__":
                         insert_list = ["Air", "Epoxy", "Insert1", "Insert2", "Insert3", "Insert4", "Insert5"]
                         print(f"Phantom type is {answer}. Sample image window closed")
                         break
-
                     else:
                         print("Sorry, type in a valid option")
                 except ValueError:
@@ -574,7 +701,7 @@ if __name__ == "__main__":
                 width = image.shape[1]
 
                 # We want the new image to be 60% of the original image
-                scale_factor = 0.4
+                scale_factor = 0.6
                 new_height = int(height * scale_factor)
                 new_width = int(width * scale_factor)
                 dimensions = (new_width, new_height)
@@ -594,9 +721,9 @@ if __name__ == "__main__":
                 [print(str.lower(insert_name)) for insert_name in insert_list]
                 print(f"Click on centre point of one of the inserts you want to annotate:")
 
-                if item == 0:
+                if item == 0: #if first image of stack
                     cv2.setMouseCallback("Resized image", draw_circle)
-                else:
+                else: #if last image of stack
                     cv2.setMouseCallback("Resized image", draw_circle2)
 
                 while True:
@@ -605,7 +732,8 @@ if __name__ == "__main__":
                         break
                 cv2.destroyAllWindows()  # when ESC is pressed
 
-                # getting orinal position on full-size image
+                print('Displaying an overlay of all annotated inserts.')
+                # getting original position on full-size image
                 OriginalX = [int((coordx / new_width) * width) for coordx in mouseX]
                 OriginalY = [int((coordy / new_height) * height) for coordy in mouseY]
 
@@ -639,9 +767,10 @@ if __name__ == "__main__":
                 # displaying
                 cv2.namedWindow("Resized image", cv2.WINDOW_KEEPRATIO)
                 cv2.imshow("Resized image", image_overlay)
-                cv2.resizeWindow("Resized image", 400, 400)
+                cv2.resizeWindow("Resized image", 600, 600)
                 cv2.waitKey(0)
                 cv2.destroyAllWindows()
+                print('Press ESC to resize sampling areas.')
 
                 # saving overlay and mask
                 cv2.imwrite(os.path.join(Phantom_folder,
@@ -679,9 +808,10 @@ if __name__ == "__main__":
                                           -1)
 
                 # displaying
+                print('Displaying the updated sampling area.')
                 cv2.namedWindow("Resized image", cv2.WINDOW_KEEPRATIO)
                 cv2.imshow("Resized image", image_overlay)
-                cv2.resizeWindow("Resized image", 400, 400)
+                cv2.resizeWindow("Resized image", 600, 600)
                 cv2.waitKey(0)
                 cv2.destroyAllWindows()
 
@@ -692,14 +822,18 @@ if __name__ == "__main__":
                                          f"Slice_{item + initial_slice_tag}_Phantom_Original_Annotated_Phantom_slice.png"),
                             image_overlay)
 
-                cv2.destroyAllWindows()
+                if loop_no == 0:
+                    print('Press ESC to close image and start annotating the next slice.')
+
+                if loop_no == 1:
+                    print('Press ESC to close image annotation mode and start greyscale probing across the entire stack.')
                 loop_no += 1
 
             print("Initiating Phantom Extraction for scan in multithreading \n")
             # COMPLETE : TODO save overlay of image original and coloured inserts
             # COMPLETE: TODO for each insert with (X,Y,Z) pairs fit a 3D vertical linear model and get positions through the stack for insert centres
 
-            # reorganizing ditionary
+            # reorganizing dictionary
             reorg_dic = {'Slice_path': [],
                          'XYZ': [],
                          'InsertType': [],
