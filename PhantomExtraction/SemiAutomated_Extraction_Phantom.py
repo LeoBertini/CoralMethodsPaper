@@ -13,11 +13,12 @@ import glob
 import os
 import pandas as pd
 from holoviews.plotting.bokeh.styles import font_size
+from param.ipython import message
 from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from scipy.ndimage import gaussian_filter1d
-from tkinter import filedialog
+from tkinter import filedialog, messagebox
 from tkinter import *
 import multiprocessing
 import time
@@ -87,7 +88,10 @@ def draw_circle(event, x, y, flags, param):
             mouseY.append(y)
             allx.append(x)
             ally.append(y)
-            print('Click on the next insert \n')
+            if dummy_list: #if list is not empty
+                print('Click on the next insert \n')
+            else:
+                print('All points annotated. Press ESC to continue.')
 
         cv2.imwrite(os.path.join(Phantom_folder,
                                  f"Slice_{item + initial_slice_tag}_Phantom_Scaled_Annotated_Phantom_slice.png"),
@@ -113,7 +117,7 @@ def draw_circle2(event, x, y, flags, param):
                 if str.lower(txt) not in dummy_list or str.lower(txt) in entered_list:
                     print("Sorry, Choose from the options above")
                 else:
-                    #  successfully parsed!
+                    # successfully parsed!
                     # we're ready to exit the loop.
                     entered_list.append(str.lower(txt))
                     break
@@ -142,7 +146,11 @@ def draw_circle2(event, x, y, flags, param):
             counter += 1
             mouseX.append(x)
             mouseY.append(y)
-            print('Click on the next insert \n')
+            if dummy_list: #if list is not empty
+                print('Click on the next insert \n')
+            else:
+                print('All points annotated. Press ESC to continue.')
+
 
         cv2.imwrite(os.path.join(Phantom_folder,
                                  f"Slice_{item + initial_slice_tag}_Phantom_Scaled_Annotated_Phantom_slice.png"),
@@ -192,9 +200,13 @@ def find_overlapping_range(interval_list):
 
 
 def find_folders_with_image_stacks(target_file_type, dir_standard_types, target_skipper_file):
+
+
+    messagebox.showwarning(title="Program Start", message="Select the Parent folder where a series of µCT scans are saved")
+
     root = Tk()
     root.withdraw()
-    Drive_Letter = filedialog.askdirectory(title='Select the drive where scans are saved (eg: C: or D:)')
+    Drive_Letter = filedialog.askdirectory(title='Select the Parent folder where a series of µCT scans are saved')
     root.update()
 
     # Selecting parent folder where scan folders are
@@ -472,6 +484,9 @@ if __name__ == "__main__":
     project_dir_list.append(selected_project_dir) #super important line so user defines which one is the project directory as the top level one they selected during dialog box
 
     #import phantom details from spreadsheet
+
+    messagebox.showwarning(title="Phantom Details", message="Select the spreadsheet 'PhantomDetails.xlsx' with the Phantom information")
+
     root = Tk()
     root.withdraw()
     PhantomDetails = filedialog.askopenfilename(title='Select the spreadsheet with the Phantom information')
@@ -483,9 +498,6 @@ if __name__ == "__main__":
 
     if folder_list: #
         for folder in folder_list:  # looping over scan folders in main dir
-            # folder = folder_list[0]
-            # folder = "D:\\CWI_Core\\Core_Phantom_New\\orbit1\\recon"
-            # scan_name = folder.split('orbit')[0].split("\\")[2]
 
             scan_name = get_scan_name(folder_name=folder,
                                       dir_standard_names=project_dir_list)
@@ -497,10 +509,7 @@ if __name__ == "__main__":
 
             target_slices = [0, int(len(image_list)) - 1]  # doing 2 images #start, middle and end of stack
 
-
             Phantom_folder = os.path.dirname(folder)
-            #Phantom_folder = os.path.join(selected_project_dir,scan_name, 'STANDARD_EXTRACT')
-
 
             # showing first image to user to define type of phantom (Extended or Narrow phantom)
             first_image = cv2.imread(image_list[0])
@@ -530,7 +539,6 @@ if __name__ == "__main__":
                         insert_list = ["Air", "Epoxy", "Insert1", "Insert2", "Insert3", "Insert4", "Insert5"]
                         print(f"Phantom type is {answer}. Sample image window closed")
                         break
-
                     else:
                         print("Sorry, type in a valid option")
                 except ValueError:
@@ -574,7 +582,7 @@ if __name__ == "__main__":
                 width = image.shape[1]
 
                 # We want the new image to be 60% of the original image
-                scale_factor = 0.4
+                scale_factor = 0.6
                 new_height = int(height * scale_factor)
                 new_width = int(width * scale_factor)
                 dimensions = (new_width, new_height)
@@ -594,9 +602,9 @@ if __name__ == "__main__":
                 [print(str.lower(insert_name)) for insert_name in insert_list]
                 print(f"Click on centre point of one of the inserts you want to annotate:")
 
-                if item == 0:
+                if item == 0: #if first image of stack
                     cv2.setMouseCallback("Resized image", draw_circle)
-                else:
+                else: #if last image of stack
                     cv2.setMouseCallback("Resized image", draw_circle2)
 
                 while True:
@@ -605,7 +613,8 @@ if __name__ == "__main__":
                         break
                 cv2.destroyAllWindows()  # when ESC is pressed
 
-                # getting orinal position on full-size image
+                print('Displaying an overlay of all annotated inserts.')
+                # getting original position on full-size image
                 OriginalX = [int((coordx / new_width) * width) for coordx in mouseX]
                 OriginalY = [int((coordy / new_height) * height) for coordy in mouseY]
 
@@ -639,7 +648,8 @@ if __name__ == "__main__":
                 # displaying
                 cv2.namedWindow("Resized image", cv2.WINDOW_KEEPRATIO)
                 cv2.imshow("Resized image", image_overlay)
-                cv2.resizeWindow("Resized image", 400, 400)
+                cv2.resizeWindow("Resized image", 600, 600)
+                print('Press ESC to resize sampling areas.')
                 cv2.waitKey(0)
                 cv2.destroyAllWindows()
 
@@ -679,9 +689,10 @@ if __name__ == "__main__":
                                           -1)
 
                 # displaying
+                print('Displaying the updated sampling area.')
                 cv2.namedWindow("Resized image", cv2.WINDOW_KEEPRATIO)
                 cv2.imshow("Resized image", image_overlay)
-                cv2.resizeWindow("Resized image", 400, 400)
+                cv2.resizeWindow("Resized image", 600, 600)
                 cv2.waitKey(0)
                 cv2.destroyAllWindows()
 
@@ -692,14 +703,18 @@ if __name__ == "__main__":
                                          f"Slice_{item + initial_slice_tag}_Phantom_Original_Annotated_Phantom_slice.png"),
                             image_overlay)
 
-                cv2.destroyAllWindows()
+                if loop_no ==0:
+                    print('Press ESC to close image and start annotating the next slice.')
+
+                if loop_no == 1:
+                    print('Press ESC to close image annotation mode and start greyscale probing across the entire stack.')
                 loop_no += 1
 
             print("Initiating Phantom Extraction for scan in multithreading \n")
             # COMPLETE : TODO save overlay of image original and coloured inserts
             # COMPLETE: TODO for each insert with (X,Y,Z) pairs fit a 3D vertical linear model and get positions through the stack for insert centres
 
-            # reorganizing ditionary
+            # reorganizing dictionary
             reorg_dic = {'Slice_path': [],
                          'XYZ': [],
                          'InsertType': [],
