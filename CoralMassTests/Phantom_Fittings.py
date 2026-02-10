@@ -3,9 +3,7 @@
 #  This is released as Supporting Material as part of the following publication:
 #  "How to quantify and minimise error in coral skeletal density estimates using X-ray µCT"
 #
-#  Copyright (c) 2023.
-#
-#  The code is distributed under the CC-BY license https://creativecommons.org/licenses/by/4.0/
+#  The code is distributed under the CC-BY licence https://creativecommons.org/licenses/by/4.0/
 
 import numpy as np
 # patch to address 'np.float64' and other 'np.XXnn' labels being carried onto the spreadsheet
