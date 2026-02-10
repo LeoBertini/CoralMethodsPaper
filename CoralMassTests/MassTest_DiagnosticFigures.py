@@ -23,7 +23,7 @@ def get_scan_name(folder_name, dir_standard_names):
     # dir_standard_names = ['CWI_Cores', 'CWI_Coral_Cores', 'NHM_fossils', 'NHM_scans']
     for dir_tag in dir_standard_names:
         if dir_tag in folder_name:
-            #print(dir_tag)
+            # print(dir_tag)
             scan_name = str(PureWindowsPath(folder_name)).split(dir_tag)[-1].split('\\')[
                 -2]  # works on both Windows and Unix
             # scan_name = folder_name.split(dir_tag)[-1].split('\\')[1]
@@ -133,7 +133,6 @@ for scan_folder in folder_list:
 
     # Find and read each histogram csv data for selected scan, then calculate virtual weight
 
-
     path_for_csvs = os.path.abspath(os.path.join(scan_folder.split(scan_name)[0], scan_name))
     csv_files = []
     Weight_Fittings = []
@@ -146,8 +145,7 @@ for scan_folder in folder_list:
         if 'Phantom_Fittings_and_Weights' in file:
             Weight_Fittings.append(os.path.join(path_for_csvs, file))  # list of xlsx dataframe
 
-
-    #Complete : TODO go through entire three.
+    # Complete : TODO go through entire three.
     if csv_files and Weight_Fittings:  # not if empty list
 
         for csv_file in csv_files:  # each csv inside scanfolder
@@ -155,18 +153,18 @@ for scan_folder in folder_list:
             # patch scan_name to assume name given on Histogram File to account for multiple different corals inside same scan folder
             scan_name_patched = csv_file.split('Histogram-')[-1].split('.csv')[0]
 
-            #phantom_calib_being_used = scan_folder.split('STANDARD_EXTRACTED_VALUES_')[-1].split('.xlsx')[0]
+            # phantom_calib_being_used = scan_folder.split('STANDARD_EXTRACTED_VALUES_')[-1].split('.xlsx')[0]
             print('Histograms found... importing data from csv files...')
             print(csv_file)
             Histogram_key_scan = 'Y'
-            hist_scan_filtered = filter_histogram_bell_plot(csv_file)  # filtering histogram to remove outliers and get nice plot
+            hist_scan_filtered = filter_histogram_bell_plot(
+                csv_file)  # filtering histogram to remove outliers and get nice plot
             Grays_hist = hist_scan_filtered[0][0:]
             Count_hist = hist_scan_filtered[1][0:]
 
-
             for weight_file in Weight_Fittings:
 
-               if scan_name_patched in weight_file: #this is added so that matching Histo and Phantom fits are grabbed and others are skipped
+                if scan_name_patched in weight_file:  # this is added so that matching Histo and Phantom fits are grabbed and others are skipped
 
                     # run plot function
                     fig = plt.figure(figsize=(11.69, 8.27), constrained_layout=TRUE)
@@ -182,11 +180,11 @@ for scan_folder in folder_list:
                     sorted3 = sorted2[sorted2["FitType"].str.contains("NoAir") == False]
                     sorted3 = sorted3.reset_index(drop=True)
                     MainFits = sorted3[sorted3["FitType"].str.contains("Complete") == True]
-                    if len(MainFits) == 0: #this means phantom was normal and not with extra inserts
+                    if len(MainFits) == 0:  # this means phantom was normal and not with extra inserts
 
-                        MainFits = sorted3[sorted3["FitType"].str.contains("Raw") == True ]
-                        MainFits = MainFits[MainFits["FitType"].str.contains("Upper") == False ]
-                        MainFits = MainFits[MainFits["FitType"].str.contains("Lower") == False ]
+                        MainFits = sorted3[sorted3["FitType"].str.contains("Raw") == True]
+                        MainFits = MainFits[MainFits["FitType"].str.contains("Upper") == False]
+                        MainFits = MainFits[MainFits["FitType"].str.contains("Lower") == False]
 
                     MainFits.reset_index(inplace=True)
 
@@ -197,16 +195,15 @@ for scan_folder in folder_list:
                         if 'Linear' in MainFits['FitType'][i]:
                             MainFits.loc[i, 'index'] = 1
                         if 'Poly' in MainFits['FitType'][i]:
-                            MainFits.loc[i, 'index']  = 2
+                            MainFits.loc[i, 'index'] = 2
                         if 'Gaussian' in MainFits['FitType'][i]:
-                            MainFits.loc[i, 'index']  = 3
+                            MainFits.loc[i, 'index'] = 3
                         if 'Exp' in MainFits['FitType'][i]:
-                            MainFits.loc[i, 'index']  = 4
+                            MainFits.loc[i, 'index'] = 4
 
-                    #now sort dataframe
+                    # now sort dataframe
                     MainFits = MainFits.sort_values(by=['index'], ascending=True)
                     MainFits.reset_index(inplace=True)
-
 
                     Boundaries = sorted3[sorted3["FitType"].str.contains("AllPoints_n11") == False]
                     Boundaries.reset_index(inplace=True)
@@ -220,10 +217,13 @@ for scan_folder in folder_list:
 
                     # figure title
                     Phantom_Used = MainFits['Calibration_File_From'][0]
-                    scan_name_mod = scan_name_patched.replace('_', '\_') #this was added so that '_' is not interpreted as 'subscript'
-                    Phantom_Used_mod =Phantom_Used.replace('_', '\_') #this was added so that '_' is not interpreted as 'subscript'
-                    fig.suptitle("Diagnostic plots for scan " + r"$\bf{" + scan_name_mod + "}$" + "  | Calib. data from " +  r"$\bf{" + Phantom_Used_mod + "}$", fontsize=12)
-
+                    scan_name_mod = scan_name_patched.replace('_',
+                                                              '\_')  # this was added so that '_' is not interpreted as 'subscript'
+                    Phantom_Used_mod = Phantom_Used.replace('_',
+                                                            '\_')  # this was added so that '_' is not interpreted as 'subscript'
+                    fig.suptitle(
+                        "Diagnostic plots for scan " + r"$\bf{" + scan_name_mod + "}$" + "  | Calib. data from " + r"$\bf{" + Phantom_Used_mod + "}$",
+                        fontsize=12)
 
                     for indx in range(0, len(MainFits)):
 
@@ -233,11 +233,13 @@ for scan_folder in folder_list:
                             FitName = 'Polynomial 3'
 
                             for indx2 in range(0, len(Boundaries)):
-                                if 'Poly' in Boundaries['FitType'][indx2] and 'LowerBnd' in Boundaries['FitType'][indx2]:
+                                if 'Poly' in Boundaries['FitType'][indx2] and 'LowerBnd' in Boundaries['FitType'][
+                                    indx2]:
                                     a, b, c, d = pd.eval(Boundaries['Coefficients_High_Low_Order'][indx2])
                                     predicted_lower = func_poly3(xvalues, a, b, c, d)
 
-                                if 'Poly' in Boundaries['FitType'][indx2] and 'UpperBnd' in Boundaries['FitType'][indx2]:
+                                if 'Poly' in Boundaries['FitType'][indx2] and 'UpperBnd' in Boundaries['FitType'][
+                                    indx2]:
                                     a, b, c, d = pd.eval(Boundaries['Coefficients_High_Low_Order'][indx2])
                                     predicted_upper = func_poly3(xvalues, a, b, c, d)
 
@@ -250,11 +252,13 @@ for scan_folder in folder_list:
                             FitName = 'Linear'
 
                             for indx2 in range(0, len(Boundaries)):
-                                if 'Linear' in Boundaries['FitType'][indx2] and 'LowerBnd' in Boundaries['FitType'][indx2]:
-                                    a, b, c, d= pd.eval(Boundaries['Coefficients_High_Low_Order'][indx2])
+                                if 'Linear' in Boundaries['FitType'][indx2] and 'LowerBnd' in Boundaries['FitType'][
+                                    indx2]:
+                                    a, b, c, d = pd.eval(Boundaries['Coefficients_High_Low_Order'][indx2])
                                     predicted_lower = func_linear(xvalues, a, b)
 
-                                if 'Linear' in Boundaries['FitType'][indx2] and 'UpperBnd' in Boundaries['FitType'][indx2]:
+                                if 'Linear' in Boundaries['FitType'][indx2] and 'UpperBnd' in Boundaries['FitType'][
+                                    indx2]:
                                     a, b, c, d = pd.eval(Boundaries['Coefficients_High_Low_Order'][indx2])
                                     predicted_upper = func_linear(xvalues, a, b)
 
@@ -267,11 +271,13 @@ for scan_folder in folder_list:
                             FitName = 'Guassian'
 
                             for indx2 in range(0, len(Boundaries)):
-                                if 'Guassian' in Boundaries['FitType'][indx2] and 'LowerBnd' in Boundaries['FitType'][indx2]:
+                                if 'Guassian' in Boundaries['FitType'][indx2] and 'LowerBnd' in Boundaries['FitType'][
+                                    indx2]:
                                     a, b, c, c = pd.eval(Boundaries['Coefficients_High_Low_Order'][indx2])
                                     predicted_lower = func_gaussian(xvalues, a, b, c)
 
-                                if 'Guassian' in Boundaries['FitType'][indx2] and 'UpperBnd' in Boundaries['FitType'][indx2]:
+                                if 'Guassian' in Boundaries['FitType'][indx2] and 'UpperBnd' in Boundaries['FitType'][
+                                    indx2]:
                                     a, b, c, c = pd.eval(Boundaries['Coefficients_High_Low_Order'][indx2])
                                     predicted_upper = func_gaussian(xvalues, a, b, c)
 
@@ -315,18 +321,19 @@ for scan_folder in folder_list:
                         ax_residuals.plot(residuals, linestyle=':', color='k')
 
                         # unpacking color list and making bgr conversion for matplotlib
-                        color1 = [list(eval(item)) for item in color] #read text to color
+                        color1 = [list(eval(item)) for item in color]  # read text to color
                         color1_new = []
                         for item in color1:
                             red = item[0]
                             green = item[1]
                             blue = item[2]
-                            bgr_color = [blue,green,red]
+                            bgr_color = [blue, green, red]
                             color1_new.append(bgr_color)
                         color2 = []
                         for item in color1_new:
                             dummy_color = [RGB / 255 for RGB in item]
-                            if dummy_color == [1, 1, 1]:  # fix one of the colours being white so dot on plot does not show on white background. Making it light grey
+                            if dummy_color == [1, 1,
+                                               1]:  # fix one of the colours being white so dot on plot does not show on white background. Making it light grey
                                 dummy_color = [211 / 255, 211 / 255, 211 / 255]
                             color2.append([dummy_color])
 
@@ -340,15 +347,17 @@ for scan_folder in folder_list:
 
                         # predicted fits
                         ax_predicted_fit = fig.add_subplot(grid[2:5, indx])
-                        ax_predicted_fit.set_title(f"Virtual weight = {round(Weight_estimate,2)} g \n Virtual density = {round(Weight_estimate/Colony_volume,2)} g/cm3", fontsize=9)
+                        ax_predicted_fit.set_title(
+                            f"Virtual weight = {round(Weight_estimate, 2)} g \n Virtual density = {round(Weight_estimate / Colony_volume, 2)} g/cm3",
+                            fontsize=9)
                         ax_predicted_fit.set_xlabel('Density (g/cm3)')
                         if indx == 0:
                             ax_predicted_fit.set_ylabel('Grey value')
 
                         ax_predicted_fit.plot(xvalues, predicted, 'k', linewidth=0.5)
                         ax_predicted_fit.legend(['Predicted Fit'], loc='upper left', fontsize=8)
-                        #ax_predicted_fit.plot(xvalues, predicted_lower, 'r', linewidth=0.25)
-                        #ax_predicted_fit.plot(xvalues, predicted_upper, 'b', linewidth=0.25)
+                        # ax_predicted_fit.plot(xvalues, predicted_lower, 'r', linewidth=0.25)
+                        # ax_predicted_fit.plot(xvalues, predicted_upper, 'b', linewidth=0.25)
                         ax_predicted_fit.fill_between(xvalues, predicted_lower, predicted_upper, alpha=0.8)
                         # TODO add here line plots for the confidence interval fits
                         ax_predicted_fit.set_xlim(-0.1, 3)
@@ -359,10 +368,10 @@ for scan_folder in folder_list:
                             x_dummy = pair[0]
                             y_dummy = pair[1]
                             color_dummy = pair[2]
-                            #bgr = (color_dummy[0][-1], color_dummy[0][2], color_dummy[0][0]) #this makes the color BGR so matplotlib displays right color
-                            ax_predicted_fit.scatter(x_dummy, y_dummy, marker='o', color = color_dummy)
+                            # bgr = (color_dummy[0][-1], color_dummy[0][2], color_dummy[0][0]) #this makes the color BGR so matplotlib displays right color
+                            ax_predicted_fit.scatter(x_dummy, y_dummy, marker='o', color=color_dummy)
 
-                        #colony histogram
+                        # colony histogram
                         histo_axis = fig.add_subplot(grid[6:, :])
                         histo_axis.plot(Grays_hist, Count_hist, 'k')
                         histo_axis.set_ylim(0, max(Count_hist) + 20000)
@@ -376,21 +385,21 @@ for scan_folder in folder_list:
                             histo_axis.scatter(phantom_greys[indx3], max(Count_hist) / 2, color=color2[indx3][0])
 
                         legend_list = pd.eval(MainFits['Insert_type'][0])
-                        legend_list.insert(0,'CT Histogram')
+                        legend_list.insert(0, 'CT Histogram')
 
                         # Shrink current axis's height by 10% on the bottom
                         box = histo_axis.get_position()
                         histo_axis.set_position([box.x0, box.y0 + box.height * 0.1,
-                                         box.width, box.height * 0.9])
+                                                 box.width, box.height * 0.9])
 
                         # Put a legend below current axis
                         histo_axis.legend(legend_list, loc='upper center', bbox_to_anchor=(0.5, -0.4),
-                                  fancybox=True, shadow=True, ncol=6, fontsize = 8)
+                                          fancybox=True, shadow=True, ncol=6, fontsize=8)
                         histo_axis.grid(True)
                         histo_axis.ticklabel_format(axis='y', style='sci', scilimits=(3, 3))
 
                     # saving figure
-                    outdir=os.path.join(project_folder, scan_name)
-                    plt.savefig(os.path.join(outdir, 'Diagnostic_Plots_Scan_' + scan_name_patched + '_based_on_Phantom_' + Phantom_Used + '.png'), dpi=300)
-
-
+                    outdir = os.path.join(project_folder, scan_name)
+                    plt.savefig(os.path.join(outdir,
+                                             'Diagnostic_Plots_Scan_' + scan_name_patched + '_based_on_Phantom_' + Phantom_Used + '.png'),
+                                dpi=300)
