@@ -9,15 +9,14 @@ This repository contains Supporting Material with code, data processing tutorial
                         
                     e-mail : l.bertini@nhm.ac.uk | l.bertini@bristol.ac.uk
 
-      The code is distributed under a CC-BY license https://creativecommons.org/licenses/by/4.0/
-
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18599470.svg)](https://doi.org/10.5281/zenodo.18599470)
 
 This project was supported by:
 - [4D-Reef](https://www.4d-reef.eu/), a Marie Skłodowska-Curie Innovative Training Network funded by European Union Horizon 2020 research and innovation programme
 - The [Natural History Museum](https://www.nhm.ac.uk/) Science Investment Fund. 
 - [SYNTHESIS+](https://www.synthesys.info/) museum initiative transnational access.
 - The [University of Bristol](https://www.bristol.ac.uk/earthsciences/) Covid Recovery Fund. 
-
 
 This work was a joint effort across people from the following institutions:
 <p align="center">
