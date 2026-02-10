@@ -3,10 +3,9 @@
 This repository contains Supporting Material with code, data processing tutorials and links to datasets that accompany the following publication:
 
     **"How to quantify and minimise error in coral skeletal density estimates using X-ray µCT"**
-
                         (link to paper URL and DOI once published).
                         
-                        Corresponding author: Leonardo Bertini
+                            Corresponding author: Leonardo Bertini
                         
                     e-mail : l.bertini@nhm.ac.uk | l.bertini@bristol.ac.uk
 
