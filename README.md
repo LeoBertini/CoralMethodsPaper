@@ -76,6 +76,6 @@ Please cite this work as:
 
 ```
 Bertini L, Hendy E, Summerfield R, Fernandez V, Clark B, Martin-Silverstone E, Lucka F, Kiss MB, 
-Johnson K. 2026. How to quantify and minimise error in coral skeletal density estimates using X-ray µCT. R. Soc.
-Open Sci. 13: 251288. https://doi.org/10.1098/rsos.251288
+Johnson K. 2026. How to quantify and minimise error in coral skeletal density estimates 
+using X-ray µCT. R. Soc.Open Sci. 13: 251288. https://doi.org/10.1098/rsos.251288
 ```
