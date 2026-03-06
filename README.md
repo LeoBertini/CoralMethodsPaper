@@ -10,7 +10,7 @@ This repository contains Supporting Material with code, data processing tutorial
 
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18599470.svg)](https://doi.org/10.5281/zenodo.18599470)
-[![DOI](https://doi.org/10.1098/rsos.251288.svg)](https://doi.org/10.1098/rsos.251288)
+![JRSOS](https://img.shields.io/badge/https%3A%2F%2Fdoi.org%2F10.1098%2Frsos.251288)
 
 This project was supported by:
 - [4D-Reef](https://www.4d-reef.eu/), a Marie Skłodowska-Curie Innovative Training Network funded by European Union Horizon 2020 research and innovation programme
