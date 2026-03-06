@@ -3,14 +3,14 @@
 This repository contains Supporting Material with code, data processing tutorials and links to datasets that accompany the following publication:
 
     **"How to quantify and minimise error in coral skeletal density estimates using X-ray µCT"**
-                        (link to paper URL and DOI once published).
-                        
+
                             Corresponding author: Leonardo Bertini
                         
                     e-mail : l.bertini@nhm.ac.uk | l.bertini@bristol.ac.uk
 
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18599470.svg)](https://doi.org/10.5281/zenodo.18599470)
+[![DOI](https://doi.org/10.1098/rsos.251288.svg)](https://doi.org/10.1098/rsos.251288)
 
 This project was supported by:
 - [4D-Reef](https://www.4d-reef.eu/), a Marie Skłodowska-Curie Innovative Training Network funded by European Union Horizon 2020 research and innovation programme
@@ -69,3 +69,13 @@ Scripts are named based on the figure they generate and are self-explanatory.
 
 ## [Data](Data)
 Data used in the paper and figures.
+
+## Citation
+
+Please cite this work as:
+
+```
+Bertini L, Hendy E, Summerfield R, Fernandez V, Clark B, Martin-Silverstone E, Lucka F, Kiss MB, 
+Johnson K. 2026. How to quantify and minimise error in coral skeletal density estimates using X-ray µCT. R. Soc.
+Open Sci. 13: 251288. https://doi.org/10.1098/rsos.251288
+```
