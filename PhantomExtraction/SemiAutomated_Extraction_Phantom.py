@@ -339,8 +339,8 @@ def get_vsize_from_CT_filetypes(selected_project_dir, scan_name):
     :return: the voxel size of the scan being processed, which is later appended to a dataframe containing the scan metadata and the calibration greyscale probing results
     """
 
-    file_extensions = [".xtekCT", ".xtekVolume", 'xtekct']
-    TargetStrings = ['VoxelSizeX=', 'Voxel size = ']
+    file_extensions = [".xtekCT", ".xtekVolume", 'xtekct', '.log']
+    TargetStrings = ['VoxelSizeX=', 'Voxel size = ', 'Image Pixel Size (um)']
     parent_folder = os.path.join(selected_project_dir, scan_name)
 
     # MAIN_PATH=os.path.join(Drive_Letter, main_dir)
@@ -364,6 +364,10 @@ def get_vsize_from_CT_filetypes(selected_project_dir, scan_name):
         voxelsize = float(dummy_size.split(TargetStrings[0])[-1])
     if TargetStrings[1] in dummy_size:
         voxelsize = float(dummy_size.split(TargetStrings[1])[-1])
+    if TargetStrings[2] in dummy_size: # added line to deal with Bruker scanner filetype
+        voxelsize = float(dummy_size.split(TargetStrings[2])[-1].split('=')[-1])
+        voxelsize = voxelsize/1e3
+
     print(f"Voxel size is {voxelsize}")
 
     return voxelsize
@@ -433,7 +437,10 @@ def build_iterator_for_parallelism(Dataframe, Phantom_folder):
     img_dir = os.path.dirname(Dataframe['Slice_path'][0][0])
 
     # first slice tag number
-    initial_slice_tag = int(Dataframe['Slice_path'][0][0].split(".tif")[0].split("_")[-1])
+    if "rec" in Dataframe['Slice_path'][0][0]:
+        initial_slice_tag = int(Dataframe['Slice_path'][0][0].split(".tif")[0].split("_")[-1].split("rec")[-1])
+    else:
+        initial_slice_tag = int(Dataframe['Slice_path'][0][0].split(".tif")[0].split("_")[-1])
 
     # build iterator for parallel loop
 
@@ -624,8 +631,8 @@ if __name__ == "__main__":
             first_image = cv2.imread(image_list[0])
             print("Original shape: ", first_image.shape)
 
-            # We want the new image to be 60% of the original image
-            scale_factor = 0.6
+            # We want the new image to be displayed to user as xx% of the original image
+            scale_factor = 0.3
             new_height = int(first_image.shape[0] * scale_factor)
             new_width = int(first_image.shape[1] * scale_factor)
             dimensions = (new_width, new_height)
@@ -674,7 +681,11 @@ if __name__ == "__main__":
 
             # this is the main interactive loop to mark slices
             # getting real slice index to append to mask name and make accurate predictions
-            initial_slice_tag = int(image_list[0].split(".tif")[0].split("_")[-1])
+
+            if 'rec' in image_list[0]: #this is the default for Bruker scanner filenames
+                initial_slice_tag = int(image_list[0].split(".tif")[0].split("_")[-1].split("rec")[-1])
+            else: #this is the usual for other filenames
+                initial_slice_tag = int(image_list[0].split(".tif")[0].split("_")[-1])
 
             for item in target_slices:  # range(0, #len(target_slices)): #looping over selected slices from stack
 
@@ -690,8 +701,8 @@ if __name__ == "__main__":
                 height = image.shape[0]
                 width = image.shape[1]
 
-                # We want the new image to be 60% of the original image
-                scale_factor = 0.6
+                # We want the new image to be displayed to user as xx% of the original image
+                scale_factor = 0.3
                 new_height = int(height * scale_factor)
                 new_width = int(width * scale_factor)
                 dimensions = (new_width, new_height)
@@ -738,7 +749,7 @@ if __name__ == "__main__":
 
                 # draw filled circle in white on black background as mask
                 mask = np.zeros((height, width, 3), dtype=np.uint8)
-                radius = int(10 * scale_factor)
+                radius = int(10 * scale_factor/2)
 
                 for iteration in range(0, len(dictionary['X'])):
                     for idx in range(0, len(dictionary['X'][iteration])):

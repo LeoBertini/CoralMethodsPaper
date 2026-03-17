@@ -19,7 +19,7 @@ from tkinter import filedialog
 from tkinter import *
 from pathlib import Path, PureWindowsPath
 from sys import platform
-
+import csv
 
 def get_scan_name(folder_name, dir_standard_names):
     # dir_standard_names = ['CWI_Cores', 'CWI_Coral_Cores', 'NHM_fossils', 'NHM_scans']
@@ -69,9 +69,17 @@ def find_folders_by_filetype(target_file_type, target_skipper_file):
 
 
 def get_vsize_from_CT_filetypes(folder):
-    file_extensions = [".xtekct", ".xtekVolume"]
-    TargetStrings = ['VoxelSizeX=', 'Voxel size = ']
-    # parent_folder = os.path.dirname(folder)
+    """
+    This function reads different types of text files from different micro-CT scanners, containing configuration data.
+    It locates fields where the resolution of the scan is mentioned. This is the size in mm of any pixel in 2D, and the thickness of a µCT slice in 3D
+
+    :param selected_project_dir: the X-ray scan directory  indicated by the user on a graphical prompt
+    :param scan_name: the X-ray dataset name
+    :return: the voxel size of the scan being processed, which is later appended to a dataframe containing the scan metadata and the calibration greyscale probing results
+    """
+
+    file_extensions = [".xtekCT", ".xtekVolume", 'xtekct', '.log']
+    TargetStrings = ['VoxelSizeX=', 'Voxel size = ', 'Image Pixel Size (um)']
 
     # MAIN_PATH=os.path.join(Drive_Letter, main_dir)
 
@@ -80,7 +88,6 @@ def get_vsize_from_CT_filetypes(folder):
             if any([name.endswith(extension) for extension in file_extensions]):
                 print(f"Found config file for scan in {os.path.abspath(os.path.join(root, name))}")
                 target_file_path = os.path.abspath(os.path.join(root, name))
-                ##TODO get voxelsize from xtect or CWI files or xteck volume files
 
     dummy_size = []
     with open(target_file_path, 'rt') as myfile:  # Open lorem.txt for reading text
@@ -95,10 +102,13 @@ def get_vsize_from_CT_filetypes(folder):
         voxelsize = float(dummy_size.split(TargetStrings[0])[-1])
     if TargetStrings[1] in dummy_size:
         voxelsize = float(dummy_size.split(TargetStrings[1])[-1])
+    if TargetStrings[2] in dummy_size:  # added line to deal with Bruker scanner filetype
+        voxelsize = float(dummy_size.split(TargetStrings[2])[-1].split('=')[-1])
+        voxelsize = voxelsize / 1e3
+
     print(f"Voxel size is {voxelsize}")
 
     return voxelsize
-
 
 ####Fit functions
 def func_exponential(x, a, b, c):
@@ -366,6 +376,24 @@ def bundle_results(dictionary, results):
 
     return dictionary
 
+
+def has_header(filename):
+    """
+    Checks if the file likely has a header row by sampling the data.
+    Returns True if a header is likely, False otherwise.
+    """
+    with open(filename, 'r') as f:
+        # Read the first few lines to analyze
+        sample = f.read(2048)
+        # Use the csv sniffer to determine if a header is present
+        sniffer = csv.Sniffer()
+        try:
+            has_header = sniffer.has_header(sample)
+            return has_header
+        except csv.Error:
+            return False
+    # Fallback for empty or unreadable files
+
 def narrow_case(DATA, scan_folder, project_dir_list):
     ResultDict = {"Function": [],
                   "Inverse_Function": [],
@@ -612,11 +640,16 @@ def narrow_case(DATA, scan_folder, project_dir_list):
             print(f"Calculating coral weight based on {phantom_calib_being_used}")
             Histogram_key_scan = 'Y'
 
-            # slice histogram dataframe to get the linear count and not log scale data (export from avizo gives both)
-            hist_scan = pd.read_csv(csv_file, header=None)
-            for index in range(len(hist_scan[0])):
+            if has_header(csv_file):
+                hist_scan = pd.read_csv(csv_file, header=0) #read
+                hist_scan.columns = range(hist_scan.shape[1]) #strip column names so indexing works for any case
+            else:
+                hist_scan = pd.read_csv(csv_file, header=None)
+
+            # slice histogram dataframe to get the linear count and not log scale data (export from Avizo workspace gives both).
+            for index in range(len(hist_scan[0])): #indexing till very last row with intensity representing 16bit grey
                 if hist_scan[0][index] == 65535:
-                    # print(index)
+                    #print(index)
                     hist_scan_filtered = hist_scan[:index + 1]
                     break
 
@@ -688,7 +721,7 @@ def extended_case(DATA, scan_folder, project_dir_list):
                 'Narrow_WithAirWithAlu']
 
     list_of_points_ext = [
-        ['air', 'sweetener', 'coffee', 'oil', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5', 'aluminium'],
+        ['air', 'sweetener', 'coffee', 'oil', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5', 'aluminium', 'calcite'],
         ['epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5'],
 
         ['air', 'sweetener', 'coffee', 'oil', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5'],
@@ -750,7 +783,7 @@ def extended_case(DATA, scan_folder, project_dir_list):
     # LOWER AND UPPER CI bounds for extracted values
 
     list_of_points_ext = [
-        ['air', 'sweetener', 'coffee', 'oil', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5', 'aluminium'],
+        ['air', 'sweetener', 'coffee', 'oil', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5', 'aluminium', 'calcite'],
         ['epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5']]
 
     fittypes = ['Ext_AllPoints_LowerBnd', 'Narrow_AllPoints_LowerBnd']
@@ -806,7 +839,7 @@ def extended_case(DATA, scan_folder, project_dir_list):
 
     fittypes = ['Ext_AllPoints_AirMod_Pos500', 'Narrow_AllPoints_AirMod_Pos500']
     list_of_points_ext = [
-        ['air', 'sweetener', 'coffee', 'oil', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5', 'aluminium'],
+        ['air', 'sweetener', 'coffee', 'oil', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5', 'aluminium', 'calcite'],
         ['air', 'epoxy', 'insert1', 'insert2', 'insert3', 'insert4', 'insert5']]
 
     for points, fitname in zip(list_of_points_ext, fittypes):
@@ -917,9 +950,14 @@ def extended_case(DATA, scan_folder, project_dir_list):
             print(f"Calculating coral weight based on {phantom_calib_being_used}")
             Histogram_key_scan = 'Y'
 
-            # slice histogram dataframe to get the linear count and not log scale data (export from avizo gives both)
-            hist_scan = pd.read_csv(csv_file, header=None)
-            for index in range(len(hist_scan[0])):
+            if has_header(csv_file):
+                hist_scan = pd.read_csv(csv_file, header=0)  # read
+                hist_scan.columns = range(hist_scan.shape[1])  # strip column names so indexing works for any case
+            else:
+                hist_scan = pd.read_csv(csv_file, header=None)
+
+            # slice histogram dataframe to get the linear count and not log scale data (export from Avizo workspace gives both).
+            for index in range(len(hist_scan[0])):  # indexing till very last row with intensity representing 16bit grey
                 if hist_scan[0][index] == 65535:
                     # print(index)
                     hist_scan_filtered = hist_scan[:index + 1]
