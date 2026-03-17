@@ -392,7 +392,6 @@ def has_header(filename):
             return has_header
         except csv.Error:
             return False
-    # Fallback for empty or unreadable files
 
 def narrow_case(DATA, scan_folder, project_dir_list):
     ResultDict = {"Function": [],
