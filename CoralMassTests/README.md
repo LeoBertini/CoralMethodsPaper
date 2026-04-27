@@ -9,8 +9,31 @@ Make sure your ProjectRoot contains individualized folders for each scan with sp
 The ProjectRoot can be any folder under which single-scan folders are saved. 
 See example below:
 
-<img src="../PhantomExtraction/GIFs/DirectoryTreeExample.jpg" width="80%" height="80%">
+```
+.
+├── Project Root/
+├── Scan1
+├── Scan2
+├── Scan3
+├── Scan4/
+│   ├── STANDARD_EXTRACT/
+│   │   ├── STANDARD_EXTRACTED_VALUES_Scan4.xlsx
+│   │   ├── Phantom_Stack
+│   │   ├── Overlay_Extracted_vals_Scan4.png
+│   │   └── Phantom_Masks/
+│   │       └── Phantom_mask_slice_0001.png
+│   ├── TIFF/
+│   │   ├── Scan4_Slice_xy_0001.tif
+│   │   └── Scan4_Slice_xy_0002.tif
+│   ├── Scan4.vgi
+│   ├── Scan4.xtekVolume
+│   ├── Scan4.raw
+│   ├── Histogram-Scan4.csv
+│   └── Phantom_Fittings_and_Weights.xlsx
+└── Scan5
 
+
+```
 **Inside the scan folder, the following files can be found:**
 
 - X-ray volume and reconstruction configuration files (respectively ***.raw***, ***.vgi*** and ***.xtekVolume*** extensions)

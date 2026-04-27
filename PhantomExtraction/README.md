@@ -24,8 +24,29 @@ Copy the slice range to ProjecRoot/ScanXX/STANDARD_EXTRACT/PhantomStack.
 
 **A general representation of the directory tree showing the folder structure is as follows:**
 
-<img src="GIFs/DirectoryTreeExample.jpg" width="600" height="400">
+```.
+├── Project Root/
+├── Scan1
+├── Scan2
+├── Scan3
+├── Scan4/
+│   ├── STANDARD_EXTRACT/
+│   │   ├── STANDARD_EXTRACTED_VALUES_Scan4.xlsx
+│   │   ├── Phantom_Stack
+│   │   ├── Overlay_Extracted_vals_Scan4.png
+│   │   └── Phantom_Masks/
+│   │       └── Phantom_mask_slice_0001.png
+│   ├── TIFF/
+│   │   ├── Scan4_Slice_xy_0001.tif
+│   │   └── Scan4_Slice_xy_0002.tif
+│   ├── Scan4.vgi
+│   ├── Scan4.xtekVolume
+│   ├── Scan4.raw
+│   ├── Histogram-Scan4.csv
+│   └── Phantom_Fittings_and_Weights.xlsx
+└── Scan5
 
+```
 
 ## Step 2 - Run Phantom Extraction code 
  
